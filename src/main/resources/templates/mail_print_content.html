@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
+    <head>
+        <meta charset="utf-8" />
+        <title>SUBAUA wise transaction detail | AuthMIS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+        <!--Swiper slider css-->
+        <link href="assets/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
+        <!-- Layout config Js -->
+        <script src="assets/js/layout.js"></script>
+        <!-- Bootstrap Css -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <link href="assets/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+         <link href="assets/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+        <!-- custom Css-->
+        <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            .highcharts-credits{display: none !important;}
+        </style>
+    </head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+    <header id="page-topbar">
+        <div class="layout-width">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box horizontal-logo">
+                        <a href="index.html" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <img src="assets/images/logo-sm.png" alt="" height="22">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="assets/images/logo-dark.png" alt="" height="17">
+                            </span>
+                        </a>
+
+                        <a href="index.html" class="logo logo-light">
+                            <span class="logo-sm">
+                                <img src="assets/images/logo-sm.png" alt="" height="22">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="assets/images/logo-light.png" alt="" height="17">
+                            </span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
+                        id="topnav-hamburger-icon">
+                        <span class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </button>
+
+                    <!-- App Search-->
+                    <!-- <form class="app-search d-none d-md-block">
+                        <div class="position-relative">
+                            <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                id="search-options" value="">
+                            <span class="mdi mdi-magnify search-widget-icon"></span>
+                            <span class="mdi mdi-close-circle search-widget-icon search-widget-icon-close d-none"
+                                id="search-close-options"></span>
+                        </div>                    
+                    </form> -->
+                </div>
+
+                <div class="d-flex align-items-center">
+
+                    <div class="dropdown d-md-none topbar-head-dropdown header-item">
+                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
+                            id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="bx bx-search fs-22"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                            aria-labelledby="page-header-search-dropdown">
+                            <form class="p-3">
+                                <div class="form-group m-0">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search ..."
+                                            aria-label="Recipient's username">
+                                        <button class="btn btn-primary" type="submit"><i
+                                                class="mdi mdi-magnify"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                   
+
+                   
+                    <div class="ms-1 header-item d-none d-sm-flex">
+                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
+                            data-toggle="fullscreen">
+                            <i class='bx bx-fullscreen fs-22'></i>
+                        </button>
+                    </div>
+
+                    <div class="ms-1 header-item d-none d-sm-flex">
+                        <button type="button"
+                            class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
+                            <i class='bx bx-moon fs-22'></i>
+                        </button>
+                    </div>
+
+                    <div class="dropdown ms-sm-3 header-item topbar-user">
+                        <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <span class="d-flex align-items-center">
+                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.png"
+                                    alt="Header Avatar">
+                                <span class="text-start ms-xl-2">
+                                    <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">PANKAJJALDEEP.DOIT</span>
+                                    <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">ACP (DY. DIR.) </span>
+                                </span>
+                            </span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <h6 class="dropdown-header">Welcome Pankaj Jaldeep</h6>
+                            <a class="dropdown-item" href="#"><i
+                                    class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
+                                    class="align-middle">Profile</span></a>
+                            <a class="dropdown-item" href="#"><i
+                                    class="mdi mdi-lifebuoy text-muted fs-16 align-middle me-1"></i> <span
+                                    class="align-middle">Help</span></a>
+                            
+                            
+                            <a class="dropdown-item" href="#"><i
+                                    class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
+                                    class="align-middle" data-key="t-logout">Logout</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+        <!-- ========== App Menu ========== -->
+        <div class="app-menu navbar-menu">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <!-- Dark Logo-->
+                <a href="index.html" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="assets/images/logo-sm.png" alt="">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="assets/images/logo-dark.png" alt="">
+                    </span>
+                </a>
+                <!-- Light Logo-->
+                <a href="index.html" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="assets/images/logo-sm.png" alt="">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="assets/images/logo-light.png" alt="">
+                    </span>
+                </a>
+                <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+                    <i class="ri-record-circle-line"></i>
+                </button>
+            </div>
+
+            <div id="scrollbar">
+                <div class="container-fluid">
+                    <div id="two-column-menu"></div>
+                    <ul class="navbar-nav" id="navbar-nav">
+                        <li class="menu-title"><span data-key="t-menu"><h4 class="text-white">Reports</h4></span></li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="sidebarDashboards">
+                                <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Auth MIS Reports</span>
+                            </a>
+                            <div class="menu-dropdown collapse show" id="sidebarDashboards">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="subaua_n_service_wise_transaction_detail.html" class="nav-link" data-key="t-ecommerce"> SUBAUA Wise Transsaction Detail </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="suspected_aadhaar.html" class="nav-link" data-key="t-crm"> Suspected Aadhaar Number</a>
+                                    </li>                                   
+                                    <li class="nav-item">
+                                        <a href="services_wise_transaction_details.html" class="nav-link" data-key="t-crypto"> SUBAUA & Service wise transactions </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" data-key="t-projects"> ODD Hour Transactions </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="block_aadhaar_no.html" class="nav-link" data-key="t-projects"> Block Aadhaar Number </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" data-key="t-projects"> Fluctuation Report </a>
+                                    </li>
+                                     <li class="nav-item">
+                                        <a href="#" class="nav-link" data-key="t-projects"> Fraud Transaction Report </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" data-key="t-projects"> Mintues Wise Transaction Report </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" data-key="t-projects"> Average Response Time Success / Failure Count Report </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- end AuthMIS Menu -->
+                    </ul>
+                </div>
+                <!-- Sidebar -->
+            </div>
+
+            <div class="sidebar-background"></div>
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0"></h4>
+
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Email Reports</li>
+                                    </ol>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">                 
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h3 class="pb-3 mt-3">Fw: Employee details and Photo</h3>
+                                            <div style="display: flex; align-items: center;">
+                                                <img src="assets/images/emil_png.png" alt="" height="35" width="35" style="border-radius: 50px;">
+                                                <div style="margin-left: 8px;">
+                                                    <span style="font-weight: 600;">PANKAJ JALDEEP/ACP/DOITC < pankajjaldeep.doit@rajasthan.gov.in >
+                                                    </span>
+                                                    <p style="font-size: 13px; margin-bottom: 0px; margin-top: 3px; color: #878a99;">12 Aug 2022, 12:57</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="pt-4 pb-4" style="color:rgb(0,0,0);font-family:Calibri,Arial,Helvetica,sans-serif;font-size:12pt">
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div style="color:rgb(0,0,0);font-family:Calibri,Arial,Helvetica,sans-serif;font-size:12pt">
+                                                <div style="text-align:left"><span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif;font-size:10pt"><span style="font-family:Calibri,Helvetica,sans-serif;font-size:13.3333px">------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>--</span></span></div>
+                                                <div style="text-align:left"><span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif;font-size:10pt">Regards:</span><br>
+                                                <span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif"></span><span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif;font-size:12px"><b><span style="font-size:11pt">Pankaj Jaldeep</span></b></span><br>
+                                                <span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif"></span><span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif;font-size:12px"><span style="font-family:Calibri,Helvetica,sans-serif;font-size:12px">Analyst-cum-Programmer
+                                                 (Dy. Director)</span>,&nbsp;</span></div>
+                                                <div style="text-align:left"><span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif;font-size:12px">UID Project (Aadhaar Authentication, State&nbsp;Aadhaar Portal)</span><br>
+                                                <span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif"></span><span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif;font-size:12px">Department of Information Technology &amp; Communication&nbsp;</span></div>
+                                                <div style="text-align:left"><span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif;font-size:12px"></span><span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif;font-size:12px">I.T. Building, Yojana Bhawan, Jaipur (Rajasthan)</span></div>
+                                                <span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif"></span>
+                                                <div style="text-align:left"><span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif;font-size:12px">IP Ext - 21606, Ph: 0141-2921606</span></div>
+                                                <span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif"></span><font face="Cambria,Serif" color="3366FF"><font size="3"><span style="color:rgb(0,111,201)"></span></font></font></div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div style="color:rgb(0,0,0);font-family:Calibri,Arial,Helvetica,sans-serif;font-size:12pt">
+                                                <span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif"></span><font color="99CCFF"><span style="font-family:comic sans ms,sans-serif"><span style="font-family:Calibri,Helvetica,sans-serif;color:rgb(0,111,201)"><span style="color:rgb(0,111,201);font-family:Cambria,serif;font-size:12px"><span style="color:rgb(0,0,0);font-family:Calibri,Helvetica,sans-serif"></span>
+                                                <p class="MsoNormal"><span style="font-family:Calibri,Helvetica,sans-serif;font-size:13.3333px;color:rgb(0,0,0)">------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>------------------------------<wbr>--</span><br>
+                                                </p>
+                                                <p class="MsoNormal"><span style="font-family:Calibri,Helvetica,sans-serif;font-size:13.3333px;color:rgb(0,0,0)"><span style="font-family:Calibri,Helvetica,sans-serif;font-size:12px"><b>"Print this email only if absolutely necessary. Save Paper. Save Trees."</b></span></span></p>
+                                                <p class="MsoNormal"><span style="font-family:Calibri,Helvetica,sans-serif;font-size:13.3333px;color:rgb(0,0,0)"><span style="font-family:Calibri,Helvetica,sans-serif;font-size:12px"><b><img alt="1646909432455" src="https://mail.google.com/mail/u/0?ui=2&amp;ik=b662c8905d&amp;attid=0.0.1&amp;permmsgid=msg-f:1740939479756788934&amp;th=18290f3ba25b54c6&amp;view=fimg&amp;fur=ip&amp;sz=s0-l75-ft&amp;attbid=ANGjdJ_sHygDU5Z87p_ueAWQ10fnrlT3dFl1MPetnllhxCC1r3sRzOFZG__wrtk-T3w2R9qEKCBvtWRP5osCImnrPbGCuGNASI5b4ualBrwRCHEyBBXTy1g6P7Qm8xc&amp;disp=emb" data-image-whitelisted="" class="CToWUd" data-bit="iit"><br>
+                                                </b></span></span></p>
+                                                </span></span></span></font></div>
+                                        </div>
+                                    </div>
+                                  
+                                </div><!-- end card -->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+
+
+                            </div> <!-- end .h-100-->
+
+                        </div> <!-- end col -->
+
+                       
+                    </div>
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        
+                        <div class="col-sm-12">
+                            <div class="text-sm-end d-none d-sm-block">
+                                Copyright © 2022 DoIT & C. All rights reserved.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        

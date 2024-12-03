@@ -1,0 +1,321 @@
+
+  <head th:replace="fragments_others_head" :: head></head>
+    
+  <body> 
+   <div id="layout-wrapper">
+		<div th:replace="fragments_others_header" :: header></div>
+		<div th:replace="fragments_others_menu" :: menu1></div>
+	   
+	    
+	    <div class="main-content">
+	          <div class="page-content">
+	                    <div class="container-fluid">
+	                        <!-- start page title -->
+	                        <div class="row">
+	                            <div class="col-12">
+	                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+	                                    <h4 class="mb-sm-0">Dashboard</h4>
+	
+	                                    <div class="page-title-right">
+	                                        <ol class="breadcrumb m-0">
+	                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+	                                            <li class="breadcrumb-item active">AuthMIS</li>
+	                                        </ol>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <!-- end page title -->
+	
+	                        <div class="row">
+	                            <div class="col">
+	                                <div class="h-100">
+	                                    <div class="row">
+	                                        <div class="col-xl-3 col-md-6">
+	                                            <!-- card -->
+	                                            <div class="card card-animate">
+	                                                <div class="card-body">
+	                                                    <div class="d-flex align-items-center">
+	                                                        <div class="flex-grow-1 overflow-hidden">
+	                                                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">No. of Organisations</p>
+	                                                        </div>
+	                                                        <div class="flex-shrink-0">
+	                                                            <!-- <h5 class="text-success fs-14 mb-0"><i class="ri-arrow-right-up-line fs-13 align-middle"></i> +16.24 %</h5> -->
+	                                                        </div>
+	                                                    </div>
+	                                                    <div class="d-flex align-items-end justify-content-between mt-4">
+	                                                        <div>
+	                                                            <h4 class="fs-22 fw-semibold ff-secondary mb-4"   >
+	                                                            
+	                                                            
+	                                                          <!--   <span class="counter-value" data-target="15">15</span></h4> -->
+	                                                          <span class="counter-value" data-target="15" th:text="${result2}"></span>
+	                                                           <!--  <a href="#" class="text-decoration-underline">More Info</a> -->
+	                                                        </div>
+	                                                        <div class="avatar-sm flex-shrink-0">
+	                                                            <span class="avatar-title bg-soft-success rounded fs-3">
+	                                                                <i class="bx bxl-microsoft-teams text-success"></i>
+	                                                            </span>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                                <!-- end card body -->
+	                                            </div>
+	                                            <!-- end card -->
+	                                        </div>
+	                                        <!-- end col -->
+	
+	                                        <div class="col-xl-3 col-md-6">
+	                                            <!-- card -->
+	                                            <div class="card card-animate">
+	                                                <div class="card-body">
+	                                                    <div class="d-flex align-items-center">
+	                                                        <div class="flex-grow-1 overflow-hidden">
+	                                                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Today Transactions</p>
+	                                                        </div>
+	                                                        <div class="flex-shrink-0">
+	                                                            <!-- <h5 class="text-danger fs-14 mb-0" > -3.57 %</h5> -->
+	                                                        </div>
+	                                                    </div>
+	                                                    <div class="d-flex align-items-end justify-content-between mt-4">
+	                                                         <div>
+	                                                       		<h4 class="fs-22 fw-semibold ff-secondary mb-4" >                                                             
+                                                           		   <span th:if="${dashBoardResult != null}" th:text="${dashBoardResult.CURENT_DAY_TRANSACTION}">0</span>
+                                                                </h4>
+	                                                        </div>	                                                    	                                                        
+	                                                       
+	                                                        <div class="avatar-sm flex-shrink-0">
+	                                                            <div class="calendar-container">
+	                                                                <p class="month-name" id="">Today</p>
+	                                                        <!--         <p class="day-name" id="day-name">Friday</p>
+	                                                         -->        <p class="day-number bg-soft-success rounded" id="day-number">20</p>
+	                                                        <!--         <p class="year" id="year">2020</p> -->
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                                <!-- end card body -->
+	                                            </div>
+	                                            <!-- end card -->
+	                                        </div>
+	                                        <!-- end col -->
+	
+	                                        <div class="col-xl-3 col-md-6">
+	                                            <!-- card -->
+	                                            <div class="card card-animate">
+	                                                <div class="card-body">
+	                                                    <div class="d-flex align-items-center">
+	                                                        <div class="flex-grow-1 overflow-hidden">
+	                                                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">This Month's Transactions</p>
+	                                                        </div>
+	                                                        <div class="flex-shrink-0">
+	                                                            <h5 class="text-success fs-14 mb-0"></h5>
+	                                                            
+	                                                        </div>
+	                                                    </div>
+	                                                    <div class="d-flex align-items-end justify-content-between mt-4">
+	                                                        <div>
+	                                                        	<h4 class="fs-22 fw-semibold ff-secondary mb-4" >     
+                                                            		<span th:if="${dashBoardResult != null}"  th:text="${dashBoardResult.CURENT_MONTH_TRANSACTION}">0</span>
+                                                            	</h4>
+	                                                        </div>
+	                                                        <div class="avatar-sm flex-shrink-0">
+	                                                             <div class="calendar-container">
+	                                                                <p class="month-name" id="">Month</p>
+	                                                        <!--         <p class="day-name" id="day-name">Friday</p>
+	                                                         -->        <p class="day-number bg-soft-warning rounded" id="month-name">Aug1</p>
+	                                                        <!--         <p class="year" id="year">2020</p> -->
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                                <!-- end card body -->
+	                                            </div>
+	                                            <!-- end card -->
+	                                        </div>
+	                                        <!-- end col -->
+	
+	                                        <div class="col-xl-3 col-md-6">
+	                                            <!-- card -->
+	                                            <div class="card card-animate">
+	                                                <div class="card-body">
+	                                                    <div class="d-flex align-items-center">
+	                                                        <div class="flex-grow-1 overflow-hidden">
+	                                                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0" >This Year Transactions</p>
+	                                                        </div>
+	                                                        <div class="flex-shrink-0">
+	                                                            <!-- <h5 class="text-muted fs-14 mb-0">
+	                                                                +0.00 %
+	                                                            </h5> -->
+	                                                        </div>
+	                                                    </div>
+	                                                    <div  class="d-flex align-items-end justify-content-between mt-4">
+	                                                        <div>
+	                                                            <h4 class="fs-22 fw-semiBold ff-secondary mb-4" >      
+                                                            		<span th:if="${dashBoardResult != null}" th:text="${dashBoardResult.CURENT_YEAR_TRANSACTION}">0</span>
+                                                            	</h4>	                                                           
+	                                                        </div>
+	                                                        <div class="avatar-sm flex-shrink-0">
+	                                                            <div class="calendar-container">
+	                                                                <p class="month-name" id="">Year</p>
+	                                                              <p class="day-number bg-soft-danger rounded" id="year">2021</p>
+	                                                        
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                                <!-- end card body -->
+	                                            </div>
+	                                            <!-- end card -->
+	                                        </div>
+	                                        <!-- end col -->
+	                                    </div>
+	                                    <!-- end row-->
+	
+	                                    <div class="row">
+	                             
+	
+	                                       <div class="tabsforTablue">
+											   <nav>
+											  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+											    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Dashboard1</button>
+											    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Dashboard2</button>
+											   
+											  </div>
+											</nav>
+											<div class="tab-content" id="nav-tabContent">
+											  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+												   <div class="iframeheight">
+													<iframe src="https://vabsdc.rajasthan.gov.in/views/UIDTxnRep/Dashboard-AadhaarAuthenticationDoITC?%3Aembed=y&%3AisGuestRedirectFromVizportal=y" width="100%" height="600"></iframe>  
+												  </div>
+											  </div>
+											 <div>
+												  
+											  </div>
+											  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+												   <div class="iframeheight">
+													<iframe src="https://vabsdc.rajasthan.gov.in/views/UID/DASHBOARD1?%3Aembed=y&%3AisGuestRedirectFromVizportal=y" width="100%" height="600"></iframe>  
+												  </div>
+												  
+											  </div>
+											  <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">...</div>
+											</div>
+
+										   </div>
+	                                  
+	                       
+	                                        <div class="col-xl-8"></div>
+	                                        <!-- .col-->
+	                                    </div>
+	                                    <!-- end row-->
+	
+	                   
+	
+	                    <div class="row" style="display:none;">
+	                        <div class="col-xl-6">
+	                            <div class="card">
+	                                <div class="card-header">
+	                                    <h4 class="card-title mb-0"></h4>
+	                                </div><!-- end card header -->
+	
+	                                <div class="card-body">
+	                                    <div id="dynamicloadedchart-wrap" dir="ltr">
+	                                        <div id="chart-year" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-dark", "--vz-info"]' class="apex-charts"></div>
+	                                        <div id="chart-quarter" class="apex-charts"></div>
+	                                    </div>
+	                                </div><!-- end card-body -->
+	                            </div><!-- end card -->
+	                        </div>
+	                        <!-- end col -->
+	
+	             
+	                        <!-- end col -->
+	                    </div>
+	                    <!-- end row -->
+	
+	                                </div>
+	                                <!-- end .h-100-->
+	                            </div>
+	                            <!-- end col -->
+	                        </div>
+	                    </div>
+	                    <!-- container-fluid -->
+	           </div>
+	    </div>
+	                    
+	    <div th:replace="fragments_others_footer" :: footer></div>
+   </div>  
+         <script src="assets/js/addMenuSubMenu.js"></script>
+        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="assets/libs/node-waves/waves.min.js"></script>
+        <script src="assets/libs/feather-icons/feather.min.js"></script>
+        <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+        <script src="assets/js/plugins.js"></script>	
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <!--   <script src="assets/libs/highchart/highcharts.js"></script>
+        <script src="assets/libs/highchart/exporting.js"></script>
+        <script src="assets/libs/highchart/export-data.js"></script>
+        <script src="assets/libs/highchart/accessibility.js"></script>
+        <script src="assets/js/pages/highchart.init.js"></script>  -->       
+        <script src="assets/libs/apexcharts/apexcharts.min.js"></script>      
+        <script src="assets/js/pages/dashboard-ecommerce.init.js"></script>
+        <script src="assets/js/pages/apexcharts-column.init.js"></script>        
+        <script src="assets/js/app.js"></script>
+        <script type="text/javascript">
+			
+		    const monthNameEl = document.getElementById("month-name");
+		    const dayNameEl = document.getElementById("day-name");
+		    const dayNumEl = document.getElementById("day-number");
+		    const yearEl = document.getElementById("year");
+		
+		    const date = new Date();
+		    const month = date.getMonth();
+		    const today = date.getDate();
+		    const year = date.getFullYear();
+		    console.log(today);
+		
+		    monthNameEl.innerText = date.toLocaleString("en-us", {
+		      month: "short"});
+		  
+			dayNumEl.innerText = date.getDate();
+			yearEl.innerText = date.getFullYear();
+		</script>
+		
+		<script>
+			
+		$(document).ready(function () {
+			fetchSubmenusAndMenus();
+		});		
+		let flag = 0;
+			function fetchSubmenusAndMenus() {
+					$.ajax({
+						url: '/GetSubMenu/',
+						type: 'GET',
+						dataType: 'json',
+						success: function (response) {//Cache.delete();
+		
+							//sessionStorage.clear()
+		
+							sessionStorage.setItem('submenuAndMenuMaster', JSON.stringify(response));
+							//localStorage.setItem('isPageReloaded', 'false');
+							if (flag==0) {
+								sessionStorage.setItem('isPageReloaded', ++flag);
+								addMenuAndSubMenu();
+								
+							}
+							
+						},
+						error: function (xhr, status, error) {
+							console.error(xhr.responseText);
+						}
+					});
+		
+				}
+		
+		
+			
+			
+		</script>
+    </body>
+</html>

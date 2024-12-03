@@ -1,0 +1,200 @@
+
+
+<head th:replace="fragments_others_head2" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header3" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dash board</a></li>
+										<li class="breadcrumb-item active">Update Menu</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Update Menu</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+											<form class="row g-3 needs-validation" novalidate
+											id="validation-form"
+											th:action="@{'/updateaddmenu/' + ${menudata.MENUID}}"
+											th:object="${menudata}" method="GET">
+
+											<div class="col-md-4">
+												<label for="MENU_NAME" class="form-label">MENU NAME</label>
+												<input type="text" th:field="*{MENUNAME}"
+													class="form-control" id="MENU_NAME" placeholder="MENU NAME"
+													required>
+											</div>
+
+											<div class="col-md-4">
+												<label for="MENU_DESCRIPTION" class="form-label">MENU
+													DESCRIPTION</label> <input type="text" th:field="*{MENUDESC}"
+													class="form-control" id="MENU_DESCRIPTION"
+													placeholder="MENU DESCRIPTION" required>
+											</div>
+
+											<div class="col-md-4">
+												<label for="URL" class="form-label">URL</label> <input
+													type="text" th:field="*{URL_REPO}" class="form-control"
+													id="URL" placeholder="URL" required readonly>
+											</div>
+											
+										<!--  	<div class="col-md-4">
+												<label for="PRIORITY_TYPE" class="form-label">PRIORITY TYPE
+												</label> <input type="text" th:field="*{PRIORITY_TYPE}"
+													class="form-control" id="PRIORITY_TYPE"
+													placeholder="PRIORITY TYPE" required>
+											</div>
+											
+										-->
+											
+											<!-- <div class="col-md-4">
+												<label for="validationCustom01" class="form-label">PRIORITY TYPE </label> 
+											<select class="form-select mb-3"
+													aria-label="Default select example form-control"
+													id="PRIORITY_TYPE" name="PRIORITY_TYPE"
+													th:field="*{PRIORITY_TYPE}" required>
+													<option th:value="1">YES</option>
+													<option th:value="0">NO</option>
+
+												</select>
+											</div> -->
+											
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">STATUS </label> 
+											<select class="form-select mb-3"
+													aria-label="Default select example form-control"
+													id="STATUS" name="STATUS"
+													th:field="*{STATUS}" required>
+													<option th:value="1">ACTIVE</option>
+													<option th:value="0"> DE-ACTIVE</option>
+
+												</select>
+											</div>
+											
+										 <div class="col-md-4">
+												<label for="CREATIONDATE" class="form-label">CREATIONAL DATE
+													</label> <input type="text" th:field="*{CREATIONDATE}"
+													class="form-control" id="CREATIONDATE"
+													placeholder="CREATIONAL DATE" required readonly>
+											</div>
+											
+											
+											
+											<div class="col-md-4">
+												<label for="CREATIONBY" class="form-label">CREATED BY
+												</label> <input type="text" th:field="*{CREATIONBY}"
+													class="form-control" id="CREATIONBY"
+													placeholder="CREATED BY" required readonly>
+											</div>
+											
+										<!-- 	<div class="col-md-4">
+												<label for="MTYPID" class="form-label">MTYPID
+												</label> <input type="text" th:field="*{MTYPID}"
+													class="form-control" id="MTYPID"
+													placeholder="MTYPID" required readonly>
+											</div>
+											 -->
+											
+											<!-- <div class="col-md-4">
+												<label for="MENU_DESCRIPTION" class="form-label">IS NEW TAB
+												</label> <input type="text" th:field="*{ISNEWTAB}"
+													class="form-control" id="ISNEWTAB"
+													placeholder="IS NEW TAB" required readonly>
+											</div>
+											  -->
+											
+
+											<div class="col-12">
+												<button class="btn btn-primary" type="submit">Submit
+													</button>
+											</div>
+
+										</form>
+									
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+		 $(".logo-lg img").attr('src','/assets/images/logo-light.png')
+	})
+	</script>
+	
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+	
+</body>
+</html>

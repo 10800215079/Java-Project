@@ -1,0 +1,357 @@
+<head th:replace="fragments_others_head" :: head></head>
+
+<body>
+
+	<!-- Begin page -->
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+
+			<div class="page-content">
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">Liveness Unblock
+											Transaction</li>
+									</ol>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- end page title -->
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Non-Liveness
+											block Transaction's</h4>
+									</div>
+								</div>
+								<!-- end card header -->
+
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<div class="alert alert-success fs-2" role="alert"
+											th:text="${success}" th:if="${success}"></div>
+										<div class="alert alert-danger fs-2" role="alert"
+											th:text="${error}" th:if="${error}"></div>
+											
+										<form id="validation-form" th:action="@{/finalUnblockList}" class="needs-validation" novalidate 
+											th:object="${NonLiveUnBlock_file}" method="get">
+											<div class="row g-3 mt-0 mb-3  pb-3 alert-danger">
+											
+												<div class="col-xxl-3 col-sm-4">
+													<div>
+														<input id="fromdate" name="fromdate" type="date"
+															class="form-control flatpickr-input active"
+															data-provider="flatpickr" data-date-format="d/m/y"
+															data-enable-time 
+															placeholder="Start Date" required>
+													</div>
+												</div>
+												<div class="col-xxl-3 col-sm-4">
+													<div>
+														<input id="enddate" name="enddate" type="date"
+															class="form-control flatpickr-input active"
+															data-provider="flatpickr" data-date-format="d/m/y"
+															data-enable-time 
+															placeholder="End Date" required>
+													</div>
+												</div>
+												<!--end col-->
+												<div class="col-xxl-2 col-sm-5" id="batchIDdiv">
+													<select class="form-select mb-3"
+														aria-label="Select Batch ID" id="batchid" name="batchid"
+														required>
+													</select>
+
+												</div>
+												<div class="col-xxl-3 col-sm-5" id="subauaDiv">
+													<select class="form-select mb-3" aria-label="Select subaua"
+														id="subaua" name="subaua" required>
+													</select>
+												</div>
+
+
+												<!--end col-->
+
+												<!--end col-->
+												<div class="col-xxl-1 col-sm-4">
+													<div>
+														<input type="submit" id="submit" class="btn btn-primary w-100"
+															value="Search" />
+													</div>
+												</div>
+												<!--end col-->
+											</div>
+										</form>
+										<form id="validation-form" th:action="@{/UnblockAadhaar}" 
+											th:object="${NonLiveUnBlock_file}" method="get">
+											<div class="table-responsive table-card1 mt-4 mb-1">
+												<table id="example" class="table table-striped"
+													style="width: 100%">
+													<thead class="alert-info">
+														<tr>
+															<!-- <td><input type="checkbox" id="selectAll" /> <strong>All</strong> </td> -->
+															<th>S.no</th>
+															<th>Ref. ID</th>
+															<th>SubAUA Code</th>
+															<th>Response Code</th>
+															<th>Device Code</th>
+															<th>Transaction ID</th>
+															<th>Batch Id</th>
+															<th>Block Date</th>
+														</tr>
+													</thead>
+													<tbody class="list form-check-all">
+														<tr th:each="dataVal,iterator  : ${details}">
+															<!-- <td><input type="checkbox" id="select" /></td> -->
+															<td th:text="${iterator.index+1}"></td>
+															<td class="reasons" th:text="${dataVal.REF_ID}">REF_ID</td>
+															<td class="nooftransaction"
+																th:text="${dataVal.SUBAUA_CODE}">SUBAUA_CODE</td>
+															<td class="nooftransaction"
+																th:text="${dataVal.RESPONSE_CODE}">RESPONSE_CODE</td>
+															<td class="nooftransaction"
+																th:text="${dataVal.DEVICE_CODE}">DEVICE_CODE</td>
+															<td class="nooftransaction"
+																th:text="${dataVal.TRANSACTION_ID}">TRANSACTION_ID</td>
+															<td class="nooftransaction" th:text="${dataVal.BATCH_ID}">BATCH_ID</td>
+															<td class="nooftransaction"
+																th:text="${dataVal.BLOCK_DATE}">BLOCK_DATE</td>
+														</tr>
+													</tbody>
+													<tfoot class="alert-info">
+														<tr>
+															<!-- <td><input type="checkbox" id="selectAll" /> <strong>All</strong> </td> -->
+															<th>S.no</th>
+															<th>Ref. ID</th>
+															<th>SubAUA Code</th>
+															<th>Response Code</th>
+															<th>Device Code</th>
+															<th>Transaction ID</th>
+															<th>Batch Id</th>
+															<th>Block Date</th>
+														</tr>
+													</tfoot>
+												</table>
+
+											</div>
+											<!-- <div class="submitbtnnew d-md-inline-block d-xl-inline-block">
+												<input type="submit" class="btn btn-primary w-100"
+													value="Unblock Selected Aadhaar" />
+											</div> -->
+										</form>
+
+									</div>
+								</div>
+								<!-- end card -->
+							</div>
+							<!-- end col -->
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end card -->
+				</div>
+				<!-- end col -->
+			</div>
+			<!-- end col -->
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+	<!-- <button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button> -->
+	<!--end back-to-top-->
+
+	<!-- JAVASCRIPT -->
+
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript' src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript" src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"	src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script type="text/javascript">
+		flatpickr('#Drange', {
+			mode : "range",
+		});
+		/* flatpickr("#uidaiEmaildate", {
+		    mode: "range",
+		 
+		 });*/
+	</script>
+
+
+	<script type="text/javascript"
+		src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js">
+		
+	</script>
+	
+	<script>
+		flatpickr("#fromdate", {
+			maxDate : "today",		 
+		});
+	</script>
+		<script>
+		flatpickr("#enddate", {
+			maxDate : "today",
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#example').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+
+							});
+				});
+	</script>
+	<script>
+		$(document).ready(function() {
+			$('#batchIDdiv').hide();
+			$('#subauaDiv').hide();
+		});
+	</script>
+	<script>
+		var from = document.getElementById('fromdate');
+		var end = document.getElementById('enddate');			
+		end.onchange = function() {
+			//alert(date_input.value);
+			var search = {
+					"fromdate" : from.value,
+					"enddate" : end.value
+					}
+			$.ajax({
+				url : "/Authmis/batchIdList",
+				data : search,
+				dataType : 'json',
+				type : 'get',
+				success : function(data) {
+					//<option selected="" disabled="" value="">Select	Batch ID</option><option value="ALL">ALL</option>
+					var html = '<option selected="" disabled="" value="">Select Batch ID</option>';
+					html+= '<option value="ALL">ALL</option>'
+	                var len = data.length;
+	                for ( var i = 0; i < len; i++) {
+	                    html += '<option value="' + data[i].BATCH_ID + '">'
+	                            + data[i].BATCH_ID + '</option>';
+	                }
+	                html += '</option>';
+	                $('#batchid').html(html);
+	                $('#batchIDdiv').show();
+				},
+				fail : function() {
+					alert("failed");
+				}	
+			}); 
+			
+		}
+	</script>
+	<script>
+	var from = document.getElementById('fromdate');
+	var end = document.getElementById('enddate');
+	var batchid = document.getElementById('batchid');
+	$('#batchid').change(
+	        function() {
+	        	var search = {
+	        			"fromdate" : from.value,
+						"enddate" : end.value,
+						"batchid" : batchid.value,						
+						}        	
+	        	$.ajax({
+					url : "/Authmis/subAuaList",
+					data : search,
+					dataType : 'json',
+					type : 'get',
+					success : function(data) {
+						//<option selected="" disabled="" value="">Select	Batch ID</option><option value="ALL">ALL</option>
+						var html = '<option selected="" disabled="" value="">Select Subaua</option>';
+						html+= '<option value="ALL">ALL</option>'
+		                var len = data.length;
+		                for ( var i = 0; i < len; i++) {
+		                    html += '<option value="' + data[i].SA + '">'
+		                            + data[i].SUB_AUA_NAME + '</option>';
+		                }
+		                html += '</option>';
+		                $('#subaua').html(html);
+		                $('#subauaDiv').show();
+					},
+					fail : function() {
+						alert("failed");
+					}	
+				}); 
+				
+	        });
+	</script>
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				debugger;
+				//var conceptName = $('#EXPIRY_DATE').val();
+				$("#fromdate").removeAttr("readonly");
+				$("#enddate").removeAttr("readonly");
+
+			});
+		});
+	</script>
+</body>
+</html>

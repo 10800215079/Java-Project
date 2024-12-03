@@ -1,0 +1,218 @@
+<head th:replace="fragments_others_head2" :: head></head>
+<style>
+.modal-header{padding: 5px}
+.modal-body table tr td:first-child{display:none}
+.modal-body table tr th:first-child{display:none}
+ table.lusan tr td:nth-child(7){display:none}
+ table.lusan tr th:nth-child(7){display:none}
+
+
+.border-danger {
+        border: 1px solid #F01;
+}
+</style>
+<body>
+        <div id="layout-wrapper">
+
+                <div th:replace="fragments_others_header3" :: header></div>
+
+                <div th:replace="fragments_others_menu" :: menu></div>
+
+                <div class="main-content">
+                        <div class="page-content">
+                                <div class="container-fluid">
+                                        <div class="row">
+                                                <div class="col-12">
+                                                        <div
+                                                                class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                                                <h4 class="mb-sm-0"></h4>
+                                                                <div class="page-title-right">
+                                                                        <ol class="breadcrumb m-0">
+                                                                                <li class="breadcrumb-item"><a
+                                                                                        href="javascript: void(0);">Dash board</a></li>
+                                                                                <li class="breadcrumb-item active">Add License</li>
+                                                                        </ol>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="col-lg-12">
+                                                        <div class="card">
+                                                                <div class="card-header bg-primary pb-2 pt-2">
+                                                                        <div class="d-flex justify-content-between">
+                                                                                <h4 class="card-title text-white mb-0 pt-2">Add Menu
+                                                                                        Service</h4>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                        <div id="suspectedAadhaar">
+                                                                                <form class="row g-3 needs-validation" novalidate
+                                                                                        id="validation-form" th:action="@{/addMenu}"
+                                                                                        th:object="${Menu}" method="POST">
+                                                                                        <div class="alert alert-success" role="alert"
+                                                                                                th:text="${success}" th:if="${success}"></div>
+                                                                                        <div class="alert alert-danger" role="alert"
+                                                                                                th:text="${error}" th:if="${error}"></div>
+
+
+
+
+                                                                                        <div class="col-md-4">
+                                                                                                <label for="validationCustom01" class="form-label">MENU
+                                                                                                        NAME </label> <input type="text" th:field="*{MENUNAME}"
+                                                                                                        class="form-control" id="MENUNAME" placeholder="MENUNAME"
+                                                                                                        required="true">
+                                                                                        </div>
+
+
+
+                                                                                        <div class="col-md-4">
+                                                                                                <label for="validationCustom01" class="form-label">MENU
+                                                                                                        DESC </label> <input type="text" th:field="*{MENUDESC}"
+                                                                                                        class="form-control" id="MENUDESC" placeholder="MENUDESC"
+                                                                                                        required="true">
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                                <button class="btn btn-primary mt-4 " type="submit" id="submit">Submit</button>
+                                                                                        </div>
+                                                                                </form>
+                                                                                
+                                                                                
+                                                                                
+                                                                                <div class="table-responsive table-card1 mt-4 mb-1"
+                                                                                        id="example2">
+                                                                                        <table id="example" class="table table-striped lusan"
+                                                                                                style="width: 100%">
+                                                                                                <thead class="alert-info">
+                                                                                                <tr class ="table-responsive table-card1 mt-4 mb-1" style="color: 100%">
+                                                                                                        <th>S.no</th>
+                                                                                                        <th>MENU NAME</th>
+                                                                                                <!--         <th>MENU DESCRIPTION</th> -->
+                                                                                                        <th>URL</th>                                                                                                
+                                                                                                        <th>STATUS</th>
+                                                                                                        <th>CREATION DATE</th>
+                                                                                                        <th>CREATED BY</th>                                                                                                        
+                                                                                                        <th>MENU ID</th>
+                                                                                                        <th>ACTION</th>
+                                                                                                        
+                                                                                                </tr>
+                                                                                        </thead>
+                                                                                        <tbody class="list form-check-all" id="tbody3">
+                                                                                                        <tr th:each="dataVal,iterator  : ${details}">
+                                                                                                                <td th:text="${iterator.index+1}"></td>                                        
+                                                                                                                <td class="reasons" th:text="${dataVal.MENUNAME}">MENU NAME</td>
+                                                                                                                <!-- <td class="reasons" th:text="${dataVal.MENUDESC}">DESCRIPTION</td> -->
+                                                                                                                <td class="reasons" th:text="${dataVal.URL_REPO}">URL</td>
+                                                                                                                <td class="nooftransaction">
+                                                                                                                                <span th:switch="${dataVal.STATUS}">
+                                                                                                                                        <span th:case="1">Active</span>
+                                                                                                                                        <span th:case="0">De-Active</span>
+                                                                                                                                </span>
+                                                                                                                        </td>                                                                                                        
+                                                                                                                <td class="reasons" th:text="${dataVal.CREATIONDATE}">CREATIONAL DATE</td>                                                                                                                
+                                                                                                                <td class="reasons" th:text="${dataVal.CREATIONBY}">CREATED BY</td>                                                                                                                                                                                
+                                                                                                                <td class="reasons" th:text="${dataVal.MENUID}">MENU ID</td>                                                                                                                                                                                                                                
+                                                                                                                <td><a class="btn btn-danger"
+                                                                                                                                th:href="@{/editBy/{MENUID}(MENUID=${dataVal.MENUID})}">EDIT</a></td>
+                                                                                                        </tr>
+                                                                                                </tbody>
+                                                                                        <tfoot class="alert-info">
+                                                                                                <tr>
+                                                                                                        <th>S.no</th>
+                                                                                                        <th>MENU NAME</th>
+                                                                                                        <!-- <th>MENU DESCRIPTION</th> -->
+                                                                                                        <th>URL</th>                                                                                                        
+                                                                                                        <th>STATUS</th>
+                                                                                                        <th>CREATION DATE</th>
+                                                                                                        <th>CREATED BY</th>                                                                                                                                                                                
+                                                                                                        <th>MENU ID</th>
+                                                                                                        <th>ACTION</th>
+                                                                                                        
+                                                                                                </tr>
+                                                                                        </tfoot>
+                                                                                </table>
+                                                                        </div>
+
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+
+                <div th:replace="fragments_others_footer" :: footer></div>
+
+        </div>
+
+
+        <button onclick="topFunction()" class="btn btn-danger btn-icon"
+                id="back-to-top">
+                <i class="ri-arrow-up-line"></i>
+        </button>
+        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/libs/feather-icons/feather.min.js"></script>
+        <script type='text/javascript'
+                src='assets/libs/flatpickr/flatpickr.min.js'></script>
+        <script src="assets/js/jquery-3.5.1.js"></script>
+        <script src="assets/js/jquery.dataTables.min.js"></script>
+        <script src="assets/js/dataTables.bootstrap5.min.js"></script>
+        <script type="text/javascript"
+                src="assets/js/dataTables.fixedHeader.min.js"></script>
+        <script type="text/javascript"
+                src="assets/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="assets/js/jszip.min.js"></script>
+        <script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+        <script src="assets/js/app.js"></script>
+
+<script type="text/javascript">
+                $(document).ready(
+                                function() {
+                                        $('#example').DataTable(
+                                                        {
+                                                                "pageLength" : 50,
+                                                                responsive : true,
+                                                                lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+                                                                                [ 50, 100, 200, 500, 'All' ], ],
+
+                                                                dom : 'Bfrtip',
+                                                                buttons : [ 'pageLength', 'csv', 'excel' ],
+
+                                                                fixedHeader : {
+                                                                        // header: true,
+                                                                        footer : true,
+                                                                },
+
+                                                        });
+                                });
+        </script>
+        
+        <script>
+                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                (function() {
+                        'use strict'
+
+                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                        var forms = document.querySelectorAll('.needs-validation')
+
+                        // Loop over them and prevent submission
+                        Array.prototype.slice.call(forms).forEach(function(form) {
+                                form.addEventListener('submit', function(event) {
+                                        if (!form.checkValidity()) {
+                                                event.preventDefault()
+                                                event.stopPropagation()
+                                        }
+
+                                        form.classList.add('was-validated')
+                                }, false)
+                        })
+                })()
+        </script>
+
+        
+
+</body>
+</html>

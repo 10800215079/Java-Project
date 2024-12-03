@@ -1,0 +1,789 @@
+<head th:replace="fragments_others_head2" :: head></head>
+<style>
+.modal-header {
+	padding: 5px
+}
+
+.modal-body table tr td:first-child {
+	display: none
+}
+
+.modal-body table tr th:first-child {
+	display: none
+}
+
+table.lusan tr td:nth-child(2) {
+	display: none
+}
+
+table.lusan tr th:nth-child(2) {
+	display: none
+}
+</style>
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header3" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dash board</a></li>
+										<li class="breadcrumb-item active">White List SSO</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">White List
+											SSO For Query Builder</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form class="row g-3 needs-validation" novalidate
+											id="sendOtpTrnForm">
+
+											<div class="alert alert-success" role="alert"
+												th:text="${success}" th:if="${success}"></div>
+											<div class="alert alert-danger" role="alert"
+												th:text="${error}" th:if="${error}"></div>
+
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">SSO
+													Id</label> <input type="text" class="form-control SSO_ID"
+													id="SSO_ID" placeholder="SSO_ID" name="SSO_ID" required>
+											</div>
+
+
+
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">IP</label>
+												<input type="text" class="form-control IP" id="IP"
+													placeholder="IP" name="IP" required>
+											</div>
+
+											<!-- <div class="d-flex align-items-start gap-3 mt-2 mb-4">
+												<button type="button"
+													class="btn btn-primary btn-label right ms-auto nexttab nexttab"
+													data-nexttab="pills-experience-tab" id="sendOtpTrnButt">
+													<i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2 aadhaarId "
+														th:value="${usersRoleMapping.aadhaarId}"></i>Submit
+												</button>
+
+											</div> -->
+
+											<div class="col-md-3">
+												<button class="btn btn-primary mt-4 submit" type="button"
+													id="sendOtpTrnButt">
+													<i class="aadhaarId"
+														th:value="${usersRoleMapping.aadhaarId}"></i>Submit
+												</button>
+											</div>
+
+
+											<div class="table-responsive">
+												<table id="resultTable"
+													class="table table-bordered table-striped table-responsive">
+
+												</table>
+											</div>
+
+										</form>
+
+
+										<div class="table-responsive table-card1 mt-4 mb-1"
+											id="example2">
+											<table id="example" class="table table-striped lusan"
+												style="width: 100%">
+												<thead class="alert-info">
+													<tr class="table-responsive table-card1 mt-4 mb-1"
+														style="color: 100%">
+														<th>S.no</th>
+														<th>SRNO</th>
+														<th>SSO Id</th>
+														<th>IP ADDRESS</th>
+														<th>CREATED DATE</th>
+														<th>CREATED BY</th>
+														<th>AADHAAR ID</th>
+														<th>TRANSACTION ID</th>
+														<th>STATUS</th>
+														<th>ACTION</th>
+
+													</tr>
+												</thead>
+												<tbody class="list form-check-all" id="tbody3">
+													<tr th:each="dataVal,iterator  : ${details}">
+														<td th:text="${iterator.index+1}"></td>
+														<td class="reasons" th:text="${dataVal.SRNO}">SR NO</td>
+														<td class="reasons" th:text="${dataVal.SSO_ID}">SSO
+															Id</td>
+														<td class="reasons" th:text="${dataVal.IP}">IP
+															ADDRESS</td>
+														<td class="reasons"
+															th:text="${#dates.format(dataVal.CREATED_DATE, 'dd-MM-yyyy')}">CREATED
+															DATE</td>
+														<td class="reasons" th:text="${dataVal.CREATED_BY}">CREATED
+															BY</td>
+														<td class="reasons" th:text="${dataVal.AADHHAR_ID}">AADHAAR
+															ID</td>
+														<td class="reasons" th:text="${dataVal.TRANSACTION_ID}">TRANSACTION
+															ID</td>
+
+														 <td class="nooftransaction"><span
+															th:switch="${dataVal.STATUS}"> <span th:case="1">Active</span>
+																<span th:case="0">De-Active</span>
+														</span></td> 
+
+														<td class="nooftransaction">
+														<span th:switch="${dataVal.STATUS}">
+															<span th:case="1"><!-- <button class="btn btn-danger" >De-Active</button> -->
+																	<a class="btn btn-danger" id="delete"
+																	 th:href="@{'/updateBySRNO/' + ${dataVal.SRNO} + '?status=1'}"
+																	onclick="return confirm(' You want to De-Active?');">De-Active</a>
+															</span> 
+															<span th:case="0"> <!-- <button class="btn btn-success" style="width: 95px">Active -->
+																	<a class="btn btn-success" id="delete"
+																	style="width: 95px"
+																	 th:href="@{'/updateBySRNO/' + ${dataVal.SRNO}}"
+																	onclick="return confirm(' You want to Active?');">Active</a>
+																	</button>
+															</span>
+														</span></td>
+
+														<!-- <td><a class="btn btn-danger" id="delete"
+															th:href="@{'/deleteBySRNO/' + ${dataVal.SRNO}}"
+															onclick="return confirm(' you want to delete?');">Delete</a></td> -->
+													</tr>
+												</tbody>
+												<tfoot class="alert-info">
+													<tr>
+														<th>S.no</th>
+														<th>SRNO</th>
+														<th>SSO Id</th>
+														<th>IP ADDRESS</th>
+														<th>CREATED DATE</th>
+														<th>CREATED BY</th>
+														<th>AADHAAR ID</th>
+														<th>TRANSACTION ID</th>
+														<th>STATUS</th>
+														<th>ACTION</th>
+
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- OTP Popup -->
+			<div class="modal fade" id="otpPopupP1" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+				data-backdrop="static">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header bg-primary">
+							<h5 class="modal-title text-white" id="exampleModalLongTitle"
+								th:value="${usersRoleMapping.aadhaarId}"
+								th:text="${#strings.repeat('X', usersRoleMapping.aadhaarId.length() - 4) + #strings.substring(usersRoleMapping.aadhaarId, usersRoleMapping.aadhaarId.length() - 4)}"></h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<form id="formOtp">
+
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="popupbox11">
+											<input type="checkbox" id="agree1" name="agree1" value="Bike">
+											<label for="agree1"> I hereby state that i have no
+												objection in authenticating myself with AADHAAR based
+												authentication system and consent to providing my AADHAAR
+												Number, and OTP for AADHAAR based Authentication. I also
+												give my explicit consent for accessing the mobile number and
+												email address from AADHAAR System. </label>
+										</div>
+										<div class="otpinputbox1">
+											<input type="text" id="otp" name="otp" maxlength="6"
+												style="display: none;" placeholder="OTP (Time-Based OTP)">
+											<label class="left10minutes" style="display: none;">Note
+												: AADHAAR OTP will be valid only for 10 minutes.</label><br> <label
+												class="opt2minutes" style="display: none;">Resend
+												OTP <span class="otp-countdown" id="timer-countdown">02:00</span>
+											</label>
+										</div>
+									</div>
+									<div class="flexbuttonOTP">
+										<button type="button" class="btn btn-primary" id="sendOTP1"
+											disabled>Send OTP</button>
+										<button type="button" class="btn btn-primary"
+											id="OTPvalidatebtn" style="display: none;">Validate
+											OTP</button>
+										<button type="button" class="btn btn-primary" id="resentOTP"
+											style="display: none;">ReSend OTP</button>
+										<button type="button" class="btn btn-primary cancel"
+											data-dismiss="modal">Cancel</button>
+										<input type="text" id="txn" name="txn" style="display: none;">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--  successfully Verified OTP -->
+			<!-- OTP Popup -->
+			<div class="modal fade" id="optverifedsuccessfully" tabindex="-1"
+				role="dialog" aria-labelledby="exampleModalCenterTitle"
+				aria-hidden="true" data-backdrop="static">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">OTP
+								Verified!</h5>
+							<button type="button" class="closeModel" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<form>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="popupbox11">
+											<p class="text-success" id="#OTPVerifiedMsg">SSO
+												whiteList Successfully.</p>
+										</div>
+
+									</div>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Duplicate IP -->
+			<div class="modal fade" id="duplicateIP" tabindex="-1"
+				role="dialog" aria-labelledby="exampleModalCenterTitle"
+				aria-hidden="true" data-backdrop="static">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Message !!
+								</h5>
+							<button type="button" class="closeModel" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<form>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="popupbox11">
+											<p class="text-success" id="#OTPVerifiedMsg">Duplicate IP address. Please choose a different one.</p>
+										</div>
+
+									</div>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#example').DataTable(
+							{
+								"pageLength" : 50,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+
+							});
+				});
+	</script>
+<script>
+    var table = '';
+    $('#sendOtpTrnButt').click(function (event) {
+    	debugger;
+        event.preventDefault();
+
+        var ipaddress = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+        var uuid = "444240666389045";
+        var sso = $('.SSO_ID').val();
+        var ip = $('.IP').val().trim();
+
+        if (sso.trim() === '' || ip.trim() === '') {
+            alert('SSO ID and IP are required fields. Please fill them in.');
+            return;
+        } else if (sso.trim() === '') {
+            alert('SSO ID is a required field. Please fill it in.');
+            return;
+        } else if (ip.trim() === '') {
+            alert('IP is a required field. Please fill it in.');
+            return;
+        } else if (!ipaddress.test(ip)) {
+            alert("IP address is invalid.");
+            return;
+        }
+
+        // Check for duplicate IP
+        $.ajax({
+            type: 'POST',
+            url: '/checkDuplicateIP',
+            data: { 
+            	IP: ip 
+            	},
+            success: function (response) {
+            	debugger;
+            	 if (response.errorCode === 'CONFLICT') {
+            	        //alert('Duplicate IP address. Please choose a different one.');
+            	        //errorMessage
+            		 event.preventDefault();
+                     $('#duplicateIP').modal('show');
+                     return;
+            	    } 
+                else {
+                    // Continue with your main AJAX call
+                    $('#otpPopupP1').modal('show');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WhiteListSubAua',
+                        data: {
+                            UUID: uuid,
+                            SSO_ID: sso,
+                            IP: ip
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            $('#resultTable').html('');
+                            const newHeaders = [];
+                            response.columns.forEach(function (columnName) {
+                                var th = $('<th>' + columnName + '</th>');
+                                newHeaders.push(th);
+                            });
+                            $('#resultTable thead tr').append(newHeaders);
+
+                            if (table) {
+                                table.destroy();
+                            }
+                            const columns = response.columns.map(function (columnName) {
+                                return {
+                                    data: columnName,
+                                    title: columnName
+                                };
+                            });
+                            $('#resultTable thead tr').html('');
+                            table = $('#resultTable').DataTable({
+                                columns: columns
+                            });
+                            table.rows.add(response.data).draw();
+                        },
+                        error: function (xhr, status, error) {
+                            $('#throwError').modal('show');
+                            console.log('Error: ' + error);
+                        }
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+            	debugger;
+                alert('Error checking duplicate IP ! ' + error);
+            }
+        });
+    });
+
+    // Rest of the code remains unchanged
+</script>
+
+
+<!-- 	<script>
+	var table = '';
+    $('#sendOtpTrnButt').click(function() {
+    	debugger;
+    	var ipaddress = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+    	var uuid = "444240666389045";
+        var sso =  $('.SSO_ID').val(); 
+        var ip =  $('.IP').val();
+        
+        if (sso.trim() === '' || ip.trim() === '') {
+            alert('SSO ID and IP are required fields. Please fill them in.');
+            return; 
+        }
+        else if (sso.trim() === '') {
+            alert('SSO ID is required field. Please fill them in.');
+            return; 
+        }
+        else if (ip.trim() === '') {
+            alert('IP is required field. Please fill them in.');
+            return; 
+        }
+        else if (ipaddress.test(ip)) 
+		{
+        	
+		}
+		else
+		{
+			alert("ip address is invalid.")
+			return;
+		}
+      
+        event.preventDefault();
+        $('#otpPopupP1').modal('show');
+            return;
+         
+        
+        $.ajax({
+            type: 'POST',
+            url: '/WhiteListSubAua', 
+            data: {
+                UUID: uuid,
+                SSO_ID: sso,
+                IP: ip
+            },
+            dataType: 'json',
+            success: function(response) {
+				$('#resultTable').html('');
+                const newHeaders = [];
+                response.columns.forEach(function (columnName) {
+                	  var th = $('<th>' + columnName + '</th>');
+                	  newHeaders.push(th);
+                	});
+           	$('#resultTable thead tr').append(newHeaders);
+           
+   			if(table){
+				table.destroy();
+			}
+			const columns = response.columns.map(function (columnName) {
+             	  return { data: columnName, title: columnName };
+             	});
+			$('#resultTable thead tr').html('');
+              table =  	  $('#resultTable').DataTable({columns: columns}); 	
+              table.rows.add(response.data).draw();
+            },
+            error: function(xhr, status, error) {
+            	$('#throwError').modal('show');
+                console.log('Error: ' + error);
+            }
+        });
+    });
+                 
+    	$(".closeModel1").click(function() {
+				$('#throwError').modal('hide');
+			});
+
+	    $("#generateOTP").click(function(e) {
+	        e.preventDefault(); // Prevent the default behavior of the button
+	        // Hide the "Generate OTP" button and the Aadhaar input
+	        $("#generateOTP, #aadhaar").hide();
+
+	        // Show the OTP input and "Submit OTP" button
+	        $("#otpFields, #submitOTP").show();
+
+	        // Generate the initial OTP and start the timer
+	        generateOTP();
+	    });
+
+	    $("#regenerateOTP").click(function() {
+	        $("#regenerateOTP").hide();
+	        generateOTP();
+	        $("#generateOTP, #aadhaar").hide();
+
+	        // Show the OTP input and "Submit OTP" button
+	        $("#otpFields, #submitOTP").show();
+	    });
+
+	    $("#submitOTP").click(function() {
+	    	
+	        var enteredOTP = $("#otp").val();
+	        if (enteredOTP === "123456") {
+	            // Valid OTP, close the modal
+	            clearInterval(otpTimer);
+	            $("#generateOTP, #aadhaar").show(); 
+		        $("#otpFields, #submitOTP").hide();
+		        $("#regenerateOTP").hide();
+	            $("#otpModal").modal("hide");
+	        } else {
+	            // Invalid OTP, show an error message or take action
+	            alert("Invalid OTP. Please try again.");
+	        }
+
+	    });
+
+
+	</script> -->
+
+	<script>
+		$(document).ready(function() {
+			 $(".openModel").click(() => {
+				 var approvalDateInput = $("#ApprovalDate");
+				
+				 if(querys.val === ""){
+					 alert("Please Enter a valid Query");
+						event.preventDefault();
+					 }
+				 else {
+					 $('#otpPopupP1').modal('show');
+				 }
+				
+			 });
+			
+			$(".close").click(function() {
+				$('#otpPopupP1').modal('hide');
+				 $("#otp").hide();
+				$("#resentOTP").hide();
+				$("#OTPvalidatebtn").hide();
+				$("#sendOTP1").show();
+				$(".left10minutes").hide();
+				$(".opt2minutes").hide();
+				var checkbox = $("#agree1");
+				if (checkbox.length > 0) {
+					if (checkbox.is(":checked")) {
+						checkbox.prop("checked", false);
+						$('#sendOTP1').prop('disabled', true);
+					}
+				}
+			});
+			
+			
+			
+			$(".closeModel").click(function() {
+				$('#optverifedsuccessfully').modal('hide');
+				location.reload();
+			});
+			
+			$(".cancel").click(function() {
+				var checkbox = $("#agree1");
+				$("#otp").hide();
+				$("#resentOTP").hide();
+				$("#OTPvalidatebtn").hide();
+				$("#sendOTP1").show();
+				$(".left10minutes").hide();
+				$(".opt2minutes").hide();
+				$("#agree1").prop("disabled", false);
+				if (checkbox.length > 0) {
+					if (checkbox.is(":checked")) {
+						checkbox.prop("checked", false);
+						 $('#sendOTP1').prop('disabled', true);
+					}
+				}
+				$('#otpPopupP1').modal('hide');
+			});
+			
+			 $('#agree1').click(function () {
+				 
+		            if ($(this).is(':checked')) {
+		                $('#sendOTP1').prop('disabled', false);
+		            }
+		            else {
+		                $('#sendOTP1').prop('disabled', true);
+		            }
+		        });
+		        // send otp show box
+		        $('#sendOTP1').click(function () {
+		        	event.preventDefault();
+		        	generateOTP();
+		        	 $("#otp").show();
+		             $("#resentOTP").show();
+		             $("#OTPvalidatebtn").show();
+		             $("#sendOTP1").hide();
+		             $(".left10minutes").show();
+		             $(".opt2minutes").show();
+		             $("#agree1").prop("disabled", true);
+		             startOTPTimer();
+		             
+		        });
+		        //Resend OTP
+		        $('#resentOTP').click(function () {
+		        	event.preventDefault();
+		        	generateOTP();
+		        	
+
+		        });
+		        
+		        
+		        $('#OTPvalidatebtn').click(function () {
+		        	debugger;
+					var otpValue = $("#otp").val();
+					if (otpValue === "" || !$.isNumeric(otpValue)) {
+						alert("Please enter a valid number OTP.");
+					} else {
+				    event.preventDefault();
+					debugger     
+		        	validateOtp();
+					}
+		        	
+		        	
+		        });
+		        
+		     		        
+		        function generateOTP() {
+			    	debugger;
+			    	var AADHHAR_ID = "444240666389045";
+			    	$.ajax({
+			            type: 'GET', 
+			            url: '/otpGeneration?UUID=' + AADHHAR_ID, 
+			            success: function(response) {
+			                var newOTP = response.otp; 
+			                $("#otp").val(newOTP);
+			                startOTPTimer();
+			                alert('OTP sent Successfully');
+			                event.preventDefault();
+			            },
+			            error: function(xhr, status, error) {
+			            	var checkbox = $("#agree1");
+							$("#otp").hide();
+							$("#resentOTP").hide();
+							$("#OTPvalidatebtn").hide();
+							$("#sendOTP1").show();
+							$(".left10minutes").hide();
+							$(".opt2minutes").hide();
+							$("#agree1").prop("disabled", false);
+							if (checkbox.length > 0) {
+								if (checkbox.is(":checked")) {
+									checkbox.prop("checked", false);
+									 $('#sendOTP1').prop('disabled', true);
+								}
+							}
+			            	$('#otpPopupP1').modal('hide');
+			            	alert('Error: Uable to sent OTP');
+			            	
+			                console.log('Error: ' + error);
+			            }
+			        });
+			 
+			    }
+		        
+			    var otpTimer;
+			    var timerDuration = 2 * 60; // 2 minutes
+			    
+			    function startOTPTimer() {
+			        var timerDisplay = $('.otp-countdown');
+			        var remainingTime = timerDuration;
+			        otpTimer = setInterval(function() {
+			            var minutes = Math.floor(remainingTime / 60);
+			            var seconds = remainingTime % 60;
+			            var display = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+			            timerDisplay.text(display);
+			            remainingTime--;
+
+			            if (remainingTime < 0) {
+			                clearInterval(otpTimer);
+			                $("#regenerateOTP").show();
+			                $("#otpFields, #submitOTP").hide();
+			            }
+			        }, 1000);
+			    }
+			    
+		 function validateOtp() {
+				  debugger;
+						var formData = {
+								otp: $("#otp").val(),
+								aadhaarId: $('#exampleModalLongTitle').attr("value"),
+								ssoId: $('.SSO_ID').val().trim(),
+							    ip: $('.IP').val().trim(),												
+						};
+					$.ajax({
+						url: '/otpAuthenticationForWhiteListSSO', // Replace with the actual URL 
+						method: 'POST',
+						data: JSON.stringify(formData), // Convert the object to JSON 
+						contentType: 'application/json', // Set the content type
+						success: function (response) {
+							$('#otpPopupP1').modal('hide');
+							$('#optverifedsuccessfully').modal('show');
+						},
+						 error: function (xhr, status, error) {
+					         debugger; 
+					         if (xhr.responseText === 'OTP is Not Valid.'){
+					            	alert('OTP is Not Valid.');
+					            }
+					         else {
+					                alert(xhr.responseText); // Display the error message received from the server
+					                $("#otpPopupP1").hide();
+					                $('.modal-backdrop').hide();
+					                location.reload();
+					            } 
+							
+					        }
+					});
+				};
+				reader.onerror = function (error) {
+					console.log('Error: ', error);
+				};
+				// Read the file as a Data URL
+				reader.readAsDataURL(file);
+			});
+	
+	</script>
+
+
+
+</body>
+</html>

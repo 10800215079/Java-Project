@@ -1,0 +1,962 @@
+
+<head th:replace="fragments_others_head" :: head></head>
+<style>
+.modal-header{padding: 5px}
+
+ table.lusan tr td:nth-child(5){display:none}
+ table.lusan tr th:nth-child(5){display:none}
+ .classNewRight{display:flex; background-color: #F01;}
+ .rightBtn{float: right;}
+
+</style>
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active"> IP Whitelist Request</li>
+									</ol>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="row">
+					
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">IP Whitelist Request</h4>
+									</div>
+								</div> <br>
+								<div class="card-body">
+									<div id="ipWhiteListRequest classNewRight" >
+										<form class="needs-validation" id="formid" novalidate th:action="@{/getRequest}"
+											method="GET">
+
+											<div class="row g-3 mt-0 mb-3  alert-danger">
+												<div class="col-xxl-4 col-sm-5">
+													<select class="form-select mb-3"
+														aria-label="Default select example" id="subAuaCode"
+														name="department" required>
+														<option selected="" disabled="" value="">Select Department</option>
+														<option th:selected="${session.subAuaCode == 'ALL'}" th:value="ALL">ALL</option>
+														<option th:each="subAuaList :${subAuaList}" th:value="${subAuaList.ID}" 
+														 th:selected="${subAuaList.ID == session.subAuaCode}" th:text="${subAuaList.NAME}"></option>
+													</select>
+												</div>
+												
+												<div class="col-xxl-3 col-sm-5">
+													<select class="form-select mb-3" id="status1" name="status"
+														required>
+														<option selected disabled value="">Select Status</option>
+														<option th:selected="${session.status1 == 0}" value="0">All</option>
+														<option th:selected="${session.status1 == 1}" value="1">APPROVED</option>
+														<option th:selected="${session.status1 == 3}" value="3">REJECTED</option>
+														<option th:selected="${session.status1 == 2}" value="2">PENDING</option>
+													</select>
+
+
+												</div>
+												<div id="myForm" class="col-xxl-1 col-sm-4">
+													<div>
+														<input type="submit" id="submit"
+															class="btn btn-primary w-100" value="Submit" />
+													</div>
+												</div>
+												<div class="col-xxl-4 col-sm-4 text-sm-end float-right ">
+                                                <div>
+                                                    <button type="button" onclick="submitSelectedItems()" 
+                                                    class="btn btn-danger fs-14" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><i class="ri-file-download-line align-bottom me-2">	
+													</i> Send Mail To Sewadwar</button>
+                                                </div>
+                                            </div>
+											</div>
+										</form>
+										
+									</div>
+								</div>
+								
+								
+						<div class="alert alert-primary" role="alert"
+												th:text="${success }" th:if="${success}" th:value="${subAuaCode}" ></div>
+											<div class="alert alert-danger" role="alert"
+												th:text="${error}" th:if="${error}"></div>
+						<div class="table-responsive table-card1 mt-1 mb-1">
+						
+							<table id="table5" class="table table-striped lusan"
+								style="width: 100%">
+							<thead class="alert-info">
+								<tr>
+									<th>S.NO</th>
+									<th>SEND MAIL</th>
+									<th>ACTION</th>
+									<th>IS MAIL SENT</th>
+									<th>SUB AUA NAME</th>
+									<th>SUB AUA CODE</th>
+									<th>STATUS</th>
+									<th>APP NAME</th>
+									<th>SERVICE TYPE</th>
+									<th>INSERT DATE</th>
+									<th>IP</th>
+									<th>IP BELONGS TO</th>
+									<th>AADHAAR ACT</th>
+									<th>SERVICE URL TYPE</th>
+									<th>APPLICATION URL</th>
+									<th>SCHEME NAME/PURPOSE</th>
+									<th>CREATED BY</th>
+									<th>REMARK</th>
+									
+									<th>GAZETTE NOTIFICATION PUBLISHED</th>
+									<th>GAZETTE NOTIFICATION  DOC</th>		
+									<th>CONSENT DOC</th>
+									<th>SECURITY AUDIT DOCUMENT</th>
+									<th>Certificate of 'No Change'</th>
+								</tr>
+							</thead>
+							
+								<tbody class="list form-check-all">
+									<tr th:each="dataVal : ${details}">
+										<td class="srNo"  th:text="${dataVal.id}">S.no</td>
+										<td>
+											<input type="checkbox" onchange="handleCheckboxChange(this)" th:if="${dataVal.status == 1 and dataVal.serviceUrlType == 'Sewa Dwar'}">
+										</td>
+										<td>
+											<div class="d-flex">
+												<a class="edit-button btn btn-success btn-sm me-2" data-toggle="modal" data-target="#approveModal"
+													th:onclick="|confirmApprove('${dataVal.id}')|" th:if="${dataVal.status != 3 and dataVal.status != 1}">Approve</a>
+												<a class="edit-button btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal"
+													th:onclick="|openRejectModel('${dataVal.id}')|"
+													th:if="${dataVal.status != 3 and dataVal.status != 1}">Reject</a>
+												<!--<a class="edit-button btn btn-success btn-sm me-2" data-toggle="modal" data-target="#approveModal"
+													 th:if="${dataVal.status == 3 or dataVal.status == 1}"
+													disabled>Approve</a>
+												<a class="edit-button btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal"
+													 th:if="${dataVal.status == 3 or dataVal.status == 1}"
+													disabled>Reject</a>-->
+										
+											</div>
+										</td>
+
+										 <td class="nooftransaction"><span th:switch="${dataVal.isMailSent}"> <span th:case="1">YES</span> <span
+													th:case="0">NO</span></td>
+										<td class="nooftransaction" th:text="${dataVal.subAUAName}">SUB AUA NAME</td>
+										<td class="nooftransaction subauacode"  th:text="${dataVal.subAUACode}">SUB AUA CODE</td>
+										<!--<td class="nooftransaction"><span th:switch="${dataVal.status}"> <span th:case="1"  class="text-success">Approved</span>
+												<span th:case="0" class="text-danger">De-Active</span> 
+												<span th:case="2" class="text-warning">Pending</span>
+												<span th:case="3" class="text-danger">Rejected</span>
+										</td>-->
+										
+										<td class="nooftransaction"><span th:switch="${dataVal.status}">
+															<span th:case="0" class="text-danger">De-Active<span th:switch="${dataVal.currentStatus}">
+																	<span th:case="0" class="text-danger">(Deactive)</span>
+																	<span th:case="1" class="text-success">(Active)</span>
+																	<!-- Add additional cases as needed -->
+																</span></span>
+															<span th:case="1" class="text-success">Approved <span th:switch="${dataVal.currentStatus}">
+																	<span th:case="0" class="text-danger">(Deactive)</span>
+																	<span th:case="1" class="text-success">(Active)</span>
+																	<!-- Add additional cases as needed -->
+																</span></span>
+															<span th:case="2" class="text-warning">Pending <span th:switch="${dataVal.currentStatus}">
+																	<span th:case="0" class="text-danger">(Deactive)</span>
+																	<span th:case="1" class="text-success">(Active)</span>
+																	<!-- Add additional cases as needed -->
+																</span></span>
+															<span th:case="3" class="text-danger">Rejected <span th:switch="${dataVal.currentStatus}">
+																	<span th:case="0" class="text-danger">(Deactive)</span>
+																	<span th:case="1" class="text-success">(Active)</span>
+																	<!-- Add additional cases as needed -->
+																</span></span>
+													</span></td>
+										
+										
+										<td class="nooftransaction appname" th:text="${dataVal.appName}">APP
+											NAME</td>
+										<td class="nooftransaction" th:text="${dataVal.requestType}">SERVICE TYPE</td>
+										<td class="nooftransaction" th:text="${#dates.format(dataVal.createdDate, 'dd-MM-yyyy')}">DATE</td>
+										<td class="nooftransaction ipaddress" th:text="${dataVal.ipAddress}">IP</td>
+										<td class="nooftransaction" th:text="${dataVal.ipBelongsTo}">IP BELONGS TO</td>
+										<td class="nooftransaction" th:text="${dataVal.ACTOFAADHAAR}">AADHAAR ACT</td>
+										<td class="nooftransaction" th:text="${dataVal.serviceUrlType}">URL</td>
+										<td class="nooftransaction" th:text="${dataVal.applicationUrl}">APPLICATION URL</td>
+										<td class="nooftransaction" th:text="${dataVal.schemeName}">SCHEME NAME/PURPOSE</td>
+										<td class="nooftransaction" th:text="${dataVal.createdBy}">CREATED BY</td>
+										<td class="nooftransaction" th:text="${dataVal.reason}">REMARK</td>
+										
+										<td class="nooftransaction"><span th:switch="${dataVal.isDocPublished}"> <span th:case="1">YES</span> <span
+													th:case="0">NO</span>
+											</span></td>
+										<td><span th:switch="${dataVal.isDocPublished}">
+												<span th:case="1"> <a class="download-button btn btn-primary me-2 btn-sm" data-toggle="modal" data-target="#exampleModal"
+														th:onclick="|downloadPublishedDoc('${dataVal.id}')|">
+														<span class="ri-download-line"></span>
+													</a>
+												</span>
+										</span></td>
+										<!--<td class="nooftransaction"><span th:switch="${dataVal.isConsentTaken}"> <span th:case="1">YES</span>
+												<span th:case="0">NO</span>
+											</span></td>-->
+										<td><a class="download-button btn btn-primary me-2 btn-sm"
+														data-toggle="modal" data-target="#exampleModal"
+														th:onclick="|downloadImage('${dataVal.id}')|"><i class="ri-download-line"> <i></i></i></a></td>
+														
+										<td><a class="download-button btn btn-primary me-2 btn-sm" data-toggle="modal" data-target="#exampleModal"
+														th:onclick="|downloadAuditDocument('${dataVal.id}')|"><i class="ri-download-line"> <i></i></i></a></td>
+														
+										<td><a class="download-button btn btn-primary me-2 btn-sm" data-toggle="modal" data-target="#exampleModal"
+														th:onclick="|downloadCertificateForNoChange('${dataVal.id}')|"><i class="ri-download-line"> <i></i></i></a></td>
+
+									</tr>
+								</tbody>
+
+							
+							<tfoot class="alert-info">
+								<tr>
+									<th>S.NO</th>
+									<th>SEND MAIL</th>
+									<th>ACTION</th>
+									<th>IS MAIL SENT</th>
+									<th>SUB AUA NAME</th>
+									<th>SUB AUA CODE</th>
+									<th>STATUS</th>
+									<th>APP NAME</th>
+									<th>SERVICE TYPE</th>
+									<th>INSERT DATE</th>
+									<th>IP</th>
+									<th>IP BELONGS TO</th>
+									<th>AADHAAR ACT</th>
+									<th>SERVICE URL TYPE</th>
+									<th>APPLICATION URL</th>
+									<th>SCHEME NAME/PURPOSE</th>
+									<th>CREATED BY</th>
+									<th>REMARK</th>
+									<th>GAZETTE NOTIFICATION PUBLISHED</th>
+									<th>PUBLISHED DOC</th>
+									<!--<th>CONSENT</th>-->
+									<th>GAZETTE NOTIFICATION DOC</th>
+									<th>SECURITY AUDIT DOCUMENT</th>
+									<th>Certificate of 'No Change'</th>
+									
+								</tr>
+							</tfoot>
+						</table>
+						
+					</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+	
+	
+	<div class="modal fade" id="optverifedsuccessfully" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title text-white " id="exampleModalLongTitle">Reason</h5>
+                <button type="button" class="closeModel" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <textarea id="myTextarea" rows="5" cols="65"></textarea>
+                        </div>
+
+                    </div>
+					<button type="button" id="submitButton"  class="btn btn-primary">Submit</button>
+					<button type="button"  class="closeModel btn btn-secondary">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+	 	
+		<div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="approveModalLabel">Confirm Approval</h5>
+						<button type="button" class="closeApprovedModal" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						Are you sure you want to approve the request?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary closeApprovedModal" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" id="confirmApproveBtn">Yes, Approve</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	
+
+ <div id="loader" style="border: 8px solid #007bff; border-radius: 50%; width: 100px; height: 100px; animation: spin 2s linear infinite; position: absolute; top: 50%; left: 60%; transform: translate(-50%, -50%); display: none;"></div> 
+
+<div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header pt-3 pb-2 alert-danger">
+        <h5 class="modal-title " id="emailModalLabel">Compose Email</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- To -->
+        <div class="mb-3">
+          <label for="inputEmail" class="form-label">To:</label>
+          <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+        </div>
+        <!-- CC -->
+        <div class="mb-3">
+    <label for="inputCC" class="form-label">CC:</label>
+    <!-- Replace input with textarea -->
+    <textarea class="form-control" id="inputCC" placeholder="Enter email"></textarea>
+</div>
+        <!-- Subject -->
+        <div class="mb-3">
+          <label for="inputSubject" class="form-label">Subject:</label>
+          <input type="text" class="form-control" id="inputSubject" placeholder="Enter subject">
+        </div>
+        <!-- Mail Body -->
+        <div class="form-group mt-3" id = "mailBody">
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="sendMail()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="otpPopupP1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle" >XXXXXXXX5845</h5>
+                <button type="button" class="cancel" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="formOtp">
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="popupbox11">
+                                <input type="checkbox" id="agree1" name="agree1" value="Bike">
+                                <label for="agree1">  I hereby state that i have no objection in authenticating myself with AADHAAR based authentication system and consent to providing my AADHAAR Number, and OTP for AADHAAR based Authentication. I also give my explicit consent for accessing the mobile number and email address from AADHAAR System. </label>
+                            </div>
+                            <div class="otpinputbox1">
+                                <input type="text" id="otp" name="otp" maxlength="6" style="display: none;" placeholder="OTP (Time-Based OTP)">
+                                <label class="left10minutes" style="display: none;">Note : AADHAAR OTP will be valid only for 10 minutes.</label><br>
+                                <label class="opt2minutes" style="display: none;">Resend OTP <span class="otp-countdown" id="timer-countdown">02:00</span></label>
+                            </div>
+                        </div>
+                        <div class="flexbuttonOTP">
+                            <button type="button" class="btn btn-primary" id="sendOTP1" disabled>Send OTP</button>
+                            <button type="button" class="btn btn-primary" id="OTPvalidatebtn" style="display: none;">Validate OTP</button>
+                            <button type="button" class="btn btn-primary" id="resentOTP" style="display: none;">ReSend OTP</button>
+                            <button type="button" class="btn btn-primary cancel" data-dismiss="modal">Cancel</button>
+                           <input type="text" id="txn" name="txn" style="display: none;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+
+	<script>
+		
+	    var id = 0;
+		function confirmApprove(itemId) {
+			// Show the modal
+			id = itemId;
+			$('#otpPopupP1').modal('show');
+	
+			// Set up event listener for the "Yes, Approve" button
+			$('#confirmApproveBtn').on('click', function () {
+				// Call the method to approve with the item ID
+				openApproveModel(itemId);
+	
+				// Hide the modal after approval
+				$('#approveModal').modal('hide');
+	
+				// Remove the event listener to prevent memory leaks
+				$(this).off('click');
+			});
+		}
+	</script>
+	
+	<script>
+
+		
+        $('#submitButton').click(function() {
+            event.preventDefault();
+            debugger;
+            var id = $('#exampleModalLongTitle').attr('value');
+			var reason = $('#myTextarea').val();
+			
+            $.ajax({
+                type: 'POST',
+                url: '/Authmis/rejectRequest?id=' + id + '&reason=' + reason,
+                success: function(response) {
+                   alert("Request has been Rejected Succesfully");
+                   location.reload();
+                },
+                error: function(xhr, status, error) {
+                    
+                }
+            });
+        });
+   
+	</script>
+
+	<script>
+	  var selectedItems = [];
+
+		function handleCheckboxChange(checkbox) {
+			var row = checkbox.closest('tr');
+			var subAuaCode = row.querySelector('.subauacode').textContent;
+			var appName = row.querySelector('.appname').textContent;
+			var ipAddress = row.querySelector('.ipaddress').textContent;
+			var srNo = row.querySelector('.srNo').textContent;
+			
+
+			var item = {
+				subAuaCode: subAuaCode,
+				appName: appName,
+				ipAddress: ipAddress,
+				srNo: srNo
+			};
+
+			if (checkbox.checked) {
+				selectedItems.push(item);
+			} else {
+				selectedItems = selectedItems.filter(function (selectedItem) {
+					return !(selectedItem.subAuaCode === item.subAuaCode && selectedItem.appName === item.appName && selectedItem.ipAddress === item.ipAddress);
+				});
+			}
+
+			console.log(selectedItems); // Do something with the selected items
+		}
+		
+		let apiResponse;
+		
+		function submitSelectedItems() {
+        // Make an AJAX call to send selectedItems to the server
+        if (!selectedItems || selectedItems.length === 0) {
+				alert('Please select Request to send Mail to sewadwar');
+				return;
+		}
+        
+        
+        $.ajax({
+            type: "POST",
+            url: "/sendMailToSewadwar",
+            contentType: "application/json",
+            data: JSON.stringify(selectedItems),
+            success: function(response) {
+				
+				apiResponse = response;
+				$('#inputEmail').val(response.to);
+				$('#inputCC').val(response.toCC);
+				$('#inputSubject').val(response.subject);
+				//$('#inputMailBody').val(response.mailBody);
+				$('#mailBody').empty();
+				$('#mailBody').append(response.mailBody),
+				$('#emailModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+            }
+        });
+    }
+		
+	function downloadPublishedDoc(id) {
+		debugger;
+		console.log(id)			
+				$.ajax({
+					type : 'GET',
+					url : '/Authmis/downloadPublishedDocument/'					
+							+ id,
+					success : function(data) {
+						debugger;
+						var base64Data = data.publishedDoc;
+						
+						if(data.publishedDoc) {
+
+							// Create a Blob from the Base64 data
+							var byteCharacters = atob(base64Data);
+							var byteNumbers = new Array(byteCharacters.length);
+							for (var i = 0; i < byteCharacters.length; i++) {
+								byteNumbers[i] = byteCharacters.charCodeAt(i);
+							}
+							var byteArray = new Uint8Array(byteNumbers);
+							var blob = new Blob([ byteArray ], {
+								type : 'application/pdf'
+							});
+
+							// Create a download link
+							var link = document.createElement('a');
+							link.href = window.URL.createObjectURL(blob);
+							link.download = 'Published Doc.pdf'; // Specify the desired file name
+							link.click();
+						}
+						else{
+							alert("File not Published for this SUBAUA and IP");
+						}
+
+					},
+					error : function(error) {
+						debugger;
+						// Handle the error
+						console.error('Error downloading document:', error);
+					}
+				});
+			 
+		}
+	
+	function sendMail(){
+		 $.ajax({
+            type: "POST",
+            url: "/sendMail",
+            contentType: "application/json",
+            data: JSON.stringify(apiResponse),
+            success: function(response) {
+				
+				alert(response)
+				$('#emailModal').modal('hide');
+				location.reload();
+            },
+            error: function(xhr, status, error) {
+               alert("Unable to sent Mail to sewa Dwar. Please Try Again Later")
+            }
+        });
+	} 
+	
+	function downloadImage(id) {
+	    debugger;
+	    console.log(id);
+	    $.ajax({
+	        type: 'GET',
+	        url: '/Authmis/downloadPublishedImages/' + id,
+	        success: function(data) {
+	            debugger;
+	            var base64Data = data.consentDocument;
+				
+	            if(data.consentDocument){
+	            	
+	            // Convert base64 string to blob
+	            var byteCharacters = atob(base64Data);
+	            var byteNumbers = new Array(byteCharacters.length);
+	            for (var i = 0; i < byteCharacters.length; i++) {
+	                byteNumbers[i] = byteCharacters.charCodeAt(i);
+	            }
+	            var byteArray = new Uint8Array(byteNumbers);
+	            var blob = new Blob([byteArray], {
+	                type: 'image/jpeg' // Adjust type based on your image format
+	            });
+
+	            // Create a download link
+	            var link = document.createElement('a');
+	            link.href = window.URL.createObjectURL(blob);
+	            link.download = 'Published_Image.jpg'; // Specify the desired file name
+	            link.click();
+	            }
+	            
+	            else{
+	            	 alert("Image not published for this SUBAUA and IP");
+	            }
+	        },
+	        error: function(error) {
+	            debugger;
+	            // Handle the error
+	            console.error('Error downloading image:', error);
+	           
+	        }
+	    });
+	}
+	
+	function openApproveModel(id){
+		    event.preventDefault();
+			
+            $.ajax({
+                type: 'POST',
+                url: '/approveRequest?id=' + id,
+                success: function(response) {
+                   alert("Request has been Approved Succesfully");
+                   location.reload();
+                },
+                error: function(xhr, status, error) {
+                    
+                }
+            });
+	}
+	
+	$(".closeApprovedModal").click(function() {
+				$('#approveModal').modal('hide');
+				//location.reload();
+			});
+	
+	function openRejectModel(id) {
+		$('#exampleModalLongTitle').attr('value', id);
+        $('#optverifedsuccessfully').modal('show');
+    }
+    
+    $(".closeModel").click(function() {
+				$('#optverifedsuccessfully').modal('hide');
+				location.reload();
+			});
+
+	</script>
+
+
+	<script type="text/javascript">
+		var table = '';
+		$(document).ready(
+				function() {					
+					table = $('#table5').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									header : true,
+									footer : true,
+								}
+							});
+				});
+
+			</script>
+			
+			
+
+	<script>
+		(function() {
+			'use strict'
+
+			var forms = document.querySelectorAll('.needs-validation')
+
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+
+	
+	<script>
+	 var col2=  $('#subAuaCode option').length;
+	  console.log(col2);
+	  if(col2==2)
+		{
+		 jQuery('#subAuaCode').children('option[value="ALL"]').remove();
+		// jQuery('#subAuaCode').val("DOIT"); 
+		}
+	
+		if(col2==3)
+			{
+			 jQuery('#subAuaCode').children('option[value="ALL"]').remove();
+			// jQuery('#subAuaCode').val("DOIT"); 
+			}
+	  </script>
+	  
+	  
+	  <script>
+		  
+		  $('#agree1').click(function () {
+				 
+		            if ($(this).is(':checked')) {
+		                $('#sendOTP1').prop('disabled', false);
+		            }
+		            else {
+		                $('#sendOTP1').prop('disabled', true);
+		            }
+		        });
+		        
+		        $(".closeModel").click(function () {
+						$('#optverifedsuccessfully').modal('hide');
+						location.reload();
+					});
+			
+			$(".cancel").click(function() {
+				var checkbox = $("#agree1");
+				$("#otp").hide();
+				$("#resentOTP").hide();
+				$("#OTPvalidatebtn").hide();
+				$("#sendOTP1").show();
+				$(".left10minutes").hide();
+				$(".opt2minutes").hide();
+				$("#agree1").prop("disabled", false);
+				if (checkbox.length > 0) {
+					if (checkbox.is(":checked")) {
+						checkbox.prop("checked", false);
+						 $('#sendOTP1').prop('disabled', true);
+					}
+				}
+				$('#otpPopupP1').modal('hide');
+			});
+			
+			$('#sendOTP1').click(function () {
+		        	event.preventDefault();
+		        	generateOTP();
+		        	 $("#otp").show();
+		             $("#resentOTP").show();
+		             $("#OTPvalidatebtn").show();
+		             $("#sendOTP1").hide();
+		             $(".left10minutes").show();
+		             $(".opt2minutes").show();
+		             $("#agree1").prop("disabled", true);
+		             startOTPTimer();
+		             
+		        });
+		        //Resend OTP
+		        $('#resentOTP').click(function () {
+		        	event.preventDefault();
+		        	generateOTP();
+		        });
+		        
+
+				 var otpTimer;
+					var timerDuration = 2 * 60; // 2 minutes
+				
+					function startOTPTimer() {
+						var timerDisplay = $('.otp-countdown');
+						var remainingTime = timerDuration;
+						otpTimer = setInterval(function () {
+							var minutes = Math.floor(remainingTime / 60);
+							var seconds = remainingTime % 60;
+							var display = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+							timerDisplay.text(display);
+							remainingTime--;
+				
+							if (remainingTime < 0) {
+								clearInterval(otpTimer);
+								$("#regenerateOTP").show();
+								$("#otpFields, #submitOTP").hide();
+							}
+						}, 1000);
+					}
+					
+					 function generateOTP() {
+							debugger;
+							var uuid = $("#aadhaar").val();
+							$.ajax({
+								type: 'GET',
+								url: '/getOTP?UUID=' + uuid,
+								success: function (response) {
+									debugger;
+									if(response.status == 'Y' || response.status == 'y'){
+										alert('OTP Sent Successfully');
+										var newOTP = response.otp;
+										$("#otp").val(newOTP);
+										startOTPTimer();
+									} else {
+										alert('Unable to Generate OTP');
+									}
+									
+								},
+								error: function (xhr, status, error) {
+									console.log('Error: ' + error);
+								}
+							});
+
+						}
+						
+				 $('#OTPvalidatebtn').click(function () {
+						var otpValue = $("#otp").val();
+						if (otpValue === "" || !$.isNumeric(otpValue)) {
+							alert("Please enter a valid number OTP.");
+						} else {
+							event.preventDefault();
+							validateOtp(otpValue);
+						}
+
+
+					});
+					
+					
+					function validateOtp(otpValue) {
+				
+					
+					$.ajax({
+						url: '/OTPAuthentication?OTP=' + otpValue, 
+						method: 'POST',
+						contentType: 'application/json', // Set the content type
+						success: function (response) {
+							if (response.auth.status == 'Y' || response.auth.status == 'y') {
+								openApproveModel(id);
+							} else {
+								alert(response.message);
+							}
+							
+							
+						},
+						error: function (xhr, status, error) {
+							alert("Interanal Server Error");
+						}
+					});
+				}
+
+				function downloadAuditDocument(id) {
+			
+						console.log(id)
+						$.ajax({
+							type: 'GET',
+							url: '/Authmis/downloadAuditDocument/'
+								+ id,
+							success: function (data) {
+			
+								var base64Data = data.auditDocument;
+			
+								if (data.auditDocument) {
+			
+									// Create a Blob from the Base64 data
+									var byteCharacters = atob(base64Data);
+									var byteNumbers = new Array(byteCharacters.length);
+									for (var i = 0; i < byteCharacters.length; i++) {
+										byteNumbers[i] = byteCharacters.charCodeAt(i);
+									}
+									var byteArray = new Uint8Array(byteNumbers);
+									var blob = new Blob([byteArray], {
+										type: 'application/pdf'
+									});
+			
+									// Create a download link
+									var link = document.createElement('a');
+									link.href = window.URL.createObjectURL(blob);
+									link.download = 'Audit Doc.pdf'; // Specify the desired file name
+									link.click();
+								}
+								else {
+									alert("File Not Found");
+								}
+			
+							},
+							error: function (error) {
+			
+								// Handle the error
+								console.error('Error downloading document:', error);
+							}
+						});
+			
+					}
+					
+					function downloadCertificateForNoChange(id) {
+			
+						console.log(id)
+						$.ajax({
+							type: 'GET',
+							url: '/downloadAuditDocument/'
+								+ id,
+							success: function (data) {
+			
+								var base64Data = data.nochangeCert;
+			
+								if (data.auditDocument) {
+			
+									// Create a Blob from the Base64 data
+									var byteCharacters = atob(base64Data);
+									var byteNumbers = new Array(byteCharacters.length);
+									for (var i = 0; i < byteCharacters.length; i++) {
+										byteNumbers[i] = byteCharacters.charCodeAt(i);
+									}
+									var byteArray = new Uint8Array(byteNumbers);
+									var blob = new Blob([byteArray], {
+										type: 'application/pdf'
+									});
+			
+									// Create a download link
+									var link = document.createElement('a');
+									link.href = window.URL.createObjectURL(blob);
+									link.download = 'NO Change Certificate.pdf.pdf'; // Specify the desired file name
+									link.click();
+								}
+								else {
+									alert("File Not Found");
+								}
+			
+							},
+							error: function (error) {
+			
+								// Handle the error
+								console.error('Error downloading document:', error);
+							}
+						});
+			
+					}
+
+
+				
+	  </script>
+	  
+</body>
+</html>

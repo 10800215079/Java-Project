@@ -1,0 +1,969 @@
+
+
+<head th:replace="fragments_others_head" :: head></head>
+<style>
+.modal-header {
+	padding: 5px
+}
+.modal-body table tr td:first-child {
+	display: none
+}
+.modal-body table tr th:first-child {
+	display: none
+}
+table.lusan tr td:nth-child(3) {
+	display: none
+}
+
+table.lusan tr th:nth-child(3) {
+	display: none
+}
+select.required {
+	border: 1px solid #F01 !Important;
+}
+input.required {
+	border: 1px solid #F01 !Important;
+}
+</style>
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">Request For Ip
+											Whitelist</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+
+										<h4 class="card-title text-white mb-0 pt-2">Request For
+											Ip Whitelist</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form id="form1" class="needs-validation" novalidate
+											enctype="multipart/form-data">
+
+
+											<div class="row g-3 mt-0 mb-3 pb-3  alert-danger">
+												<!-- <div class="col-xxl-3 col-sm-5"> -->
+												<div class="col-md-4">
+													<label for="exampleFormControlInput1" class="form-label">SubAUA
+														Name</label> <select class="form-select mb-4 subAuaName"
+														aria-label="Default select example" id="subAuaName"
+														name="subAuaName" required>
+
+														<option selected="" disabled="" value="">Select
+															SUBAUA NAME</option>
+														<!--  	<option value="ALL">ALL</option> -->
+														<option th:each="subAuaList :${subAuaList}"
+															th:value="${subAuaList.NAME}"
+															th:text="${subAuaList.NAME}" required></option>
+													</select>
+
+
+												</div>
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">SUB
+														AUA Code </label> <select class="form-select mb-3 subAuaCode"
+														aria-label="Default select example form-control"
+														id="subAuaCode" name="subAuaCode" required>
+														<option selected="" disabled="" value="">Select
+															SUBAUA CODE</option>
+														<option value="-1" label="-Select-" />
+
+													</select>
+												</div>
+
+												<div class="col-xxl-4 col-sm-3">
+													<label for="exampleFormControlInput1" class="form-label">Service
+														Name</label> <select class="form-select mb-3 servicetype"
+														aria-label="Default select example" id="servicetype"
+														name="servicetype" required>
+
+														<option selected="" disabled="" value="">Select
+															Service</option>
+														<option value="ALL">ALL</option>
+														
+													</select>
+												</div>
+
+												<div class="col-xxl-4 col-sm-5">
+													<label for="exampleFormControlInput1" class="form-label">Application
+														Name</label> <input type="text" class="form-control appName"
+														id="appName" name="appName" placeholder=" App Name"
+														required>
+												</div>
+
+												<!-- Add a div for error message above the IP address field -->
+												<div id="ipErrorMessage" class="alert alert-danger"
+													style="display: none;">Please enter a valid IP
+													address.</div>
+												<div class="col-xxl-4 col-sm-5">
+													<label for="exampleFormControlInput1" class="form-label">
+														Ip Address</label> <input type="text" class="form-control IP"
+														id="iPAddress" name="ipAddress"
+														placeholder="xxx.xxx.xxx.xxx" required>
+												</div>
+
+
+												<div class="col-xxl-4 col-sm-5">
+													<label for="serverType" class="form-label">IP
+														Address belongs to ?</label> <select
+														class="form-select serverType" id="serverType"
+														name="ipBelongsTo" required>
+														<option selected="" disabled="" value="">--Select--</option>
+														<option value="Developer PC">Developer PC</option>
+														<option value="Production Server">Production
+															Server</option>
+														<!--<option value="pre-Production Server">Pre-Production
+															Server</option>-->
+														<option value="DR Server">DR Server</option>
+													</select>
+												</div>
+
+												<div class="col-xxl-4 col-sm-5">
+													<label for="ApplicationUrl" class="form-label"> Application
+														URL
+													</label> <input type="text" class="form-control ApplicationUrl"
+														id="ApplicationUrl" name="applicatonUrl"
+														placeholder="Application Url" required>
+												</div>
+
+
+												<!-- aadhaar service url -->
+												<div class="col-xxl-4 col-sm-5">
+													<label for="serverType" class="form-label">Aadhaar
+														Service URL Type ?</label> <select class="form-select serverType"
+														id="urlType" name="urlType" required>
+														<option selected="" disabled="" value="">--Select--</option>
+														<option value="Sewa Dwar">Sewa Dwar</option>
+														<option value="Direct URL">Direct URL</option>
+													</select>
+												</div>
+
+												<!-- Consent of resident taken during Authentication (Yes/No). -->
+												<!-- <div class="col-xxl-4 col-sm-5">
+													<label for="section" class="form-label">Consent of
+														resident taken during Authentication ? </label> <select
+														class="form-select" id="byconsent" name="byconsent">
+														<option selected="" disabled="" value="">--Select--</option>
+														<option value="1">YES</option>
+														<option value="0">NO</option>
+													</select>
+												</div> -->
+												
+
+												<!--  For screenshot of consent  -->
+												<div class="col-xxl-4 col-sm-5" id="image">
+													<label for="ApprovalDoc" class="form-label">Consent Screenshot 
+														(.jpg, .jpeg, .png)</label> <input type="file" class="form-control"
+														id="imagDoc" accept=".jpg, .jpeg, .png"
+														name="imageFile" onchange="checkImageSize(this)" required>
+												</div>
+												
+												
+												
+
+												<!-- Purpose covered under which Section of Aadhaar Act, 2016 ?  -->
+												<div class="col-xxl-4 col-sm-5">
+													<label for="section" class="form-label"> Purpose
+														covered under which Section of Aadhaar Act, 2016 ? </label> <select
+														class="form-select" id="purposefor" name="purposefor" required>
+														<option selected="" disabled="" value="" >--Select--</option>
+														<option value="Section 7">Section 7</option>
+														<option value="Section 4(4)(b)(ii)">Section
+															4(4)(b)(ii)</option>
+													</select>
+												</div>
+	
+	
+												
+
+												<div class="col-xxl-4 col-sm-5">
+													<label for="section" class="form-label">Gazette
+														Notification published under Section 7/Section 4(4)(b)(ii)
+														of Aadhaar Act ?</label> <select class="form-select"
+														id="notification" name="isDocPublished" required>
+														<option selected="" disabled="" value="">--Select--</option>
+														<option value="1">YES</option>
+														<option value="0">NO</option>
+													</select>
+												</div>
+												
+												<div class="col-md-4" style="display: none;" id="doc">
+													<label for="ApprovalDoc" class="form-label"> Gazette Notification published
+														Document (PDF)</label> <input type="file" class="form-control"
+														id="ApprovalDoc" accept=".pdf" name="inputFile"
+														onchange="checkFileSize(this)">
+												</div>
+												
+												<div class="col-xxl-4 col-sm-5" id="image">
+													<label for="ApprovalDoc" class="form-label">Valid Latest Security Audit Report
+														(PDF)</label> <input type="file" class="form-control"
+														id="auditDoc" accept=".pdf"
+														name="imageFile" onchange="checkFileSize(this)" required>
+												</div>
+												
+												<div class="col-xxl-4 col-sm-5" id="image">
+													<label for="NochangeCert" class="form-label">Certificate of 'No Change' (PDF) 
+														  ( <a href="/assets/certificate of no change.docx" download="certificate of no change.docx">Download Sample file</a> ) </label> <input type="file" class="form-control"
+														id="NochangeCert" accept=".pdf"
+														name="NochangeCert" onchange="checkFileSize(this)" required>
+												</div>
+
+												<div class="col-xxl-4 col-sm-5">
+													<label for="purpose" class="form-label"> Scheme
+														Name/Purpose for which Aadhaar Authentication is being
+														Used</label>
+													<textarea type="text" class="form-control" id="purpose"
+														name="schemeName" placeholder="Scheme Name/purpose"
+														required rows="3"></textarea>
+												</div>
+
+												<input type="hidden" class="form-control" id="status"
+													name="status" value="1" />
+
+
+												<div class="col-md-3">
+													<button class="btn btn-primary mt-4 submit" type="submit">Submit
+													</button>
+												</div>
+											</div>
+
+										</form>
+
+
+										<div class="table-responsive table-card1 mt-1 mb-1">
+											<div class="dataTables_wrapper dt-bootstrap5">
+												<table id="whiteListSubAUA" class="table table-striped lusan dataTable" style="width: 100%"
+													aria-describedby="table5_info">
+													<thead class="alert-info">
+												<tr>
+													<th>S.NO</th>
+													<th>SUB AUA NAME</th>
+													<th>SUB AUA CODE</th>
+													<th>APP NAME</th>
+													<th>SERVICE TYPE</th>
+													<th>IP</th>
+													<th>IP BELONGS TO</th>
+													<th>SCHEME NAME/PURPOSE</th>
+													<th>GAZETTE NOTIFICATION PUBLISHED</th>
+													<th>AADHAAR ACT</th>
+													<th>AAPLICATION URL</th>
+													<th>SERVICE URL</th>
+													<!-- <th>CONSENT OF RESIDENT TAKEN</th> -->
+													<th>CREATED BY</th>
+													<th>REMARK</th>
+													<th>INSERT DATE</th>
+													<th>STATUS</th>
+													<!--<th>CURRENTSTATUS</th>-->
+													<th>GAZETTE NOTIFICATION DOCUMENT</th>
+													<th>CONSENT DOCUMENT</th>
+													<th>SECURITY AUDIT DOCUMENT</th>
+													<th>Certificate of 'No Change'</th>
+												</tr>
+											</thead>
+											<tbody class="list form-check-all">
+												<tr th:each="dataVal, rowNumber : ${details}">
+													 <td th:text="${rowNumber.index + 1}">S.no</td>
+													<td class="nooftransaction" th:text="${dataVal.SUB_AUA_NAME}">SUB AUA NAME</td>
+													<td class="nooftransaction" th:text="${dataVal.SUB_AUA_CODE}">SUB AUA CODE</td>
+													<td class="nooftransaction" th:text="${dataVal.APP_NAME}">APP NAME</td>
+													<td class="nooftransaction" th:text="${dataVal.REQUEST_TYPE}">SERVICE TYPE</td>
+													
+													<td class="nooftransaction" th:text="${dataVal.IP_ADDRESS}">IP</td>
+													<td class="nooftransaction" th:text="${dataVal.IPBELONGSTO}">IP BELONGS TO</td>
+													<td class="nooftransaction" th:text="${dataVal.SCHEMENAME}">SCHEME NAME/PURPOSE</td>
+													
+													<td class="nooftransaction"><span th:switch="${dataVal.ISDOCPUBLISHED}"> 
+															<span th:case="1">YES</span> 
+															<span th:case="0">NO</span>
+													</span></td>
+													
+													<td class="nooftransaction" th:text="${dataVal.ACTOFAADHAAR}">AADHAAR ACT</td>
+													<td class="nooftransaction" th:text="${dataVal.APPLICATONURL}">AAPLICATION URL</td>	
+													<td class="nooftransaction" th:text="${dataVal.SERVICE_URL_TYPE}">URL</td>
+													
+													
+													<td class="nooftransaction" th:text="${dataVal.CREATED_BY}">CREATED BY</td>
+														
+													<td class="nooftransaction" th:text="${dataVal.REASON}">REMARK</td>	
+														
+													<td class="nooftransaction" th:text="${#dates.format(dataVal.CREATED_DATE, 'dd-MM-yyyy')}">DATE</td>
+													
+													<td class="nooftransaction"><span th:switch="${dataVal.STATUS}">
+															<span th:case="0" class="text-danger">De-Active<span th:switch="${dataVal.CURRENTSTATUS}">
+																	<span th:case="0" class="text-danger">(Deactive)</span>
+																	<span th:case="1" class="text-success">(Active)</span>
+																	<!-- Add additional cases as needed -->
+																</span></span>
+															<span th:case="1" class="text-success">Approved <span th:switch="${dataVal.CURRENTSTATUS}">
+																	<span th:case="0" class="text-danger">(Deactive)</span>
+																	<span th:case="1" class="text-success">(Active)</span>
+																	<!-- Add additional cases as needed -->
+																</span></span>
+															<span th:case="2" class="text-warning">Pending <span th:switch="${dataVal.CURRENTSTATUS}">
+																	<span th:case="0" class="text-danger">(Deactive)</span>
+																	<span th:case="1" class="text-success">(Active)</span>
+																	<!-- Add additional cases as needed -->
+																</span></span>
+															<span th:case="3" class="text-danger">Rejected <span th:switch="${dataVal.CURRENTSTATUS}">
+																	<span th:case="0" class="text-danger">(Deactive)</span>
+																	<span th:case="1" class="text-success">(Active)</span>
+																	<!-- Add additional cases as needed -->
+																</span></span>
+													</span></td>
+
+													<td><span th:switch="${dataVal.ISDOCPUBLISHED}">
+															<span th:case="1"> <a
+																class="download-button btn btn-primary me-2 btn-sm"
+																data-toggle="modal" data-target="#exampleModal"
+																th:onclick="|downloadPublishedDoc('${dataVal.ID}')|">
+																	<span class="ri-download-line"></span>
+															</a>
+														</span>
+													</span></td>
+
+
+
+													<td><a class="download-button btn btn-primary me-2 btn-sm"
+														data-toggle="modal" data-target="#exampleModal"
+														th:onclick="|downloadImage('${dataVal.ID}')|"><span class="ri-download-line"></span></a></td>
+														
+													<td><a class="download-button btn btn-primary me-2 btn-sm"
+														data-toggle="modal" data-target="#exampleModal"
+														th:onclick="|downloadAuditDocument('${dataVal.ID}')|"><span class="ri-download-line"></span></a></td>
+													<td><a class="download-button btn btn-primary me-2 btn-sm" data-toggle="modal" data-target="#exampleModal"
+														th:onclick="|downloadNoChangeCertificate('${dataVal.ID}')|"><span class="ri-download-line"></span></a></td>
+												</tr>
+											</tbody>
+
+											<tfoot class="alert-info">
+												<tr>
+													<th>S.NO</th>
+													<th>SUB AUA NAME</th>
+													<th>SUB AUA CODE</th>
+													<th>APP NAME</th>
+													<th>SERVICE TYPE</th>
+													
+													<th>IP</th>
+													<th>IP BELONGS TO</th>
+													<th>SCHEME NAME/PURPOSE</th>
+													<th>GAZETTE NOTIFICATION PUBLISHED</th>
+													<th>AADHAAR ACT</th>
+													<th>AAPLICATION URL</th>
+													<th>SERVICE URL</th>
+													<!-- <th>CONSENT</th> -->
+													<th>CREATED BY</th>
+													<th>REMARK</th>
+													<th>INSERT DATE</th>
+													<th>STATUS</th>
+													<!--<th>CURRENTSTATUS</th>-->
+													<th>GAZETTE NOTIFICATION DOCUMENT</th>
+													<th>CONSENT DOCUMENT</th>
+													<th>SECURITY AUDIT DOCUMENT</th>
+													<th>Certificate of 'No Change'</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- Duplicate IP -->
+			<div class="modal fade" id="duplicateIP" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+				data-backdrop="static">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Message
+								!!</h5>
+							<button type="button" class="closeModelWhenDuplicate"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<form>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="popupbox11">
+											<p class="text-danger" id="#OTPVerifiedMsg">Duplicate IP
+												address. Please choose a different one.</p>
+										</div>
+
+									</div>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- IP Whitelisted Successfully -->
+
+			<div class="modal fade" id="ipwhitelistedsuccessfully" tabindex="-1"
+				role="dialog" aria-labelledby="exampleModalCenterTitle"
+				aria-hidden="true" data-backdrop="static">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Message
+								!!</h5>
+							<button type="button" class="closeModelWhenIpSuccess"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<form>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="popupbox11">
+											<p class="text-success" id="#OTPVerifiedMsg">IP whiteList Request Submitted
+												Successfully.</p>
+										</div>
+
+									</div>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+	</div>
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+
+
+		<div id="loader" style="border: 8px solid #007bff; border-radius: 50%; width: 100px; height: 100px; animation: spin 2s linear infinite; position: absolute; top: 20%; left: 60%; transform: translate(-50%, -50%); display: none;"></div>
+	</div>
+
+
+
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/simplebar/simplebar.min.js"></script>
+	<script src="assets/libs/node-waves/waves.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+	<script src="assets/js/plugins.js"></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+	<!-- Check Duplicate on Submit Button -->
+
+	<script>
+		
+	function showLoader() {
+			$("#loader").show();
+		}
+
+		function hideLoader() {
+			$("#loader").hide();
+	}	
+		
+		
+	function downloadPublishedDoc(id) {
+		
+		console.log(id)			
+				$.ajax({
+					type : 'GET',
+					url : '/Authmis/downloadPublishedDocument/'					
+							+ id,
+					success : function(data) {
+						
+						var base64Data = data.publishedDoc;
+						
+						if(data.publishedDoc) {
+
+							// Create a Blob from the Base64 data
+							var byteCharacters = atob(base64Data);
+							var byteNumbers = new Array(byteCharacters.length);
+							for (var i = 0; i < byteCharacters.length; i++) {
+								byteNumbers[i] = byteCharacters.charCodeAt(i);
+							}
+							var byteArray = new Uint8Array(byteNumbers);
+							var blob = new Blob([ byteArray ], {
+								type : 'application/pdf'
+							});
+
+							// Create a download link
+							var link = document.createElement('a');
+							link.href = window.URL.createObjectURL(blob);
+							link.download = 'Published Doc.pdf'; // Specify the desired file name
+							link.click();
+						}
+						else{
+							alert("File not Published for this SUBAUA and IP");
+						}
+
+					},
+					error : function(error) {
+						
+						// Handle the error
+						console.error('Error downloading document:', error);
+					}
+				});
+			 
+		}
+	
+	
+	
+	function downloadImage(id) {
+	    debugger;
+	    console.log(id);
+	    $.ajax({
+	        type: 'GET',
+	        url: '/Authmis/downloadPublishedImages/' + id,
+	        success: function(data) {
+	        	debugger;
+	            var base64Data = data.consentDocument ? data.consentDocument : null;
+				
+	            if(base64Data){
+	            	
+	            // Convert base64 string to blob
+	            var byteCharacters = atob(base64Data);
+	            var byteNumbers = new Array(byteCharacters.length);
+	            for (var i = 0; i < byteCharacters.length; i++) {
+	                byteNumbers[i] = byteCharacters.charCodeAt(i);
+	            }
+	            var byteArray = new Uint8Array(byteNumbers);
+	            var blob = new Blob([byteArray], {
+	                type: 'image/jpeg' // Adjust type based on your image format
+	            });
+
+	            // Create a download link
+	            var link = document.createElement('a');
+	            link.href = window.URL.createObjectURL(blob);
+	            link.download = 'Published_Image.jpg'; // Specify the desired file name
+	            link.click();
+	            }
+	            
+	            else{
+	            	 alert("Image not published for this SUBAUA and IP");
+	            }
+	        },
+	        error: function(error) {
+	            
+	            // Handle the error
+	            console.error('Error downloading image:', error);
+	           
+	        }
+	    });
+	}
+
+	</script>
+
+
+	<script type="text/javascript">
+		jQuery(document).ready(
+				function() {
+					$('#whiteListSubAUA').DataTable(
+							{
+								//order: [ 6, 'desc' ],
+								"pageLength" : 10,
+
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+
+							});
+
+				});
+	</script>
+
+
+	<script>
+		$(document).ready(function() {
+			$('#notification').on('change', function() {
+
+				var selectValue = $(this).val();
+
+				if (selectValue === '1') {
+					$('#doc').show(); // Show when 'YES'
+				} else {
+					$('#doc').hide(); // Hide when 'NO'
+				}
+			});
+		});
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			$('#byconsent').on('change', function() {
+
+				var selectValue = $(this).val();
+
+				if (selectValue === '1') {
+					$('#image').show(); // Show when 'YES'
+				} else {
+					$('#image').hide(); // Hide when 'NO'
+				}
+			});
+		});
+	</script>
+
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+							$("#subAuaName").change(function() {
+
+												var ORGNAME = $(this).val();
+												console.log(ORGNAME);
+												$.ajax({
+													type : 'GET',
+													url : "/subauadepname/"+ ORGNAME,
+													contentType : "application/json; charset=utf-8",
+													dataType : "json",
+													success : function(data) {
+																var slctSubcat = $("#subAuaCode"), option = "";
+																slctSubcat.empty();
+
+																for (var i = 0; i < data.length; i++) {
+																	option = option
+																			+ "<option value='"+data[i] + "'>"
+																			+ data[i]
+																			+ "</option>";
+																}
+																console.log(option);
+																slctSubcat.append(option);
+															},
+															error : function() {
+																alert("error");
+															}
+
+														});
+											});
+						});
+	</script>
+
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			
+			'use strict';
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation');
+
+			// Loop over them and prevent submission
+			Array.prototype.slice
+					.call(forms)
+					.forEach(function(form) {
+								form.addEventListener(
+												'submit',
+												function(event) {
+													
+													var subAuaCode = $('.subAuaCode').val();
+													var ip = $('.IP').val().trim();
+													var subAuaName = $('.subAuaName').val();
+													var servicetype = $('.servicetype').val();
+													var appName = $('.appName').val();
+													var serverType = $('.serverType').val();
+													var ApplicationUrl = $('.ApplicationUrl').val();
+													var notification = $('#notification').val();
+													var schemeName = $('#purpose').val();
+													var purpose = $('#purposefor').val();
+													
+													var urlType = $('#urlType').val();
+
+													var ipaddress = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+
+													// Hide the previous error message and reset the IP field border color
+													$('#ipErrorMessage').hide();
+													$('.IP').css('border-color', '');
+
+													if (!form.checkValidity()) {
+														
+														event.preventDefault();
+														event.stopPropagation();
+													} else if (!ipaddress.test(ip)) {
+														
+														alert("IP address is invalid.");
+													} else {
+														// Check for duplicate IP and subaua
+														
+														$.ajax({
+																	type : 'POST',
+																	url : '/checkDuplicateRequestForIP',
+																	data : {
+																		subAuaCode : subAuaCode,
+																		iPAddress : ip
+																	},
+																	success : function(response) {
+																		
+																		if (response.errorCode === 'CONFLICT') {
+																			$('#duplicateIP').modal('show');
+																		}
+
+																		else {
+																			
+																			var formData = new FormData();
+																			formData.append('subAuaCode',$('.subAuaCode').val());
+																			formData.append('ipAddress',$('.IP').val().trim());
+																			formData.append('subAuaName',$('.subAuaName').val());
+																			formData.append('servicetype',$('.servicetype').val());
+																			formData.append('appName',$('.appName').val());
+																			formData.append('serverType',$('.serverType').val());
+																			formData.append('applicatonUrl',$('.ApplicationUrl').val());
+																			formData.append('schemeName',$('#purpose').val());
+																			formData.append('isDocPublished',$('#notification').val());
+																			formData.append('ipBelongsTo',$('#serverType').val());															
+																			formData.append('purposefor',$('#purposefor').val());
+																			formData.append('urlType',$('#urlType').val());
+																			formData.append('byconsent',$('#byconsent').val());
+																	
+																			var isDocPublished = $('#notification').val();
+																			if (isDocPublished === '1') {
+																				formData.append('fileInput',$('#ApprovalDoc')[0].files[0]);
+																			}
+
+																			else {formData.append('fileInput',new Blob(),'');
+																			}
+																			
+																			formData.append('imageFile',$('#imagDoc')[0].files[0]);
+																			
+																			formData.append('auditDoc',$('#auditDoc')[0].files[0]);
+	
+																			formData.append('NochangeCert',$('#NochangeCert')[0].files[0]);
+																			
+
+																			showLoader()
+																			
+																			$.ajax({
+																						url : '/addRequestForIpWhitelist',
+																						method : 'POST',
+																						data : formData,
+																						processData : false,
+																						contentType : false,
+																						success : function(response) {
+																							 hideLoader();
+																							$('#ipwhitelistedsuccessfully').modal('show');
+																							console.log(response);
+																						},
+																						error : function(xhr,status,error) {
+																							hideLoader();
+																							console.log('Error in second AJAX call: '
+																											+ error);
+																						}
+																					});
+																		}
+																	},
+																	error : function(xhr,status,error) {
+																		alert('Error checking duplicate IP! '+ error);
+																	}
+																});
+														event.preventDefault();
+													}
+
+													form.classList.add('was-validated');
+												}, false);
+							});
+		})();
+		$(".closeModelWhenDuplicate").click(function() {
+			$('#duplicateIP').modal('hide');
+
+		});
+
+		$(".closeModelWhenIpSuccess").click(function() {
+			$('#ipwhitelistedsuccessfully').modal('hide');
+			location.reload();
+		});
+		
+		
+		
+		function checkFileSize(input) {
+				const fileInput = input;
+				if (fileInput.files.length > 0) {
+					const file = fileInput.files[0];
+					const fileSize = file.size; // in bytes
+					const maxSize = 1024 * 1024; // 1 MB (you can adjust this to your desired size)
+
+					// Check if the file type is "application/pdf"
+					if (file.type !== "application/pdf") {
+						alert("Please select a PDF file.");
+						fileInput.value = ""; // Clear the file input
+						return; // Exit the function if not a PDF
+					} else if (fileSize > maxSize) {
+						alert("The selected PDF file is too large. Please choose a file smaller than 1 MB.");
+						fileInput.value = ""; // Clear the file input
+					}
+
+					
+				}
+			}
+			
+			
+			function checkImageSize(input) {
+					const fileInput = input;
+					if (fileInput.files.length > 0) {
+						const file = fileInput.files[0];
+						const fileSize = file.size; // in bytes
+						const maxSize = 1024 * 1024; // 1 MB (you can adjust this to your desired size)
+
+						// Check if the file type is an image (JPEG, PNG, GIF)
+						const validImageTypes = ["image/jpeg", "image/png", "image/gif"];
+						if (!validImageTypes.includes(file.type)) {
+							alert("Please select an image file (JPEG, PNG, or GIF).");
+							fileInput.value = ""; // Clear the file input
+							return; // Exit the function if not an image
+						} else if (fileSize > maxSize) {
+							alert("The selected image file is too large. Please choose a file smaller than 1 MB.");
+							fileInput.value = ""; // Clear the file input
+						}
+					}
+				}
+				
+				
+					function downloadAuditDocument(id) {
+
+							console.log(id)
+							$.ajax({
+								type: 'GET',
+								url: '/Authmis/downloadAuditDocument/'
+									+ id,
+								success: function (data) {
+
+									var base64Data = data.auditDocument;
+
+									if (data.auditDocument) {
+
+										// Create a Blob from the Base64 data
+										var byteCharacters = atob(base64Data);
+										var byteNumbers = new Array(byteCharacters.length);
+										for (var i = 0; i < byteCharacters.length; i++) {
+											byteNumbers[i] = byteCharacters.charCodeAt(i);
+										}
+										var byteArray = new Uint8Array(byteNumbers);
+										var blob = new Blob([byteArray], {
+											type: 'application/pdf'
+										});
+
+										// Create a download link
+										var link = document.createElement('a');
+										link.href = window.URL.createObjectURL(blob);
+										link.download = 'Audit Doc.pdf'; // Specify the desired file name
+										link.click();
+									}
+									else {
+										alert("File Not Found");
+									}
+
+								},
+								error: function (error) {
+
+									alert('Error downloading document:', error);
+									console.error('Error downloading document:', error);
+								}
+							});
+
+						}
+
+							function downloadNoChangeCertificate(id) {
+
+								console.log(id)
+								$.ajax({
+									type: 'GET',
+									url: '/downloadAuditDocument/'
+										+ id,
+									success: function (data) {
+
+										var base64Data = data.nochangeCert;
+
+										if (data.auditDocument) {
+
+											// Create a Blob from the Base64 data
+											var byteCharacters = atob(base64Data);
+											var byteNumbers = new Array(byteCharacters.length);
+											for (var i = 0; i < byteCharacters.length; i++) {
+												byteNumbers[i] = byteCharacters.charCodeAt(i);
+											}
+											var byteArray = new Uint8Array(byteNumbers);
+											var blob = new Blob([byteArray], {
+												type: 'application/pdf'
+											});
+
+											// Create a download link
+											var link = document.createElement('a');
+											link.href = window.URL.createObjectURL(blob);
+											link.download = 'NO Change Certificate.pdf'; // Specify the desired file name
+											link.click();
+										}
+										else {
+											alert("File Not Found");
+										}
+
+									},
+									error: function (error) {
+
+										alert('Error downloading document:', error);
+										console.error('Error downloading document:', error);
+									}
+								});
+
+							}
+
+	</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,976 @@
+
+
+<head th:replace="fragments_others_head" :: head></head>
+<style>
+select.required {
+	border: 1px solid #F01 !Important;
+}
+
+input.required {
+	border: 1px solid #F01 !Important;
+}
+</style>
+
+<style>
+.modal-header{padding: 5px}
+.modal-body table tr td:first-child{display:none}
+.modal-body table tr th:first-child{display:none}
+ table.lusan tr td:nth-child(2){display:none}
+ table.lusan tr th:nth-child(2){display:none}
+
+</style>
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">IP Whitelist Request for Datavault</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+
+										<h4 class="card-title text-white mb-0 pt-2">IP Whitelist Request for Datavault</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form id="form1" class="needs-validation" novalidate
+											enctype="multipart/form-data">
+
+
+											<div class="row g-3 mt-0 mb-3 pb-3  alert-danger">
+												<!-- <div class="col-xxl-3 col-sm-5"> -->
+												<div class="col-md-4">
+													<label for="exampleFormControlInput1" class="form-label">Department</label> <select class="form-select mb-1 subAuaName"
+														aria-label="Default select example" id="subAuaName"
+														name="subAuaName" required>
+
+														<option selected="" disabled="" value="">Select
+															Department</option>
+														<option  value="other">
+															Other</option>
+														<!--  	<option value="ALL">ALL</option> -->
+														<option th:each="subAuaList :${subAuaList}"
+															th:value="${subAuaList.ID}"
+															th:text="${subAuaList.NAME}" required></option>
+													</select>
+												</div>
+												
+												<div id="otherDepartmentContainer" style="display: none;" class="col-md-4">
+													<label for="otherDepartmentInput" class="form-label">Enter Department Name</label>
+													<input type="text" class="form-control" id="otherDepartmentInput" name="otherDepartmentInput"
+														placeholder="Enter department name">
+												</div>
+												
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">App Name</label> 
+													<input type="text" class="form-control appName"
+														id="appName" name="appName" placeholder=" App Name" 
+														required>
+												</div>
+												
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">App Code</label> 
+													<input type="text" class="form-control appCode"
+														id="appCode" name="appCode" placeholder=" App Code" minlength="10" maxlength="10"
+														required>
+												</div>
+												
+
+
+												<div class="col-xxl-4 col-sm-3">
+													<label for="exampleFormControlInput1" class="form-label">Service
+														Name</label> <select class="form-select mb-3 servicetype"
+														aria-label="Default select example" id="servicetype"
+														name="servicetype" required>
+
+														<option selected="" disabled="" value="">Select
+															Service</option>
+														<option value="ALL">ALL(Tokenize, De-Tokenize, Encryption, Decryption)</option>
+														<!-- <option th:each="serviceTypeList :${serviceTypeList}"
+															th:value="${serviceTypeList.ID}"
+															th:text="${serviceTypeList.NAME}"></option> -->
+													</select>
+												</div>
+
+												
+
+												<!-- Add a div for error message above the IP address field -->
+												<div id="ipErrorMessage" class="alert alert-danger"
+													style="display: none;">Please enter a valid IP
+													address.</div>
+												<div class="col-xxl-4 col-sm-5">
+													<label for="exampleFormControlInput1" class="form-label">
+														Ip Address</label> <input type="text" class="form-control IP"
+														id="iPAddress" name="ipAddress"
+														placeholder="xxx.xxx.xxx.xxx" required>
+												</div>
+
+												<div class="col-md-3">
+													<button class="btn btn-primary mt-4 submit" type="submit">ADD
+													</button>
+												</div>
+											</div>
+											</form>
+											<div id="dataContainer"
+												style="background-color: #f9f9f9; display: none; padding: 10px; border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 20px; margin-bottom: 20px;">
+												<div id="dataList" style="margin-bottom: 10px;"></div>
+												<div style="display: flex; justify-content: center;">
+													<button id="submitAll" onclick="showOtpModal()"
+														style="background-color: #007bff; border: none; padding: 10px; color: white; text-align: center; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">
+														Submit
+													</button>
+												</div>
+											</div>
+											<table id="whiteListSubAUA" class="table table-striped dataTable lusan" style="width: 100%">
+												<thead class="alert-info">
+													<tr>
+														<th>S.no</th>
+														<th>SUB AUA CODE</th>
+														<th>SUB AUA NAME</th>
+														<th>APP NAME</th>
+														<th>APP CODE</th>
+														<th>SERVICE TYPE</th>
+														<th>INSERT DATE</th>
+														<th>IP</th>
+														<th>STATUS</th>
+														<th>EDIT</th>
+														<th>ACTION</th>
+													</tr>
+													</thead>
+											<tbody class="list form-check-all">
+												<tr th:each="dataVal,iterator: ${dataList}">
+													<td th:text="${iterator.index+1}">S.no</td>
+													<td class="nooftransaction" th:text="${dataVal.subAuaCode}">SUB
+														AUA NAME</td>
+													<td class="nooftransaction" th:text="${dataVal.subAuaName}">
+														SUB AUA CODE</td>
+													<td class="nooftransaction" th:text="${dataVal.appName}">APP
+														NAME</td>
+													<td class="nooftransaction" th:text="${dataVal.appCode}">APP
+														CODE</td>
+													<td class="nooftransaction" th:text="${dataVal.serviceType}">SERVICE TYPE</td>
+										
+													<td class="nooftransaction" th:text="${dataVal.createdDate}">DATE</td>
+										
+													<td class="nooftransaction" th:text="${dataVal.ipAddresses}">IP</td>
+										
+													<td class="nooftransaction"><span th:switch="${dataVal.status}"> <span th:case="1">Active</span>
+															<span th:case="0">De-Active</span>
+														</span></td>
+										
+										
+													<td><a class="edit-button  btn btn-danger" data-toggle="modal" data-target="#exampleModal"
+															th:onclick="|openModel('${dataVal.id}')|">Edit</a></td>
+										
+										
+													<td class="nooftransaction"><span th:switch="${dataVal.status}"> <span th:case="1">
+																<a class="btn btn-danger" id="deactivate" style="width: 100px" th:data-id="${dataVal.id}"
+																	th:data-action="deactivate"
+																	th:onclick="'showOtpModal(' + ${dataVal.id} + '); return false;'">
+																	De-Active </a>
+															</span> <span th:case="0"> <a class="btn btn-success" id="deactivate" style="width: 95px"
+																	th:data-id="${dataVal.id}" th:data-action="activate"
+																	th:onclick="'showOtpModal(' + ${dataVal.id} + '); return false;'">Active</a>
+															</span>
+														</span></td>
+										
+										
+												</tr>
+											</tbody>
+											<tfoot class="alert-info">
+												<tr>
+													<th>S.no</th>
+													<th>SUB AUA CODE</th>
+													<th>SUB AUA NAME</th>
+													<th>APP NAME</th>
+													<th>APP CODE</th>
+													<th>SERVICE TYPE</th>
+													<th>INSERT DATE</th>
+													<th>IP</th>
+													<th>STATUS</th>
+													<th>EDIT</th>
+													<th>ACTION</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- Duplicate IP -->
+			<div class="modal fade" id="duplicateIP" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+				data-backdrop="static">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Message
+								!!</h5>
+							<button type="button" class="closeModelWhenDuplicate"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<form>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="popupbox11">
+											<p class="text-danger" id="#OTPVerifiedMsg">Duplicate IP
+												address. Please choose a different one.</p>
+										</div>
+
+									</div>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- IP Whitelisted Successfully -->
+
+			<div class="modal fade" id="ipwhitelistedsuccessfully" tabindex="-1"
+				role="dialog" aria-labelledby="exampleModalCenterTitle"
+				aria-hidden="true" data-backdrop="static">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Message
+								!!</h5>
+							<button type="button" class="closeModelWhenIpSuccess"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<form>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="popupbox11">
+											<p class="text-success" id="#OTPVerifiedMsg">IPs whiteList
+												Successfully.</p>
+										</div>
+
+									</div>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+	</div>
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+
+
+	<!-- Modal dialog for editing -->
+	<div class="modal fade" id="exampleModalLong" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLongTitle"
+		aria-hidden="true">
+
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary ">
+					<h5 class="modal-title text-white" id="exampleModalLabel">Edit
+						Whitelisted IP Details</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" onclick="closeModal()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="form2" class="row g-3 mt-0 mb-3 pb-3 "
+						th:action="@{/updateWhiteListedIPDetails}" method="POST"
+						th:object="${addWhiteListIP}" enctype="multipart/form-data"
+						onsubmit="return submitForm()">
+
+						<input type="hidden" class="form-control" id="id" name="id"
+							value="" />
+
+						<!-- <div class="col-xxl-3 col-sm-5"> -->
+						<div class="col-md-4">
+							<label for="exampleFormControlInput1" class="form-label">SubAUA
+								Name</label> <input type="text" class="form-control" id="mSubauaName"
+								name="appName" placeholder=" subaua Name" disabled>
+						</div>
+
+						<div class="col-md-4">
+							<label for="validationCustom01" class="form-label">SUB
+								AUA Code </label> <input type="text" class="form-control"
+								id="mSubauaCode" name="subaua code" placeholder=" subaua Code"
+								disabled>
+						</div>
+
+						<div class="col-xxl-4 col-sm-3">
+							<label for="exampleFormControlInput1" class="form-label">Service
+								Name</label> <input type="text" class="form-control" id="mServiceName"
+								name="serviceName" placeholder=" Service Name" disabled>
+
+						</div>
+
+						<div class="col-xxl-4 col-sm-5">
+							<label for="exampleFormControlInput1" class="form-label">Application
+								Name</label> <input type="text" class="form-control" id="mappName"
+								name="appName" placeholder=" App Name">
+						</div>
+
+
+						<div class="col-xxl-4 col-sm-5">
+							<label for="exampleFormControlInput1" class="form-label">
+								Ip Address</label> <input type="text" class="form-control" readonly
+								id="miPAddress" name="ipAddress" placeholder="xxx.xxx.xxx.xxx">
+						</div>
+
+						<div class="col-xxl-4 col-sm-5">
+							<label for="serverType" class="form-label">IP Address
+								belongs to ?</label> <select class="form-select" id="mserverType"
+								name="ipBelongsTo">
+								<option selected="" disabled="" value="">--Select--</option>
+								<option value="Developer PC">Developer PC</option>
+								<option value="Production Server">Production Server</option>
+								<option value="pre - Production Server">Pre-Production
+									Server</option>
+								<option value="DR Server">DR Server</option>
+							</select>
+						</div>
+
+						<div class="col-xxl-4 col-sm-5">
+							<label for="ApplicationUrl" class="form-label"> <br />Application
+								URL
+							</label> <input type="text" class="form-control" id="mApplicationUrl"
+								name="applicatonUrl" placeholder="Application Url">
+						</div>
+
+						<div class="col-xxl-4 col-sm-5">
+							<label for="purpose" class="form-label"> Scheme
+								Name/Purpose for which Aadhaar Authentication is being Used</label> <input
+								type="text" class="form-control" id="mpurpose" name="schemeName"
+								placeholder="Scheme Name/purpose">
+						</div>
+
+						<div class="col-xxl-4 col-sm-5">
+							<label for="section" class="form-label">Gazette
+								Notification published under Section 7/Section 4(4)(b)(ii) of
+								Aadhaar Act ?</label> <select class="form-select" id="mnotification"
+								name="isDocPublished">
+								<option selected="" disabled="" value="">--Select--</option>
+								<option value="1">YES</option>
+								<option value="0">NO</option>
+							</select>
+						</div>
+
+						<div class="col-md-4" id="doc">
+							<label for="ApprovalDoc" class="form-label">Update
+								published Document (PDF)
+								<button id="downloadPublishedDoc" type="button">
+									<i class="ri-eye-fill fs-5" onclick="downloadPublishedDoc()">
+										<i></i>
+									</i>
+								</button>
+							</label> <input type="file" class="form-control" id="mApprovalDoc"
+								accept=".pdf" name="inputFile" onchange="checkFileSize(this)">
+						</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal" onclick="closeModal()">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
+
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+	</div>
+
+
+	<div class="modal fade" id="otpPopupP1" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		data-backdrop="static">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title text-white" id="exampleModalLongTitle">XXXXXXXX5845</h5>
+					<button type="button" class="cancel" data-dismiss="modal"
+						aria-label="Close" onclick="closeandCancelModal()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<form id="formOtp">
+
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="popupbox11">
+									<input type="checkbox" id="agree1" name="agree1" value="Bike"
+										onclick="concernCheckbox(this)"> <label for="agree1">
+										I hereby state that i have no objection in authenticating
+										myself with AADHAAR based authentication system and consent to
+										providing my AADHAAR Number, and OTP for AADHAAR based
+										Authentication. I also give my explicit consent for accessing
+										the mobile number and email address from AADHAAR System. </label>
+								</div>
+								<div class="otpinputbox1">
+									<input type="text" id="otp" name="otp" maxlength="6"
+										style="display: none;" placeholder="OTP (Time-Based OTP)">
+									<label class="left10minutes" style="display: none;">Note
+										: AADHAAR OTP will be valid only for 10 minutes.</label><br> <label
+										class="opt2minutes" style="display: none;">Resend OTP
+										<span class="otp-countdown" id="timer-countdown">02:00</span>
+									</label>
+								</div>
+							</div>
+							<div class="flexbuttonOTP">
+								<button type="button" class="btn btn-primary" id="sendOTP1"
+									onclick="sendOtp()" disabled>Send OTP</button>
+								<button type="button" class="btn btn-primary"
+									id="OTPvalidatebtn" style="display: none;"
+									onclick="validateOtp()">Validate OTP</button>
+								<button type="button" class="btn btn-primary" id="resentOTP"
+									style="display: none;">ReSend OTP</button>
+								<button type="button" class="btn btn-primary cancel"
+									data-dismiss="modal" onclick="closeandCancelModal()">Cancel</button>
+								<input type="text" id="txn" name="txn" style="display: none;">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="loader"
+		style="border: 8px solid #007bff; border-radius: 50%; width: 100px; height: 100px; animation: spin 2s linear infinite; position: absolute; top: 50%; left: 60%; transform: translate(-50%, -50%); display: none;"></div>
+
+
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/simplebar/simplebar.min.js"></script>
+	<script src="assets/libs/node-waves/waves.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+	<script src="assets/js/plugins.js"></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/otpValidation.js"></script>
+	<script>
+		
+		function openModel(id) {
+			debugger;
+			$.ajax({
+				type : "GET",
+				url : "/getRecordById/" + id,
+				success : function(response) {
+					$("#id").val(id);
+					$("#mSubauaName").val(response.subAuaName);
+					$("#mSubauaCode").val(response.subAuaCode);
+					$("#mServiceName").val(response.servicetype);
+					$("#mappName").val(response.appName);
+					$("#miPAddress").val(response.ipAddress);
+					$("#mserverType").val(response.ipBelongsTo);
+					$("#mApplicationUrl").val(response.applicatonUrl);
+					$("#mpurpose").val(response.schemeName);
+					$("#mnotification").val(response.isDocPublished);
+					$("#exampleModalLong").modal("show");
+
+				},
+				error : function(error) {
+					// Handle the error here
+					console.error("Error fetching details:", error);
+				}
+			});
+
+		}
+		
+		function showLoader() {
+			$("#loader").show();
+		}
+
+		function hideLoader() {
+			$("#loader").hide();
+		}
+
+		function closeModal() {
+			$('#exampleModalLong').modal('hide');
+		}
+
+
+
+		function submitForm() {
+			// Create a FormData object and append form data to it
+			var formData = new FormData(document.getElementById('form2'));
+			
+			// Use AJAX to submit the form
+			$.ajax({
+				type : 'POST',
+				url : '/updateWhiteListedIPDetails',
+				data : formData,
+				contentType : false, // Let jQuery handle the content type
+				processData : false, // Prevent jQuery from processing the data
+				success : function(response) {
+					alert('Form submitted successfully!');
+					location.reload();
+				},
+				error : function(xhr, status, error) {
+					alert('Error submitting the form: ' + error);
+				}
+			});
+
+			// Prevent the form from submitting in the traditional way
+			return false;
+		}
+
+		function updateWhiteListedIPDetail() {
+			
+			var formData = {
+				id : whiteListedId,
+				subAuaCode : $("#mSubauaCode").val().trim(),
+				subAuaName : $("#mSubauaName").val().trim(),
+				servicetype : $("#mServiceName").val().trim(),
+				iPAddress : $("#miPAddress").val(),
+				appName : $("#mappName").val(),
+				ipBelongsTo : $("#mserverType").val(),
+				applicatonUrl : $("#mApplicationUrl").val(),
+				schemeName : $("#mpurpose").val(),
+				isDocPublished : $("#mnotification").val(),
+				inputFile : base64DataDoc,
+			};
+
+			console.log("FormData:", formData);
+			// Make AJAX request
+			$.ajax({
+				type : "POST",
+				url : "/updateWhiteListedIPDetails",
+				data : formData,
+				contentType : false, // Set to false when using FormData
+				processData : false, // Set to false to prevent jQuery from processing the data
+				success : function(response) {
+					// Handle success response
+					console.log("Field updated successfully:", response);
+					// Optionally close the modal or perform other actions
+				},
+				error : function(error) {
+					// Handle error
+					console.error("Error updating field:", error);
+				}
+			});
+		}
+
+		// Attach the updateField function to the button click event
+		$("#downloadPublishedDoc").on("click", function() {
+			updateField();
+		});
+
+		// Assuming you have an input element of type 'file' with id 'mApprovalDoc'
+		var fileInput = document.getElementById('mApprovalDoc');
+		var base64DataDoc;
+		fileInput.addEventListener('change', function() {
+			var file = fileInput.files[0];
+
+			if (file) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					base64DataDoc = e.target.result;
+					console.log('Base64-encoded data:', base64DataDoc);
+				};
+
+				reader.readAsDataURL(file);
+			}
+		});
+	</script>
+
+	<script type="text/javascript">
+		jQuery(document).ready(
+				function() {
+					$('#whiteListSubAUA').DataTable(
+							{
+								//order: [ 6, 'desc' ],
+								"pageLength" : 10,
+
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+
+							});
+
+				});
+	</script>
+
+
+	<script>
+		$(document).ready(function() {
+			$('#notification').on('change', function() {
+				
+				var selectValue = $(this).val();
+
+				if (selectValue === '1') {
+					$('#doc').show(); // Show when 'YES'
+				} else {
+					$('#doc').hide(); // Hide when 'NO'
+				}
+			});
+		});
+	</script>
+
+
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$("#subAuaName")
+									.change(
+											function() {
+
+												var ORGNAME = $(this).val();
+												console.log(ORGNAME);
+												$
+														///Authmis/
+														.ajax({
+															type : 'GET',
+															url : "/subauadepname/"
+																	+ ORGNAME,
+															contentType : "application/json; charset=utf-8",
+															dataType : "json",
+															success : function(
+																	data) {
+																var slctSubcat = $("#subAuaCode"), option = "";
+																slctSubcat
+																		.empty();
+
+																for (var i = 0; i < data.length; i++) {
+																	option = option
+																			+ "<option value='"+data[i] + "'>"
+																			+ data[i]
+																			+ "</option>";
+																}
+																console
+																		.log(option);
+																slctSubcat
+																		.append(option);
+															},
+															error : function() {
+																alert("error");
+															}
+
+														});
+											});
+						});
+	</script>
+
+	<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    let dataList = []; // Array to store data entries
+(function () {
+    'use strict';
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation');
+    
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var subAuaCode = $('.subAuaName').val();
+            if(subAuaCode == 'other'){
+				subAuaCode = 'NA'
+			}
+            var ip = $('.IP').val().trim();
+            var servicetype = $('.servicetype').val();
+            var appCode = $('.appCode').val().toUpperCase();
+            var serverType = $('.serverType').val();
+            var subAuaName = $('.subAuaName option:selected').text();
+            if(subAuaCode == 'NA'){
+				subAuaName = $('#otherDepartmentInput').val();
+			}
+            
+            var appName = $('#appName').val();
+
+            // IP address validation pattern
+            var ipPattern = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+
+            // Split and trim the IP addresses
+            const ipAddresses = ip.split(',').map(ipAdd => ipAdd.trim());
+            
+            let allValid = true;
+
+            // Validate each IP address
+            for (const ipAddr of ipAddresses) {
+                if (!ipPattern.test(ipAddr)) {
+                    allValid = false;
+                    break;
+                }
+            }
+
+            // Hide error message and reset border color if everything is valid
+            $('#ipErrorMessage').hide();
+            $('.IP').css('border-color', '');
+
+            // Check form validity and IP validity
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+            } else if (!allValid) {
+                $('#ipErrorMessage').show();
+                $('.IP').css('border-color', 'red');
+                alert("IP address is invalid.");
+            } else {
+                // Add valid data to the list
+                var newData = {
+                    subAuaCode: subAuaCode,
+                    ipAddresses: ipAddresses,
+                    serviceType: servicetype,
+                    appCode: appCode,
+                    subAuaName: subAuaName,
+                    appName: appName
+                    
+                };
+
+                dataList.push(newData);
+
+                // Display the added data (for example, in a div)
+                displayDataList(dataList);
+
+                // Reset the form for new entries
+                form.reset();
+                form.classList.remove('was-validated');
+            }
+        }, false);
+    });
+
+    // Function to display the data list
+    function displayDataList(dataList) {
+
+    // Create a table element
+    const table = document.createElement('table');
+    table.classList.add('table', 'table-striped');
+
+    // Create a table header row
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+        <tr class="alert-info">
+            <th>SR.NO.</th>
+            <th>Sub AUA NAME</th>
+             <th>App Name</th>
+             <th>App Code</th>
+            <th>IP Addresses</th>
+            <th>Service Type</th>
+            
+           
+        </tr>
+    `;
+    table.appendChild(thead);
+
+    // Create a table body
+    const tbody = document.createElement('tbody');
+    dataList.forEach((data, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${data.subAuaName}</td>
+            <td>${data.appName}</td>
+            <td>${data.appCode}</td>
+            <td>${data.ipAddresses.join(', ')}</td>
+            <td>${data.serviceType}</td>
+            <
+            
+        `;
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    // Append the table to a div or a specific container
+    const dataListDiv = document.getElementById('dataList'); // Replace with your container's ID
+    dataListDiv.innerHTML = ''; // Clear existing content if any
+    dataListDiv.appendChild(table);
+    
+    const dataContainer = document.getElementById('dataContainer');
+        if (dataList.length > 0) {
+            dataContainer.style.display = 'block';
+        } else {
+            dataContainer.style.display = 'none';
+        }
+	    
+
+	}
+	
+	
+	    
+	    
+	})();
+
+	function submitAll() {
+			
+			
+			
+				$.ajax({
+					url: '/saveIpWhitelistRequest',
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify(dataList),
+					success: function (data) {
+						console.log('Success:', data);
+						dataList = []; // Clear the list after successful submission
+						$('#dataListDiv').empty(); // Clear displayed data
+						$('#ipwhitelistedsuccessfully').modal('show');
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.error('Error:', textStatus, errorThrown);
+					}
+				});
+	   }
+	
+    function showOtpModal(){
+		if (dataList.length === 0) {
+				alert('No List to submit.');
+				return; // Exit the function if there's no data
+		}
+		
+		$('#otpPopupP1').modal('show');
+	}
+    
+    $(".closeModelWhenDuplicate").click(function() {
+		$('#duplicateIP').modal('hide');
+		
+	});
+	
+	$(".closeModelWhenIpSuccess").click(function() {
+		$('#ipwhitelistedsuccessfully').modal('hide');
+		location.reload();
+	});
+	
+		function validateOtp() {
+			
+	    var otpValue = $("#otp").val();
+		if (otpValue === "" || !$.isNumeric(otpValue)) {
+			alert("Please enter a valid number OTP.");
+		} else {
+			$.ajax({
+				
+			url: '/OTPAuthentication?OTP=' + otpValue,
+			method: 'POST',
+			cache: false,  
+			contentType: 'application/json', // Set the content type
+			success: function(response) {
+									if(response.auth.status == 'Y' || response.auth.status == 'y'){
+										$('#otpPopupP1').modal('hide');
+										submitAll();
+									} else {
+										alert(response.message);
+									}
+	
+			},
+			error: function(xhr, status, error) {
+				alert("Interanal Server Error");
+			}
+		});
+		
+		}
+		
+	}
+	
+	function updateStatus(){
+		$.ajax({
+                url: '/updateStatus/' + idToupdate,
+                type: 'GET', // Assuming the method is GET based on @GetMapping
+                cache: false,  
+                success: function(response) {
+                  
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert(error);
+                    console.error('Error updating status:', error);
+                }
+                 
+            });
+	}
+	
+	function openModel(id){
+		
+		$("#exampleModalLong").modal("show");
+	}
+	
+	
+
+	
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#subAuaName').change(function() {
+            if ($(this).val() === 'other') {
+                $('#otherDepartmentContainer').show();
+            } else {
+                $('#otherDepartmentContainer').hide();
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

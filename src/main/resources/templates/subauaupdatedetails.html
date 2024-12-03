@@ -1,0 +1,825 @@
+
+
+<head th:replace="fragments_others_head2" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header3" :: header></div>
+
+		<div th:replace="fragments_others_menu2" :: menu1></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dash board</a></li>
+										<li class="breadcrumb-item active">Update License</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">SubAua De-Registration Form</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form class="row g-3 needs-validation" novalidate id="validation-form"
+											th:action=" @{'/subauaa/'+${subauaLicenseKeydata.TID}}" th:object="${subauaLicenseKeydata}" method="GET" th.value = "${subauaLicenseKeydata.TID}">
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">SUB
+													AUA Name </label> <input type="text" th:field="*{ORGNAME}" class="form-control" id="SUB_AUA_NAME"
+													placeholder="SUB AUA NAME" required readonly="readonly">
+											</div>
+										
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">SUB
+													AUA Code </label> <input type="text" th:field="*{SUBAUA_CODE}" class="form-control" id="SUB_AUA_CODE"
+													placeholder="SUB_AUA CODE" required readonly="readonly">
+											</div>
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">MPOC Name
+												</label> <input type="text" class="form-control" id="mpocName" placeholder="MPOC Name" required th:field= "*{MPOCNAME}" th:disabled ="*{! ACTIVE}">
+											</div>
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">MPOC PHONE
+													</label> <input type="text" class="form-control" id="mpocPhone" placeholder="MPOC PHONE" required th:field="*{MPOCCONTACT}" th:disabled ="*{! ACTIVE}">
+												</div>
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">MPOC EMAIL
+													</label> <input type="text" class="form-control" id="mpocEmail" placeholder="MPOC EMAIL" required th:field="*{MPOCEMAIL}" th:disabled ="*{! ACTIVE}">
+												</div>
+												
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">MPOC DESIGNATION
+													</label> <input type="text" class="form-control" id="mpocDesignation" placeholder="MPOC Designation" required th:field="*{MPOCDESIGNATION}" th:disabled ="*{! ACTIVE}">
+												</div>
+												
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">TPOC Name</label>
+													<input type="text" class="form-control" id="tpocName" placeholder="TPOC Name" required th:field="*{OFFICERNAME}" th:disabled ="*{! ACTIVE}">
+												</div>
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">TPOC Phone</label>
+													<input type="text" class="form-control" id="tpocPhone" placeholder="TPOC Phone" required th:field="*{PHONE}" th:disabled ="*{! ACTIVE}">
+												</div>
+												<div class="col-md-4">
+													<label for="validationCustom01" class a="form-label">TPOC Email</label>
+													<input type="text" class="form-control" id="tpocEmail" placeholder="TPOC Email" required th:field="*{EMAIL}" th:disabled ="*{! ACTIVE}">
+												</div>
+												
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">TPOC Designation</label>
+													<input type="text" class="form-control" id="tpocDesignation" placeholder="TPOC Designation" required th:field="*{DESIGNATION}" th:disabled ="*{! ACTIVE}">
+												</div>
+
+												<div class="col-md-75 bg-info  justify-content-between bg-primary pb-1 pt-1">
+													<label for="MPOC_DETAILS" class="form-label subheading text-white" th:field="*{DESIGNATION}" th:disabled ="*{! ACTIVE}" >SCHEME DETAILS</label>
+												</div>
+												
+												<div class="col-md-4">
+												<label for="TOGGLE" class="form-label">SECTION
+													</label> <select class="form-select" id="scheme" required th:field="*{SECTIONAADHARACT}" th:disabled ="*{! ACTIVE}">
+													<option value="Section 7">Section 7</option>
+													<option value="SECTION-4(4)(b)(ii)" >SECTION-4(4)(b)(ii)</option>
+												</select>
+											</div>
+											
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">Approval Date </label> <input type="text" th:disabled ="*{! ACTIVE}"
+													class="form-control flatpickr-input active"
+													data-provider="flatpickr" data-date-format="d-m-y"
+													id="ApprovalDate" placeholder="Approval Date" required th:field="*{APPROVALDATE}">
+												<!-- readonly="readonly" -->
+											</div>
+											
+											<div class="col-md-4">
+												<label for="ApprovalDoc" class="form-label"> Update Approval
+													Document (PDF) <button id="downloadButton"><i class="ri-eye-fill fs-5"> <i></i></i></button> 	
+													
+												 </label> <input type="file" class="form-control" th:disabled ="*{! ACTIVE}"
+													id="ApprovalDoc" accept=".pdf" required onchange="getFile2(event)">
+											</div>
+											
+											<div class="col-md-4">
+												<label for="Purpose" class="form-label">Purpose</label>
+												<textarea class="form-control" id="TEXTAREA" rows="4" th:field="*{SCHEME_PURPOSE} " th:disabled ="*{! ACTIVE}"></textarea>
+											</div>
+											
+											<div class="col-md-75 bg-info  justify-content-between bg-primary pb-1 pt-1">
+												<label for="MPOC_DETAILS" class="form-label subheading text-white">SubAua Status</label>
+											</div>
+											
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">Registered With UIDAI </label>
+												<select class="form-select mb-3" aria-label="Default select example form-control" id="isRegisteredWithUid" name="ACTIVE" th:disabled ="*{! ACTIVE}"
+													required th:field="*{IS_REG_WITH_UID}">
+													<option th:value="1">YES</option>
+													<option th:value="0"> NO</option>
+												</select>
+											</div>
+
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">STATUS </label> 
+											<select class="form-select mb-3"
+													aria-label="Default select example form-control"
+													id="stauts" name="ACTIVE" th:field="*{ACTIVE}"
+													 required  >
+													<option th:value="1">ACTIVE</option>
+													<option th:value="0"> DE-ACTIVE</option>
+
+												</select>
+											</div>
+											
+											<div class="col-md-4 deactivationApprovalDate" style="display: none;">
+												<label for="validationCustom01" class="form-label">Deactivation Approval Date </label> 
+												<input type="text"  th:disabled ="*{! ACTIVE}" th:field="*{DEREGISTRATIONAPPROVALDATE} "
+													class="form-control flatpickr-input active"      
+													data-provider="flatpickr" data-date-format="d-m-y"
+													id="deactivationApprovalDate" placeholder="DeactivationApproval Date" required >
+												
+											</div>
+											
+											<div class="col-md-4  deactivationApprovalDoc"  style="display: none;" >
+												<label for="ApprovalDoc" class="form-label">Deactivation
+													Document (PDF)  <button id="DectivationDocdownloadButton"><i class="ri-eye-fill fs-5"> <i></i></i></button></label> 
+													<input type="file" class="form-control" th:disabled ="*{! ACTIVE}"  th:field="*{DEREGISTRATIONAPPROVALDOC} "
+													id="deactivationApprovalDoc" accept=".pdf" required onchange="getFile()">
+											</div>
+		
+											<div class="col-12">
+												<button class="btn btn-primary submit" th:disabled ="*{! ACTIVE}" type="submit" th.value="${subauaLicenseKeydata.TID}" >Submit
+													</button>
+											</div>
+
+										</form>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="modal fade" id="otpPopupP1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true" data-backdrop="static">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title text-white" id="exampleModalLongTitle" th:value="${usersRoleMapping.aadhaarId}"  th:text="${#strings.repeat('X', usersRoleMapping.aadhaarId.length() - 4) + #strings.substring(usersRoleMapping.aadhaarId, usersRoleMapping.aadhaarId.length() - 4)}"></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+		
+						<form id="formOtp">
+		
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="popupbox11">
+										<input type="checkbox" id="agree1" name="agree1" value="Bike">
+										<label for="agree1"> I hereby state that i have no objection in authenticating myself
+											with AADHAAR based authentication system and consent to providing my AADHAAR Number,
+											and OTP for AADHAAR based Authentication. I also give my explicit consent for
+											accessing the mobile number and email address from AADHAAR System. </label>
+									</div>
+									<div class="otpinputbox1">
+										<input type="text" id="otp" name="otp" maxlength="6" style="display: none;"
+											placeholder="OTP (Time-Based OTP)">
+										<label class="left10minutes" style="display: none;">Note : AADHAAR OTP will be valid
+											only for 10 minutes.</label><br>
+										<label class="opt2minutes" style="display: none;">Resend OTP <span class="otp-countdown"
+												id="timer-countdown">02:00</span></label>
+									</div>
+								</div>
+								<div class="flexbuttonOTP">
+									<button type="button" class="btn btn-primary" id="sendOTP1" disabled>Send OTP</button>
+									<button type="button" class="btn btn-primary" id="OTPvalidatebtn"
+										style="display: none;">Validate OTP</button>
+									<button type="button" class="btn btn-primary" id="resentOTP" style="display: none;">ReSend
+										OTP</button>
+									<button type="button" class="btn btn-primary cancel" data-dismiss="modal">Cancel</button>
+									<input type="text" id="txn" name="txn" style="display: none;">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--  successfully Verified OTP -->
+		<!-- OTP Popup -->
+		<div class="modal fade" id="optverifedsuccessfully" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Submitted</h5>
+						<button type="button" class="closeModel" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+		
+						<form>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="popupbox11">
+										<p class="text-success" id="#OTPVerifiedMsg">SubAua Detals Updated SuccessFully. </p>
+									</div>
+		
+								</div>
+		
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="optverifedsuccessfully1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">OTP Verified!</h5>
+                <button type="button" class="closeModel" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="popupbox11">
+                                <p class="text-success" id="#OTPVerifiedMsg">SubAua Detals Updated SuccessFully. </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+		
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="../../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../assets/libs/feather-icons/feather.min.js"></script>
+	<script src="../../assets/js/jquery-3.5.1.js"></script>
+	<script src="../../assets/js/jquery.dataTables.min.js"></script>
+	<script src="../../assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="../../assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="../../assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="../assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="../assets/js/buttons.html5.min.js"></script>
+	<script src="../assets/js/app.js"></script>
+
+	
+	<script>
+		flatpickr("#ApprovalDate", {
+			mode: "single",
+			dateFormat: 'd-m-Y',
+			maxDate: new Date()
+		});
+		
+		flatpickr("#deactivationApprovalDate", {
+			mode: "single",
+			dateFormat: 'd-m-Y',
+			maxDate: new Date()
+		});
+		
+			var deRegistrationApprovalDoc ='';
+			var approvalDoc = '';
+				function getFile() {
+					console.log(event)
+					const file = event.target.files[0];
+					console.log(file)
+
+					var reader = new FileReader();
+					reader.readAsDataURL(file);
+					reader.onload = function () {
+					deRegistrationApprovalDoc = reader.result
+					
+			};
+	    }
+				function getFile2() {
+						console.log(event)
+						const file = event.target.files[0];
+						console.log(file)
+
+						var reader = new FileReader();
+						reader.readAsDataURL(file);
+						reader.onload = function () {
+						approvalDoc = reader.result
+						};
+					}
+					
+					window.onload = function () {
+							const active = $("#stauts").val();
+						if (active == 0) {
+							$(".deactivationApprovalDate").show();
+							$(".deactivationApprovalDoc").show();
+						}
+
+					}  
+					
+	</script>
+	
+	<!-- Include this script in your HTML template -->
+<script>
+    $(document).ready(function () {
+         $('.submit').click(function () {
+			 debugger;
+            event.preventDefault(); 
+            var formDataString = $('#validation-form').serialize();
+            var formDataObject = parseFormData(formDataString);
+            var isValid = validateFormData(formDataObject);
+            
+            if (isValid) {
+				 if (previousIsReg != currentIsReg || currentStatus != previousStatus) {
+					 $('#otpPopupP1').modal('show');
+				 } else {
+					 saveData();
+				 }
+
+			 }
+			
+        });
+        
+         $("#downloadButton").click(function() {
+			 	event.preventDefault(); 
+	      		const form = document.getElementById('validation-form');
+				var action = form .getAttribute('action');
+				const match = action.match(/\/(\d+)$/);
+				const status = $('#stauts').val()
+				const tid = match[1];
+				 $.ajax({
+					type: 'POST',
+					url: '/Authmis/downloadPdf?TID=' + tid + '&status=' + status,
+					success: function (data) {
+						const downloadLink = document.createElement("a");
+						downloadLink.href = data;
+						downloadLink.download = 'ApprovalDoc.pdf';
+						downloadLink.click();
+					},
+					error: function (xhr, status, error) {
+
+					}
+				});
+	       
+	    });
+	    
+	     $("#DectivationDocdownloadButton").click(function() {
+			 	event.preventDefault(); 
+	      		const form = document.getElementById('validation-form');
+				var action = form .getAttribute('action');
+				const match = action.match(/\/(\d+)$/);
+				const status = $('#stauts').val()
+				const tid = match[1];
+				 $.ajax({
+					type: 'POST',
+					url: '/Authmis/deactivationDocDownloadPdf?TID=' + tid + '&status=' + status,
+					success: function (data) {
+						const downloadLink = document.createElement("a");
+						downloadLink.href = data;
+						downloadLink.download = 'DeactivationApprovalDoc.pdf';
+						downloadLink.click();
+					},
+					error: function (xhr, status, error) {
+
+					}
+				});
+	       
+	    });
+        
+        function saveData(){
+			var formDataString = $('#validation-form').serialize();
+            var formDataObject = parseFormData(formDataString);
+			const form = document.getElementById('validation-form');
+			
+				var action = form .getAttribute('action');
+				const match = action.match(/\/(\d+)$/);
+				const tid = match[1];
+					var formData = {
+						subAuaCode : $('#SUB_AUA_CODE').val(),
+						orgName: $('#SUB_AUA_NAME').val(),
+						isRegWithUid: $('#isRegisteredWithUid').val(),
+						approvalDate: $('#ApprovalDate').val(),
+						approvalDoc: btoa(approvalDoc), 
+						sectionAadharAct: $('#scheme').val(),
+						schemePurpose: $('#TEXTAREA').val(),
+						mpocName: $('#mpocName').val(),
+						mpocEmail: $('#mpocEmail').val(),
+						mpocContact: $('#mpocPhone').val(),
+						mpocDesignation: $('#mpocDesignation').val(),
+						officerName: $('#tpocName').val(),
+						email: $('#tpocEmail').val(),
+						phone: $('#tpocPhone').val(),
+						designation: $('#tpocDesignation').val(),
+						active: $('#stauts').val()
+					};
+					
+					if (formData.isRegisteredWithUid === "yes") {
+						
+					}
+					
+					$.ajax({
+						url: '/Authmis/subauaa/' + tid, 
+						method: 'POST',
+						data: JSON.stringify(formData), // Convert the object to JSON
+						contentType: 'application/json', // Set the content type
+						success: function (response) {
+							 $('#optverifedsuccessfully').modal('show');
+							
+							
+						},
+						error: function (xhr, status, error) {
+							alert("Internal Server Error Please Trying Again Later")
+						}
+					});
+		}
+        
+		function parseFormData(formDataString) {
+			var formDataObject = {};
+			var formDataPairs = formDataString.split('&');
+			formDataPairs.forEach(function (pair) {
+				var keyValue = pair.split('=');
+				var key = decodeURIComponent(keyValue[0]);
+				var value = decodeURIComponent(keyValue[1]);
+				formDataObject[key] = value;
+			});
+			return formDataObject;
+		}
+		
+		function validateFormData(formData) {
+			for (var key in formData) {
+				var value = formData[key];
+				if (!value || value.trim() === "" ) {
+					if( key == "DEREGISTRATIONAPPROVALDATE" ||  key == "MPOCNAME" ){
+						break;
+					}
+					alert('The field "' + key + '" is empty. Please fill it in.');
+					return false; // Validation failed
+				}
+
+				if ((key === "PHONE" || key === "MPOCCONTACT") && isNaN(Number(value))) {
+					alert('The field "' + key + '" should be a number.');
+					return false; // Validation failed
+				}
+				
+				var status = $('#stauts').val()
+				var deactivationApprovalDate = document.getElementById("deactivationApprovalDate").value;
+				var deactivationApprovalDoc = document.getElementById("deactivationApprovalDoc");
+				if (status === "0") { // Check if status is "DE-ACTIVE"
+					if (deactivationApprovalDate.trim() === "") {
+						alert("Deactivation Approval Date is required for DE-ACTIVE status.");
+						return false;
+					}
+					if (deactivationApprovalDoc.files.length === 0) {
+						alert("Deactivation Approval Document is required for DE-ACTIVE status.");
+						return false;
+					}
+				}
+
+				
+				
+				
+			}
+			return true; // Validation passed
+		}
+		
+		function checkFileSize(input) {
+			const fileInput = input;
+			if (fileInput.files.length > 0) {
+				const file = fileInput.files[0];
+				const fileSize = file.size; // in bytes
+				const maxSize = 5 * 1024 * 1024; // 5 MB
+				if (file.type !== "application/pdf") {
+					alert("Please select a PDF file.");
+					fileInput.value = ""; 
+					return; 
+				} else if (fileSize > maxSize) {
+					alert("The selected PDF file is too large. Please choose a file smaller than 5 MB.");
+					fileInput.value = ""; 
+				}
+			}
+		}
+		
+		$(".close").click(function () {
+			$('#otpPopupP1').modal('hide');
+			$("#otp").hide();
+			$("#resentOTP").hide();
+			$("#OTPvalidatebtn").hide();
+			$("#sendOTP1").show();
+			$(".left10minutes").hide();
+			$(".opt2minutes").hide();
+			var checkbox = $("#agree1");
+			if (checkbox.length > 0) {
+				if (checkbox.is(":checked")) {
+					checkbox.prop("checked", false);
+					$('#sendOTP1').prop('disabled', true);
+				}
+			}
+		});
+		
+		let previousIsReg;
+		let currentIsReg;
+		
+		(function () {
+			$("#isRegisteredWithUid").focus(function () {				
+				previousIsReg = $('#isRegisteredWithUid').find(":selected").val();
+			}).change(function () {
+				currentIsReg = $('#isRegisteredWithUid').find(":selected").val();
+				
+			});
+		})();
+		
+		let previousStatus;
+		let currentStatus;
+		
+		(function () {
+			$("#stauts").focus(function () {				
+				previousStatus = $('#stauts').find(":selected").val();
+			}).change(function () {
+				currentStatus = $('#stauts').find(":selected").val();
+				
+			});
+		})();
+		
+
+
+		$(".closeModel").click(function () {
+			$('#optverifedsuccessfully').modal('hide');
+			location.reload();
+		});
+
+		$(".cancel").click(function () {
+			var checkbox = $("#agree1");
+			$("#otp").hide();
+			$("#resentOTP").hide();
+			$("#OTPvalidatebtn").hide();
+			$("#sendOTP1").show();
+			$(".left10minutes").hide();
+			$(".opt2minutes").hide();
+			$("#agree1").prop("disabled", false);
+			if (checkbox.length > 0) {
+				if (checkbox.is(":checked")) {
+					checkbox.prop("checked", false);
+					$('#sendOTP1').prop('disabled', true);
+				}
+			}
+			$('#otpPopupP1').modal('hide');
+		});
+
+		$('#agree1').click(function () {
+
+			if ($(this).is(':checked')) {
+				$('#sendOTP1').prop('disabled', false);
+			}
+			else {
+				$('#sendOTP1').prop('disabled', true);
+			}
+		});
+		// send otp show box
+		$('#sendOTP1').click(function () {
+			event.preventDefault();
+			generateOTP();
+			$("#otp").show();
+			$("#resentOTP").show();
+			$("#OTPvalidatebtn").show();
+			$("#sendOTP1").hide();
+			$(".left10minutes").show();
+			$(".opt2minutes").show();
+			$("#agree1").prop("disabled", true);
+			startOTPTimer();
+
+		});
+		//Resend OTP
+		$('#resentOTP').click(function () {
+			event.preventDefault();
+			generateOTP();
+
+
+		});
+
+		function generateOTP() {
+			debugger;
+			var uuid = $("#exampleModalLongTitle").attr("value");;
+			$.ajax({
+				type: 'GET',
+				url: '/Authmis/otpGeneration?UUID=' + uuid,
+				success: function (response) {
+					var newOTP = response.otp;
+					$("#otp").val(newOTP);
+					startOTPTimer();
+					alert('OTP Sent Successfully');
+				},
+				error: function (xhr, status, error) {
+					console.log('Error: ' + error);
+					alert('Unable to sent OTP. Please Try Again.');
+					var checkbox = $("#agree1");
+					$("#otp").hide();
+					$("#resentOTP").hide();
+					$("#OTPvalidatebtn").hide();
+					$("#sendOTP1").show();
+					$(".left10minutes").hide();
+					$(".opt2minutes").hide();
+					$("#agree1").prop("disabled", false);
+					if (checkbox.length > 0) {
+						if (checkbox.is(":checked")) {
+							checkbox.prop("checked", false);
+							$('#sendOTP1').prop('disabled', true);
+						}
+					}
+					$('#otpPopupP1').modal('hide');
+				}
+			});
+
+		}
+		 $('#OTPvalidatebtn').click(function () {
+			var otpValue = $("#otp").val();
+			if (otpValue === "" || !$.isNumeric(otpValue)) {
+				alert("Please enter a valid number OTP.");
+			} else {
+				validateOtp();
+			}
+
+
+		});
+		
+		
+
+		function validateOtp() {
+				var formDataString = $('#validation-form').serialize();
+	            var formDataObject = parseFormData(formDataString);
+				const form = document.getElementById('validation-form');
+				var action = form .getAttribute('action');
+				const match = action.match(/\/(\d+)$/);
+				const tid = match[1];
+					var formData = {
+						otp: $("#otp").val(),
+						uuid: $('#exampleModalLongTitle').attr("value"),
+						subAuaCode : $('#SUB_AUA_CODE').val(),
+						orgName: $('#SUB_AUA_NAME').val(),
+						isRegWithUid: $('#isRegisteredWithUid').val(),
+						approvalDoc: btoa(approvalDoc), 
+						approvalDate: $('#ApprovalDate').val(),
+						sectionAadharAct: $('#scheme').val(),
+						schemePurpose: $('#TEXTAREA').val(),
+						mpocName: $('#mpocName').val(),
+						mpocEmail: $('#mpocEmail').val(),
+						mpocContact: $('#mpocPhone').val(),
+						mpocDesignation: $('#mpocDesignation').val(),
+						officerName: $('#tpocName').val(),
+						email: $('#tpocEmail').val(),
+						phone: $('#tpocPhone').val(),
+						designation: $('#tpocDesignation').val(),
+						active: $('#stauts').val()
+					};
+					
+					if (formData.active === "0") {
+						formData.deRegistrationApprovalDoc = btoa(deRegistrationApprovalDoc) ;
+						formData.deRegistrationApprovalDate = $('#deactivationApprovalDate').val();
+					}
+					
+					$.ajax({
+						url: '/Authmis/OTPValidation/' + tid, 
+						method: 'POST',
+						data: JSON.stringify(formData), // Convert the object to JSON
+						contentType: 'application/json', // Set the content type
+						success: function (response) {
+							if(response.status === 'y' || response.status === 'Y'){
+								$('#optverifedsuccessfully1').modal('show');
+							 $('#otpPopupP1').modal('hide');
+							} else {
+								alert(response.error);
+							}
+
+						},
+						error: function (xhr, status, error) {
+							alert("Interanal Server Error");
+						}
+					});
+
+		}
+		
+		
+		
+		var otpTimer;
+		var timerDuration = 2 * 60; // 2 minutes
+
+		function startOTPTimer() {
+			var timerDisplay = $('.otp-countdown');
+			var remainingTime = timerDuration;
+			otpTimer = setInterval(function () {
+				var minutes = Math.floor(remainingTime / 60);
+				var seconds = remainingTime % 60;
+				var display = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+				timerDisplay.text(display);
+				remainingTime--;
+
+				if (remainingTime < 0) {
+					clearInterval(otpTimer);
+					$("#regenerateOTP").show();
+					$("#otpFields, #submitOTP").hide();
+				}
+			}, 1000);
+		}
+	});
+</script>
+
+	
+	<script>
+		$(document).ready(function () {
+			$("#stauts").change(function () {
+				if ($(this).val() === "0") {
+					$(".deactivationApprovalDate").show();
+					$(".deactivationApprovalDoc").show();
+				} else {
+					$(".deactivationApprovalDate").hide();
+					$(".deactivationApprovalDoc").hide();
+				}
+			});
+		});
+	</script>
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$("#ORGNAME")
+									.change(
+											function() {
+												debugger;
+												var ORGNAME = $(this).val();
+												console.log(ORGNAME);
+												$
+														.ajax({
+															type : 'GET',
+															url : "/Authmis/subauadepname/"
+																	+ ORGNAME,
+															contentType : "application/json; charset=utf-8",
+															dataType : "json",
+															success : function(
+																	data) {
+																var slctSubcat = $("#SUBAUA_CODE"), option = "";
+																slctSubcat
+																		.empty();
+
+																for (var i = 0; i < data.length; i++) {
+																	option = option
+																			+ "<option value='"+data[i] + "'>"
+																			+ data[i]
+																			+ "</option>";
+																}
+																//console.log(option);
+																slctSubcat
+																		.append(option);
+															},
+															error : function() {
+																alert("error");
+															}
+
+														});
+											});
+						});
+						
+						
+						
+						
+	</script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		 $(".logo-lg img").attr('src','/assets/images/logo-light.png')
+	})
+	</script>
+</body>
+</html>

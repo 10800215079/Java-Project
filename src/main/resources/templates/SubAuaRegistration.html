@@ -1,0 +1,855 @@
+
+
+<head th:replace="fragments_others_head2" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header3" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dash board</a></li>
+										<li class="breadcrumb-item active">SubAua Registration</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">SubAua Registration</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form class="row g-3" id="validation-form" method="GET" novalidate >
+											<div class="alert alert-success" role="alert"
+													th:text="${success}" th:if="${success}"></div>
+												<div class="alert alert-danger" role="alert"
+													th:text="${error}" th:if="${error}"></div>
+											<!-- Input Fields Without Readonly -->
+											<div class="col-md-4" novalidate>
+												<label for="SUB_AUA_NAME" class="form-label">SUB AUA
+													Name</label> <input type="text" class="form-control"
+													id="SUB_AUA_NAME" placeholder="SUB AUA NAME" required>
+											</div>
+
+											<div class="col-md-4">
+												<label for="TOGGLE" class="form-label">Registered With UIDAI</label>
+												<select class="form-select" id="TOGGLE" required>
+													<option value="" selected>Select</option>
+													<option value="1">Yes</option>
+													<option value="0">No</option>
+												</select>
+											</div>
+
+
+											<div class="col-md-4" id="subAuaCodeField"
+												style="display: none;">
+												<label for="SUB_AUA_CODE" class="form-label">SUB AUA
+													Code</label> <input type="text" class="form-control"
+													id="SUB_AUA_CODE" placeholder="SUB_AUA CODE" required>
+											</div>
+											<div class="col-md-4">
+												<label for "Approval Date" class="form-label">Approval Date</label> <input
+													type="date" class="form-control" id="ApprovalDate"
+													placeholder="ApprovalDate" required>
+											</div>
+
+											<div class="col-md-4">
+												<label for="ApprovalDoc" class="form-label">Approval
+													Document (PDF)</label> <input type="file" class="form-control"
+													id="ApprovalDoc" accept=".pdf" required onchange="checkFileSize(this)">
+											</div>
+											
+											<div class="col-md-4">
+												<label for="TOGGLE" class="form-label">SECTION
+													</label> <select class="form-select" id="scheme" required>
+													<option value="" selected>Select</option>
+													<option value="Section 7">Section 7</option>
+													<option value="SECTION-4(4)(b)(ii)" >SECTION-4(4)(b)(ii)</option>
+												</select>
+											</div>
+											
+											<div class="col-md-4">
+												<label for="Purpose" class="form-label">Purpose</label>
+												<textarea class="form-control" id="TEXTAREA" rows="4"></textarea>
+											</div>
+
+											<div class="col-md-75 bg-info  justify-content-between bg-primary pb-1 pt-1">
+												<label for="MPOC_DETAILS"
+													class="form-label subheading text-white">MPOC
+													Details</label>
+											</div>
+											<div class="col-md-4">
+												<label for="MpocNmae" class="form-label">Name</label>
+												<input type="text" class="form-control" id="mPocName"
+													placeholder="Name" required>
+											</div>
+
+											<div class="col-md-4">
+												<label for="MpocEmail" class="form-label">Email
+													</label> <input type="email" class="form-control"
+													id="MpocEmail" placeholder="Mpoc Email" required>
+											</div>
+											
+											<div class="col-md-4">
+												<label for="MpocContact" class="form-label">Contact</label>
+												<input type="text" class="form-control" id="MpocContact" placeholder="Mpoc Contact" required maxlength="12">
+											</div>
+
+											
+											<div class="col-md-4">
+												<label for="Mpoc Designation" class="form-label">Designation
+													</label> <input type="text" class="form-control"
+													id="MpocDesignation" placeholder="Mpoc Designation" required>
+											</div>
+
+											<div
+												class="col-md-75 bg-info justify-content-between bg-primary pb-1 pt-1">
+												<label for="TPOC_DETAILS"
+													class="form-label subheading text-white">TPOC
+													Details</label>
+											</div>
+
+											<!-- Fields for TPOC Details -->
+											<div class="col-md-4">
+												<label for="TPOCName" class="form-label">Name</label> <input
+													type="text" class="form-control" id="TPOCName"
+													placeholder="TPOC Name" required>
+											</div>
+
+											<div class="col-md-4">
+												<label for="TPOCEmail" class="form-label">Email</label> <input
+													type="email" class="form-control" id="TPOCEmail"
+													placeholder="TPOC Email" required>
+											</div>
+
+											<div class="col-md-4">
+												<label for="TPOCContact" class="form-label">Contact</label>
+												<input type="text" class="form-control" id="TPOCContact"
+													placeholder="TPOC Contact" required maxlength="12">
+											</div>
+
+											<div class="col-md-4">
+												<label for="TPOCDesignation" class="form-label">Designation</label>
+												<input type="text" class="form-control" id="TPOCDesignation"
+													placeholder="TPOC Designation" required>
+											</div>
+
+											<div class="col-md-4" id="statusDropdown"
+												style="display: none;">
+												<label for="ACTIVE" class="form-label">STATUS</label> <select
+													class="form-select mb-3" id="ACTIVE" required>
+													<option value="1">ACTIVE</option>
+													<option value="0">DE-ACTIVE</option>
+												</select>
+											</div>
+
+											<div class="col-12">
+												<button type="button" class="btn btn-primary openModel" data-toggle="modal" data-target="#otpModal">Submit
+													</button>
+											</div>
+											
+											
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- <div class="modal fade" id="otpModal" tabindex="-1" role="dialog"
+			aria-labelledby="otpModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="otpModalLabel">Generate OTP</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="aadhaar">Aadhaar Number</label> <input type="text"
+								class="form-control" id="aadhaar"
+								placeholder="Enter Aadhaar Number">
+						</div>
+						Countdown timer
+						<div id="timer">00:30</div>
+						Additional fields for OTP generation
+						<div id="otpFields" style="display: none;">
+							<label for="otp">OTP</label> <input type="text"
+								class="form-control" id="otp" placeholder="Enter OTP">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" id="generateOTP">Generate
+							OTP</button>
+						<button type="button" class="btn btn-primary" id="regenerateOTP"
+							style="display: none;">Regenerate OTP</button>
+						<button type="button" class="btn btn-primary" id="submitOTP"
+							style="display: none;">Submit OTP</button>
+					</div>
+				</div>
+			</div>
+		</div> -->
+		
+		
+		<!-- OTP Popup -->
+<div class="modal fade" id="otpPopupP1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle" th:value="${usersRoleMapping.aadhaarId}"  th:text="${#strings.repeat('X', usersRoleMapping.aadhaarId.length() - 4) + #strings.substring(usersRoleMapping.aadhaarId, usersRoleMapping.aadhaarId.length() - 4)}"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="formOtp">
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="popupbox11">
+                                <input type="checkbox" id="agree1" name="agree1" value="Bike">
+                                <label for="agree1">  I hereby state that i have no objection in authenticating myself with AADHAAR based authentication system and consent to providing my AADHAAR Number, and OTP for AADHAAR based Authentication. I also give my explicit consent for accessing the mobile number and email address from AADHAAR System. </label>
+                            </div>
+                            <div class="otpinputbox1">
+                                <input type="text" id="otp" name="otp" maxlength="6" style="display: none;" placeholder="OTP (Time-Based OTP)">
+                                <label class="left10minutes" style="display: none;">Note : AADHAAR OTP will be valid only for 10 minutes.</label><br>
+                                <label class="opt2minutes" style="display: none;">Resend OTP <span class="otp-countdown" id="timer-countdown">02:00</span></label>
+                            </div>
+                        </div>
+                        <div class="flexbuttonOTP">
+                            <button type="button" class="btn btn-primary" id="sendOTP1" disabled>Send OTP</button>
+                            <button type="button" class="btn btn-primary" id="OTPvalidatebtn" style="display: none;">Validate OTP</button>
+                            <button type="button" class="btn btn-primary" id="resentOTP" style="display: none;">ReSend OTP</button>
+                            <button type="button" class="btn btn-primary cancel" data-dismiss="modal">Cancel</button>
+                           <input type="text" id="txn" name="txn" style="display: none;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  successfully Verified OTP -->
+<!-- OTP Popup -->
+<div class="modal fade" id="optverifedsuccessfully" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">OTP Verified!</h5>
+                <button type="button" class="closeModel" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="popupbox11">
+                                <p class="text-success" id="#OTPVerifiedMsg">SubAua SuccessFully Registered </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Javascript files-->
+		
+
+
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="../../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../assets/libs/feather-icons/feather.min.js"></script>
+	<script src="../assets/js/jquery-3.5.1.js"></script>
+	<script src="../assets/js/jquery.dataTables.min.js"></script>
+	<script src="../assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="../assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="../assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="../assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="../assets/js/buttons.html5.min.js"></script>
+	<script src="../assets/js/app.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	
+	<script>
+    flatpickr("#ApprovalDate", {
+        mode: "single",
+        dateFormat: 'd-m-Y',
+        maxDate: new Date()
+    });
+</script>
+
+<script>
+	// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  'use strict';
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation');
+
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+        form.classList.add('was-validated');
+      } else {
+        // If the form is valid, open the modal here
+        $('#yourModalId').modal('show');
+      }
+    }, false);
+  });
+
+  // Handle the click event on elements with class .openModel
+  $(".openModel").click(() => {
+    $(forms).trigger('submit');
+  });
+})();
+
+
+</script>
+	
+	<script>
+		// Add an event listener to the toggle select element
+		
+		document.getElementById('TOGGLE').addEventListener(
+				'change',
+				function() {
+					// Get the selected value
+					var toggleValue = this.value;
+
+					// Get the "Sub AUA Code" input field
+					var subAuaCodeField = document
+							.getElementById('subAuaCodeField');
+
+					// Show or hide the "Sub AUA Code" input field based on the toggle value
+					if (toggleValue == 1 ) {
+						subAuaCodeField.style.display = 'block';
+					} else {
+						subAuaCodeField.style.display = 'none';
+					}
+				});
+	</script>
+	
+	<script>
+	
+		function checkFileSize(input) {
+				const fileInput = input;
+				if (fileInput.files.length > 0) {
+					const file = fileInput.files[0];
+					const fileSize = file.size; // in bytes
+					const maxSize = 1024 * 1024; // 1 MB (you can adjust this to your desired size)
+
+					// Check if the file type is "application/pdf"
+					if (file.type !== "application/pdf") {
+						alert("Please select a PDF file.");
+						fileInput.value = ""; // Clear the file input
+						return; // Exit the function if not a PDF
+					} else if (fileSize > maxSize) {
+						alert("The selected PDF file is too large. Please choose a file smaller than 1 MB.");
+						fileInput.value = ""; // Clear the file input
+					}
+
+					
+				}
+			}
+		
+
+	</script>
+
+
+	<script>
+		$(document).ready(function() {
+			
+			 $(".openModel").click(() => {
+				 var approvalDateInput = $("#ApprovalDate");
+				 var SUB_AUA_NAME = $("#SUB_AUA_NAME");
+				 var TOGGLE = $("#TOGGLE");
+				 var SUB_AUA_CODE = $("#SUB_AUA_CODE");
+				 var approvalDocInput = $("#ApprovalDoc");
+				 var schemeInput = $("#scheme");
+				 var textareaInput = $("#TEXTAREA");
+				 var mPocNameInput = $("#mPocName");
+				 var mPocEmailInput = $("#MpocEmail");
+				 var mPocContactInput = $("#MpocContact");
+				 var mPocDesignationInput = $("#MpocDesignation");
+				 var tPocNameInput = $("#TPOCName");
+				 var tPocEmailInput = $("#TPOCEmail");
+				 var tPocContactInput = $("#TPOCContact");
+				 var tPocDesignationInput = $("#TPOCDesignation");
+				 var statusInput = $("#ACTIVE");
+				 
+				 if (!SUB_AUA_NAME.val()) {
+					 alert("SUB AUA Name is required.");
+					 event.preventDefault();
+				 }
+				 else if (!approvalDateInput.val()) {
+					 alert("Approval Date is required.");
+					 event.preventDefault();
+				 }
+				
+				 else if (TOGGLE.val() === "") {
+					 alert("Please select a valid option for Registered with UIDAI.");
+					event.preventDefault();
+				 }
+				 else if (TOGGLE.val() == 1 && $("#SUB_AUA_CODE").val() === "") {
+						 alert("SUB AUA Code is required when Registered with UIDAI is 'Yes'.");
+						 event.preventDefault(); // Make sure event is available in the scope
+
+				 }
+				  else if (approvalDocInput[0].files.length === 0) {
+					 alert("Approval Document (PDF) is required.");
+					 event.preventDefault();
+				 }
+
+				  else if (schemeInput.val() === "") {
+					 alert("Please select a valid Scheme/Purpose.");
+					event.preventDefault();
+				 }
+ 				else if(textareaInput.val() === "") {
+					 alert("Scheme/Purpose description is required.");
+					 event.preventDefault();
+				 }
+
+				  else if (mPocNameInput.val() === "") {
+					 alert("MPOC Name is required.");
+					 vevent.preventDefault();
+				 }
+
+				  else if (mPocEmailInput.val() === "") {
+					 alert("MPOC Email is required.");
+					 event.preventDefault();
+				 }
+
+				 else if (mPocContactInput.val() == "" || /^\d{0,9}$/.test(mPocContactInput.val())) {
+					 alert("MPOC Contact is required and must be a numeric value with at most 10 digits.");
+					 event.preventDefault();
+				 }  
+
+				  else if (mPocDesignationInput.val() === "") {
+					 alert("MPOC Designation is required.");
+					 event.preventDefault();
+				 }
+				  else if (tPocNameInput.val() === "") {
+					 alert("TPOC Name is required.");
+					 event.preventDefault();
+				 }
+				 else if (tPocEmailInput.val() === "") {
+					 alert("TPOC Email is required.");
+					 event.preventDefault();
+				 }
+				 else if (tPocContactInput.val() == "" || /^\d{0,9}$/.test(tPocContactInput.val())) {
+					alert("TPOC Contact is required and must be a numeric value with at most 10 digits.");
+					 event.preventDefault();
+				 }
+				  else if (tPocDesignationInput.val() === "") {
+					 alert("TPOC Designation is required.");
+					 event.preventDefault();
+				 }
+				 else if (statusInput.is(":visible") && statusInput.val() === "") {
+					 alert("Please select a valid STATUS.");
+					 event.preventDefault();
+				 }else {
+					 $('#otpPopupP1').modal('show');
+				 }
+				
+			 });
+			
+			$(".close").click(function() {
+				$('#otpPopupP1').modal('hide');
+				 $("#otp").hide();
+				$("#resentOTP").hide();
+				$("#OTPvalidatebtn").hide();
+				$("#sendOTP1").show();
+				$(".left10minutes").hide();
+				$(".opt2minutes").hide();
+				var checkbox = $("#agree1");
+				if (checkbox.length > 0) {
+					if (checkbox.is(":checked")) {
+						checkbox.prop("checked", false);
+						$('#sendOTP1').prop('disabled', true);
+					}
+				}
+			});
+			
+			
+			
+			$(".closeModel").click(function() {
+				$('#optverifedsuccessfully').modal('hide');
+				location.reload();
+			});
+			
+			$(".cancel").click(function() {
+				var checkbox = $("#agree1");
+				$("#otp").hide();
+				$("#resentOTP").hide();
+				$("#OTPvalidatebtn").hide();
+				$("#sendOTP1").show();
+				$(".left10minutes").hide();
+				$(".opt2minutes").hide();
+				$("#agree1").prop("disabled", false);
+				if (checkbox.length > 0) {
+					if (checkbox.is(":checked")) {
+						checkbox.prop("checked", false);
+						 $('#sendOTP1').prop('disabled', true);
+					}
+				}
+				$('#otpPopupP1').modal('hide');
+			});
+			
+			 $('#agree1').click(function () {
+				 
+		            if ($(this).is(':checked')) {
+		                $('#sendOTP1').prop('disabled', false);
+		            }
+		            else {
+		                $('#sendOTP1').prop('disabled', true);
+		            }
+		        });
+		        // send otp show box
+		        $('#sendOTP1').click(function () {
+		        	event.preventDefault();
+		        	generateOTP();
+		        	 $("#otp").show();
+		             $("#resentOTP").show();
+		             $("#OTPvalidatebtn").show();
+		             $("#sendOTP1").hide();
+		             $(".left10minutes").show();
+		             $(".opt2minutes").show();
+		             $("#agree1").prop("disabled", true);
+		             startOTPTimer();
+		             
+		        });
+		        //Resend OTP
+		        $('#resentOTP').click(function () {
+		        	event.preventDefault();
+		        	generateOTP();
+		        	
+
+		        });
+		        
+		        
+		        $('#OTPvalidatebtn').click(function () {
+					var otpValue = $("#otp").val();
+					if (otpValue === "" || !$.isNumeric(otpValue)) {
+						alert("Please enter a valid number OTP.");
+					} else {
+						event.preventDefault();
+		        	validateOtp();
+					}
+		        	
+		        	
+		        });
+
+		        function generateOTP() {
+			    	debugger;
+			    	var uuid = $("#exampleModalLongTitle").attr("value");;
+			    	$.ajax({
+			            type: 'GET', 
+			            url: '/otpGeneration?UUID=' + uuid, 
+			            success: function(response) {
+			                var newOTP = response.otp; 
+			                $("#otp").val(newOTP);
+			                startOTPTimer();
+			                alert('OTP Sent Successfully')
+			            },
+			            error: function(xhr, status, error) {
+			                console.log('Error: ' + error);
+			                alert('Unable to sent OTP. Please Try Again Later.')
+			                var checkbox = $("#agree1");
+							$("#otp").hide();
+							$("#resentOTP").hide();
+							$("#OTPvalidatebtn").hide();
+							$("#sendOTP1").show();
+							$(".left10minutes").hide();
+							$(".opt2minutes").hide();
+							$("#agree1").prop("disabled", false);
+							if (checkbox.length > 0) {
+								if (checkbox.is(":checked")) {
+									checkbox.prop("checked", false);
+									$('#sendOTP1').prop('disabled', true);
+								}
+							}
+							$('#otpPopupP1').modal('hide');
+						}
+			        });
+			 
+			    }
+		        
+			    var otpTimer;
+			    var timerDuration = 2 * 60; // 2 minutes
+			    
+			    function startOTPTimer() {
+			        var timerDisplay = $('.otp-countdown');
+			        var remainingTime = timerDuration;
+			        otpTimer = setInterval(function() {
+			            var minutes = Math.floor(remainingTime / 60);
+			            var seconds = remainingTime % 60;
+			            var display = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+			            timerDisplay.text(display);
+			            remainingTime--;
+
+			            if (remainingTime < 0) {
+			                clearInterval(otpTimer);
+			                $("#regenerateOTP").show();
+			                $("#otpFields, #submitOTP").hide();
+			            }
+			        }, 1000);
+			    }
+			    
+			  function validateOtp() {
+				const inputElement = document.getElementById('ApprovalDoc');
+				const file = inputElement.files[0];
+
+				// Create a FileReader
+				var reader = new FileReader();
+
+				reader.onload = function () {
+					// The contents of the PDF will be in reader.result
+					const pdfContentBase64 = reader.result.split(',')[1]; // Get the Base64 part of the result
+					console.log('PDF content:', pdfContentBase64);
+
+					var formData = {
+						otp: $("#otp").val(),
+						uuid: $('#exampleModalLongTitle').attr("value"),
+						orgName: $('#SUB_AUA_NAME').val(),
+						isRegWithUid: $('#TOGGLE').val(),
+						approvalDoc: pdfContentBase64, // Set the Base64 content here
+						approvalDate: $('#ApprovalDate').val(),
+						sectionAadharAct: $('#scheme').val(),
+						schemePurpose: $('#TEXTAREA').val(),
+						mpocName: $('#mPocName').val(),
+						mpocEmail: $('#MpocEmail').val(),
+						mpocContact: $('#MpocContact').val(),
+						mpocDesignation: $('#MpocDesignation').val(),
+						officerName: $('#TPOCName').val(),
+						email: $('#TPOCEmail').val(),
+						phone: $('#TPOCContact').val(),
+						designation: $('#TPOCDesignation').val()
+					};
+					
+					if (formData.isRegWithUid === '1') {
+						formData.subAuaCode = $('#SUB_AUA_CODE').val();
+					}
+					
+					$.ajax({
+						url: '/otpAuthentication', 
+						method: 'POST',
+						data: JSON.stringify(formData), // Convert the object to JSON
+						contentType: 'application/json', // Set the content type
+						success: function (response) {
+							if(response.status === 'y' || response.status === 'Y'){
+								$('#otpPopupP1').modal('hide');
+								$('#optverifedsuccessfully').modal('show');
+							} else {
+								alert(response.error);
+							}
+							
+							
+						},
+						error: function (xhr, status, error) {
+							alert("Interanal Server Error");
+						}
+					});
+				};
+
+				reader.onerror = function (error) {
+					console.log('Error: ', error);
+				};
+
+				// Read the file as a Data URL
+				reader.readAsDataURL(file);
+			}
+
+		});
+
+				function arrayBufferToBase64(buffer) {
+					const binary = new Uint8Array(buffer);
+					const bytes = [];
+					for (let i = 0; i < binary.length; i++) {
+						bytes.push(String.fromCharCode(binary[i]));
+					}
+					return btoa(bytes.join(''));
+				}
+		
+	</script>
+	
+
+	<script>
+	$(document).ready(function() {
+
+
+	    function generateOTP() {
+	    	debugger;
+	    	var uuid = $("#aadhaar").val();
+	    	$.ajax({
+	            type: 'GET', 
+	            url: '/otpGeneration?UUID=' + uuid, 
+	            success: function(response) {
+	                debugger;
+	                var newOTP = response.otp; 
+	                $("#otp").val(newOTP);
+	                startOTPTimer();
+	            },
+	            error: function(xhr, status, error) {
+	                console.log('Error: ' + error);
+	            }
+	        });
+	 
+	    }
+	    
+
+
+	    $("#generateOTP").click(function(e) {
+	        e.preventDefault(); // Prevent the default behavior of the button
+	        // Hide the "Generate OTP" button and the Aadhaar input
+	        $("#generateOTP, #aadhaar").hide();
+
+	        // Show the OTP input and "Submit OTP" button
+	        $("#otpFields, #submitOTP").show();
+
+	        // Generate the initial OTP and start the timer
+	        generateOTP();
+	    });
+
+	    $("#regenerateOTP").click(function() {
+	        $("#regenerateOTP").hide();
+	        generateOTP();
+	        $("#generateOTP, #aadhaar").hide();
+
+	        // Show the OTP input and "Submit OTP" button
+	        $("#otpFields, #submitOTP").show();
+	    });
+
+	    $("#submitOTP").click(function() {
+	    	
+	        var enteredOTP = $("#otp").val();
+	        if (enteredOTP === "123456") {
+	            // Valid OTP, close the modal
+	            clearInterval(otpTimer);
+	            $("#generateOTP, #aadhaar").show(); 
+		        $("#otpFields, #submitOTP").hide();
+		        $("#regenerateOTP").hide();
+	            $("#otpModal").modal("hide");
+	        } else {
+	            // Invalid OTP, show an error message or take action
+	            alert("Invalid OTP. Please try again.");
+	        }
+
+	    });
+
+	});
+	</script>
+	<script>
+	 function BindClickEventDynamic() {
+	        //$.noConflict();
+	        $("#btnForward").click(function () {
+	            $('#otpPopupP1').modal('show');
+	        });
+	       
+
+	        $('#agree1').click(function () {
+	            if ($(this).is(':checked')) {
+	                $('#sendOTP1').prop('disabled', false);
+	            }
+	            else {
+	                $('#sendOTP1').prop('disabled', true);
+	            }
+	        });
+	        // send otp show box
+	        $('#sendOTP1').click(function () {
+	        	generateOTP()
+
+	        });
+	        //Resend OTP
+	        $('#resentOTP').click(function () {
+	        	generateOTP()
+
+	        });
+
+
+	        // Verify Otp
+	        $('#OTPvalidatebtn').click(function () {
+
+	            VerifyOTP();
+	        });
+
+	        //// -------- coundown-timer-----
+	        if ($('#timer-countdown').length) {
+
+	            countdown("timer-countdown", 2, 0);
+	        }
+
+	    }
+	 
+	 var element, endTime, hours, mins, msLeft, time;
+	    function countdown(elementName, minutes, seconds) {
+
+	        element = document.getElementById(elementName);
+	        endTime = (+new Date) + 1000 * (60 * minutes + seconds) + 500;
+
+	        updateTimer();
+	    }
+	    function twoDigits(n) {
+	        return (n <= 9 ? "0" + n : n);
+	    }
+	    function updateTimer() {
+	        msLeft = endTime - (+new Date);
+	        if (msLeft < 1000) {
+	            element.innerHTML = "Time is up!";
+	            $('#resentOTP').show();
+	        } else {
+	            time = new Date(msLeft);
+	            hours = time.getUTCHours();
+	            mins = time.getUTCMinutes();
+	            element.innerHTML = (hours ? hours + ':' + twoDigits(mins) : mins) + ':' + twoDigits(time.getUTCSeconds());
+	            setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+	        }
+	    }
+	    </script>
+	    
+	    
+
+</body>
+</html>

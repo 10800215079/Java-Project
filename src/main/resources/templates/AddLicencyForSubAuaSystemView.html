@@ -1,0 +1,417 @@
+
+
+<head th:replace="fragments_others_head" :: head></head>
+<style>
+.border-danger{border:1px solid #F01;}
+</style>
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dash board</a></li>
+										<li class="breadcrumb-item active">Add License</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Add Sub Aua
+											license key</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form class="row g-3 needs-validation" novalidate
+											id="validate-form"
+											th:action="@{/AddLicencyForSubAuaSystem}"
+											th:object="${AddLicencyForSubAuaSystem}" method="POST">
+											<div class="alert alert-primary" role="alert"
+												th:text="${success }" th:if="${success}" th:value="${subAuaCode}" ></div>
+											<div class="alert alert-danger" role="alert"
+												th:text="${error}" th:if="${error}"></div>
+
+
+
+											<div class="col-md-4 ">
+												<label for="validationCustom01" class="form-label">Sub
+													AUA Name </label> <select class="form-select mb-3  "
+													aria-label="Default select example " id="SUB_AUA_NAME"
+													name="SUB_AUA_NAME" th:field="*{subAuaName}" required>
+													<!-- onchange= "change(this.value);" -->
+													
+														  <option  selected="selected" value=""> -- Department -- </option>
+														
+													<!-- <option value="-Department-">-Department-</option> -->
+													<option th:each="subAuaList :${subAuaList}"
+														th:value="${subAuaList.NAME}" th:text="${subAuaList.NAME}"></option>
+												</select>
+
+											</div>
+
+
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">SUB
+													AUA Code </label> 
+													<select class="form-select mb-3"
+													aria-label="Default select example form-control"
+													id="SUB_AUA_CODE" name="SUB_AUA_CODE"
+													th:field="*{subAuaCode}" required="true">
+													<!-- <option value="-1" label="-Select-" /> -->
+													 <option  selected="selected" value=""> -- SUB_AUA_CODE -- </option>
+
+												</select>
+											</div>
+											
+											
+										<div class="col-md-4">
+											<label for="validationCustom01" class="form-label">SUBAUA LK</label>
+											<div class="input-group">
+												<input type="password" th:field="*{subAuaLk}" class="form-control" id="SUB_AUA_LK" placeholder="SUB AUA LK"
+													required="true">
+												<button type="button" class="btn btn-secondary viewBtn" value="VIEW"><i class="ri-eye-fill fs-5"></i></button>
+											</div>
+										</div>
+											
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">KUA
+													CODE </label> <input type="text" th:field="*{kuaCode}"
+													class="form-control" id="KUA_CODE" placeholder="KUA CODE"
+													required="true">
+											</div>
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">KUA LK</label>
+												<div class="input-group">
+													<input type="password" th:field="*{kuaLk}" class="form-control" id="KUA_LK" placeholder="KUA LK"
+														required="true">
+													<button type="button" class="btn btn-secondary viewBtn" value="VIEW"><i class="ri-eye-fill fs-5"></i></button>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<label for="validationCustom01" class="form-label">EXPIRY
+													DATE(SUBAUA LK) </label> <input type="date" th:field="*{expiryDate}"
+													class="form-control flatpickr-input active"
+													data-provider="flatpickr" data-date-format="Y-m-d"
+													 id="EXPIRY_DATE"
+													placeholder="EXPIRY DATE" required="true">
+											</div>
+
+											<div class="col-12">
+												<button class="btn btn-primary" type="submit" id="submit" onclick="validateForm()" >Submit
+													</button>
+											</div>
+
+										</form>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+	<div class="modal fade" id="otpPopupP1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+	    <div class="modal-dialog modal-dialog-centered" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header bg-primary">
+	                <h5 class="modal-title text-white" id="exampleModalLongTitle" >XXXXXXXX5845</h5>
+	                <button type="button" class="cancel" data-dismiss="modal" aria-label="Close" onclick="closeandCancelModal()">
+	                    <span aria-hidden="true">&times;</span>
+	                </button>
+	            </div>
+	            <div class="modal-body">
+	
+	                <form id="formOtp">
+	                    
+	                    <div class="row">
+	                        <div class="col-sm-12">
+	                            <div class="popupbox11">
+	                                <input type="checkbox" id="agree1" name="agree1" value="Bike" onclick="concernCheckbox(this)">
+	                                <label for="agree1">  I hereby state that i have no objection in authenticating myself with AADHAAR based authentication system and consent to providing my AADHAAR Number, and OTP for AADHAAR based Authentication. I also give my explicit consent for accessing the mobile number and email address from AADHAAR System. </label>
+	                            </div>
+	                            <div class="otpinputbox1">
+	                                <input type="text" id="otp" name="otp" maxlength="6" style="display: none;" placeholder="OTP (Time-Based OTP)">
+	                                <label class="left10minutes" style="display: none;">Note : AADHAAR OTP will be valid only for 10 minutes.</label><br>
+	                                <label class="opt2minutes" style="display: none;">Resend OTP <span class="otp-countdown" id="timer-countdown">02:00</span></label>
+	                            </div>
+	                        </div>
+	                        <div class="flexbuttonOTP">
+	                            <button type="button" class="btn btn-primary" id="sendOTP1" onclick="sendOtp()" disabled>Send OTP</button>
+	                            <button type="button" class="btn btn-primary" id="OTPvalidatebtn" style="display: none;" onclick="validateOtp()">Validate OTP</button>
+	                            <button type="button" class="btn btn-primary" id="resentOTP" style="display: none;" onclick="resendOtp()">ReSend OTP</button>
+	                            <button type="button" class="btn btn-primary cancel" data-dismiss="modal" onclick="closeandCancelModal()">Cancel</button>
+	                           <input type="text" id="txn" name="txn" style="display: none;">
+	                        </div>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+
+<div class="modal fade" id="successMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true" data-backdrop="static">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Message !!
+						</h5>
+						<button type="button" class="closeModel" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+		
+						<form>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="popupbox">
+										<p class="text-success" id="SuccessFailuremsg"></p>
+									</div>
+		
+								</div>
+		
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript' src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript" src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"	src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/otpValidation.js"></script>
+
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+
+	
+		<script type="text/javascript">
+		    $(document).ready(function() {
+		        $("#SUB_AUA_NAME").change(function() {
+		            debugger;
+		            var ORGNAME = $(this).val();
+		            console.log(ORGNAME);
+		
+		            $.ajax({
+		                type: 'GET',
+		                url: "/subauaORGNAME/" + ORGNAME,
+		                contentType: "application/json; charset=utf-8",
+		                dataType: "json",
+		                success: function(data) {
+		                    var slctSubcat = $("#SUB_AUA_CODE"), 
+		                        option = "";
+		                    slctSubcat.empty();
+		
+		                    for (var i = 0; i < data.length; i++) {
+		                        option += "<option value='" + data[i] + "'>" + data[i] + "</option>";
+		                    }
+		                    console.log(option);
+		                    slctSubcat.append(option);
+		                },
+		                error: function() {
+		                    alert("error");
+		                }
+		            });
+		        });
+		    });
+		</script>
+
+			<script>
+				flatpickr("#EXPIRY_DATE", {
+					///maxDate : "today",
+					    minDate: "today",
+		
+					enableTime : true,
+					dateFormat : "Y-m-d"
+				});
+			</script>
+			
+			<script type="text/javascript">
+				
+				function openModalSubmitBtn(){
+					event.preventDefault();
+					$('#otpPopupP1').modal('show');
+				}
+				
+				
+				function validateForm() {
+						var form = $("#validate-form")[0];
+						if (form.checkValidity() === false) {
+							form.classList.add('was-validated');
+						} else {
+							openModalSubmitBtn()
+						}
+				}
+		
+		
+				
+			</script>
+			
+			<script>
+				$(document).ready(function () {
+					$(".viewBtn").on("mousedown", function () {
+						var inputField = $(this).siblings("input");
+						inputField.attr("type", "text");
+					});
+		
+					$(".viewBtn").on("mouseup mouseleave", function () {
+						var inputField = $(this).siblings("input");
+						inputField.attr("type", "password");
+					});
+				});
+			</script>
+			
+	
+			<script>	
+				var topFunction = function () {
+					window.scrollTo(0, 0);
+				};
+			</script>
+			
+			<script type="text/javascript">
+				$(document).ready(function () {
+					$("#submit").click(function () {
+						debugger;
+
+						$("#EXPIRY_DATE").removeAttr("readonly");
+
+					});
+				});
+				
+				
+						function validateOtp() {
+
+								var otpValue = $("#otp").val();
+								if (otpValue === "" || !$.isNumeric(otpValue)) {
+									alert("Please enter a valid number OTP.");
+								} else {
+									$.ajax({
+
+										url: '/OTPAuthentication?OTP=' + otpValue,
+										method: 'POST',
+										cache: false,
+										contentType: 'application/json', // Set the content type
+										success: function (response) {
+											if (response.auth.status == 'Y' || response.auth.status == 'y') {
+												submitForm();
+												alert('OTP Authenticated Successfully ');
+												closeandCancelModal();
+											} else {
+												alert(response.message);
+											}
+
+										},
+										error: function (xhr, status, error) {
+											alert("Interanal Server Error");
+										}
+									});
+
+								}
+							}
+							
+							
+				function submitForm() {
+						//e.preventDefault(); // Prevent the default form submission
+						var formData = {
+							subAuaName: $('#SUB_AUA_NAME').val(),
+							subAuaCode: $('#SUB_AUA_CODE').val(),
+							subAuaLk: $('#SUB_AUA_LK').val(),
+							kuaCode: $('#KUA_CODE').val(),
+							kuaLk: $('#KUA_LK').val(),
+							expiryDate: $('#EXPIRY_DATE').val()
+						};
+
+						// Make the AJAX call
+						$.ajax({
+							type: 'POST',
+							url: '/AddLicencyForSubAuaSystem', // Change this to your actual URL
+							data: JSON.stringify(formData),
+							contentType: 'application/json',
+
+							success: function (response) {
+								
+								$('#SuccessFailuremsg').text(response);
+								$('#successMessage').modal('show');
+								
+							},
+							error: function (xhr, status, error) {
+								
+								var errorMessage = xhr.responseText || 'Error saving data';
+								$('#SuccessFailuremsg').removeClass('text-success').addClass('text-danger').text(errorMessage);
+								$('#successMessage').modal('show');
+								console.error('Error saving data:', error);
+							}
+						});
+
+					}
+					
+					
+						$(".closeModel").click(function () {
+							$('#successMessage').modal('hide');
+							location.reload();
+						});
+
+						
+
+					
+			</script>
+</body>
+</html>

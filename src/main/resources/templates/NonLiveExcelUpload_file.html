@@ -1,0 +1,379 @@
+<head th:replace="fragments_others_head" :: head></head>
+
+<body>
+
+	<!-- Begin page -->
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+
+			<div class="page-content">
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">Upload Non-liveness transaction File</li>
+									</ol>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- end page title -->
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Block Suspected Aadhaar</h4>
+									</div>
+								</div>
+								<!-- end card header -->
+
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<div class="alert alert-success fs-2" role="alert"
+											th:text="${success}" th:if="${success}"></div>
+										<div class="alert alert-danger fs-2" role="alert"
+											th:text="${error}" th:if="${error}"></div>
+											
+										<form id="validation-form" class="needs-validation" novalidate 
+										th:action="@{/NonLiveExcelUpload}" th:object="${NonLiveExcelUpload_file}" 
+										method="post" enctype="multipart/form-data">
+											<div class="row g-3 mt-0 mb-3 pb-4  alert-danger">
+												<div class="col-lg-12">
+													<div class="two_c">
+														<h2 class="text-start">Upload Non-liveness transaction File</h2>
+														<label style="text-align: right;"> <a
+															href="/assets/uidaiNonLivetrn.xlsx"
+															class="btn btn-primary"
+															download="download">Download Sample Excel file</a></label>
+													</div>
+												</div>
+												<div class="col-lg-3">
+																<label class="text-black">Transaction start date</label>
+																<input id="fromdate" name="fromdate" type="date"
+																class="form-control flatpickr-input active"
+																data-provider="flatpickr" data-date-format="d/m/y"
+									
+																placeholder="Data Transaction start date" required>
+													</div>
+													<div class="col-lg-3">
+														<label class="text-black">Transaction end date</label> <input
+															id="enddate" name="enddate" type="date"
+															class="form-control flatpickr-input active"
+															data-provider="flatpickr" data-date-format="d/m/y"
+															
+															placeholder="Data Transaction End date" required>
+													</div>
+													<div class="col-lg-3">
+														<label class="text-black">UIDAI Email Received Date</label>
+														<input id="emailDate" name="emailDate" type="date"
+															class="form-control flatpickr-input active"
+															data-provider="flatpickr" data-date-format="d/m/y"
+															
+															placeholder="UIDAI Email Received Date" required>
+													</div>
+													<div class="col-lg-3">
+														<label class="text-black">Upload PDF</label> <input
+															id="mailPdfFile" name="mailPdfFile" class="form-control"
+															type="file" accept="application/pdf" required>
+													</div>
+													<div class="col-sm-3">
+														<label class="text-black">Suspected transaction
+															Data (.XLSX, .XLS)</label> <input id="excelFile" name="excelFile"
+															type="file" class="form-control" required />
+
+													</div>
+													<div class="col-lg-3 btnnewone">
+														<button type="submit" id="submit" class="btn btn-success btn-label">
+															<i
+																class=" ri-arrow-right-line label-icon align-middle fs-16 me-2"></i>
+															Submit
+														</button>
+													</div>
+										</form>
+										<!--end col-->
+									</div>
+									<div class="table-responsive"
+										style="overflow: auto; width: 100%; height: 700px">
+										<div id="excel_data" class="mt-5"></div>
+									</div>
+
+									<!-- <div class="col-lg-12 btnnewone">
+										<button type="button" class="btn btn-success btn-label">
+											<i
+												class=" ri-arrow-right-line label-icon align-middle fs-16 me-2"></i>
+											Click Proccess
+										</button>
+									</div> -->
+
+								</div>
+							</div>
+							<!-- end card -->
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end col -->
+				</div>
+				<!-- end card -->
+			</div>
+			<!-- end col -->
+		</div>
+		<!-- end col -->
+	</div>
+
+
+	</div>
+	<!-- end .h-100-->
+
+	</div>
+	<!-- end col -->
+
+
+	</div>
+
+	</div>
+	<!-- container-fluid -->
+	</div>
+	<!-- End Page-content -->
+
+	<div th:replace="fragments_others_footer" :: footer></div>
+	</div>
+
+	</div>
+	<!-- END layout-wrapper -->
+	<!--start back-to-top-->
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<!--end back-to-top-->
+
+
+	<!-- JAVASCRIPT -->
+	<script>
+		async function uploadFile() {
+	  	let formData = new FormData(); 
+	 	formData.append("file", fileupload.files[0]);
+	 	let response = await fetch('/upload', {
+	    method: "POST", 
+	    body: formData
+	  }); 
+	
+	  if (response.status == 200) {
+	    alert("File successfully uploaded.");
+	  }
+	}
+	</script>
+
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript' src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript" src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"	src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script type="text/javascript">
+            flatpickr('#Drange', {
+               mode: "range",
+            
+            });
+           /* flatpickr("#uidaiEmaildate", {
+               mode: "range",
+            
+            });*/
+
+                
+        </script>
+
+
+	<script type="text/javascript"
+		src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<!-- 	<script>
+    const excel_file = document.getElementById('excelFile');
+    
+    excel_file.addEventListener('change', (event) => {
+    
+        if(!['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'].includes(event.target.files[0].type))
+        {
+            document.getElementById('excel_data').innerHTML = '<div class="alert alert-danger">Only .xlsx or .xls file format are allowed</div>';
+    
+            excel_file.value = '';
+    
+            return false;
+        }
+    
+        var reader = new FileReader();
+    
+        reader.readAsArrayBuffer(event.target.files[0]);
+    
+        reader.onload = function(event){
+    
+            var data = new Uint8Array(reader.result);
+    
+            var work_book = XLSX.read(data, {type:'array'});
+    
+            var sheet_name = work_book.SheetNames;
+    
+            var sheet_data = XLSX.utils.sheet_to_json(work_book.Sheets[sheet_name[0]], {header:1});
+    
+            if(sheet_data.length > 0)
+            {
+                var table_output = '<table class="table table-striped" id="example">';
+    
+                for(var row = 0; row < sheet_data.length; row++)
+                {
+    
+    if(row==0)
+    {
+        table_output += '<thead>';
+    }
+                    //table_output += '<thead>';
+                    table_output += '<tr>';
+    
+                    for(var cell = 0; cell < sheet_data[row].length; cell++)
+                    {
+    
+                        if(row == 0)
+                        {
+    
+                            table_output += '<th>'+sheet_data[row][cell]+'</th>';
+    
+                        }
+                        else
+                        {
+                            if(row==1)
+                        {
+                            table_output += '</thead>';
+                        }
+    
+                            table_output += '<td>'+sheet_data[row][cell]+'</td>';
+    
+                        }
+    
+    
+    
+                    }
+    
+                    table_output += '</tr>';
+                     //table_output += '</thead>';
+    
+    
+    
+                }
+    
+                table_output += '</table>';
+    
+                document.getElementById('excel_data').innerHTML = table_output;
+                $(".btnnewone").show();
+            }
+    
+            //excel_file.value = '';
+    
+        }
+    
+    });
+    
+</script> -->
+	<script type="text/javascript">
+    $(document).ready(function () {
+    $('#example').DataTable({
+    "pageLength": 10,
+    responsive: true,
+    lengthMenu: [[50, 100, 200, 500, -1], [50, 100, 200, 500, 'All'],],
+    
+    
+    dom: 'Bfrtip',
+    buttons: [
+        'pageLength'
+    ],
+     
+     fixedHeader: {
+               // header: true,
+                footer: true,                    
+            },
+    
+    } );
+    });
+</script>
+<script>
+   flatpickr("#fromdate", {               
+            maxDate: "today",
+            //enableTime: true,
+           // dateFormat: "d/m/y H:i"           
+        });
+   </script>
+   <script>
+   flatpickr("#enddate", {               
+            maxDate: "today",
+            //enableTime: true,
+            //dateFormat: "d/m/y H:i"           
+        });
+   </script>
+    <script>
+   flatpickr("#emailDate", {               
+            maxDate: "today",
+            //enableTime: true,
+            //dateFormat: "d/m/y H:i"           
+        });
+   </script>
+   
+   <script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				debugger;
+				//var conceptName = $('#EXPIRY_DATE').val();
+				$("#fromdate").removeAttr("readonly");
+				$("#enddate").removeAttr("readonly");
+				$("#emailDate").removeAttr("readonly");
+
+			});
+		});
+	</script>
+		<script>
+		var topFunction = function() {
+		    window.scrollTo(0, 0);
+		};
+		</script>
+</body>
+</html>

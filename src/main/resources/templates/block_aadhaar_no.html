@@ -1,0 +1,223 @@
+
+<head th:replace="fragments_others_head" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">Block Aadhaar No</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Block Aadhaar
+											No</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<div class="row g-3 mt-0 mb-3 pb-3  alert-danger">
+											<div class="col-xxl-3 col-sm-4">
+												<div>
+													<input type="text" class="form-control"
+														id="specificSizeInputName"
+														placeholder="Enter Aadhaar Number to Block">
+												</div>
+											</div>
+											<div class="col-xxl-1 col-sm-4">
+												<div>                                                 
+                                                    <input type="submit" class="btn btn-primary w-100" value="Submit"/>
+                                                </div>
+											</div>
+										</div>
+										<div class="table-responsive table-card1 mt-4 mb-1">
+											<table id="example" class="table table-striped"
+												style="width: 100%">
+												<thead class="alert-info">
+													<tr>
+
+														<th>S.no</th>
+														<th>Aadhaar</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody class="list form-check-all">
+													<tr>
+														<td>1</td>
+														<td>4440XXXXXXXX</td>
+														<td>
+															<div class="d-flex gap-2">
+																<div class="edit">
+																	<button class="btn btn-sm btn-success edit-item-btn"
+																		data-bs-toggle="modal" data-bs-target="#showModal">Edit</button>
+																</div>
+																<div class="remove">
+																	<button class="btn btn-sm btn-danger remove-item-btn"
+																		data-bs-toggle="modal"
+																		data-bs-target="#deleteRecordModal">Remove</button>
+																</div>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+												<tfoot class="alert-info">
+													<tr>
+														<th>S.no</th>
+														<th>Aadhaar</th>
+														<th>Action</th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="showModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" style="display: none;"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-light p-3">
+						<h5 class="modal-title" id="exampleModalLabel">Update Aadhaar</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close" id="close-modal"></button>
+					</div>
+					<form>
+						<div class="modal-body">
+
+							<div class="mb-3" id="modal-id" style="display: none;">
+								<label for="id-field" class="form-label">ID</label> <input
+									type="text" id="id-field" class="form-control" placeholder="ID"
+									readonly="">
+							</div>
+
+							<div class="mb-3">
+								<label for="customername-field" class="form-label">Aadhaar</label>
+								<input type="text" id="customername-field" class="form-control"
+									placeholder="Aadhaar No." required="">
+							</div>
+
+						</div>
+						<div class="modal-footer" style="display: block;">
+							<div class="hstack gap-2 justify-content-end">
+								<button type="button" class="btn btn-light"
+									data-bs-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-success" id="add-btn"
+									style="display: none;">Add Customer</button>
+								<button type="button" class="btn btn-success" id="edit-btn"
+									style="display: block;">Update</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript' src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript" src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"	src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+    $('#example').DataTable({
+        "pageLength": 10,
+        responsive: true,
+        lengthMenu: [[50, 100, 200, 500, -1], [50, 100, 200, 500, 'All'],],
+
+
+       dom: 'Bfrtip',
+        buttons: [
+            'pageLength','csv', 'excel'
+        ],
+         
+         fixedHeader: {
+                   // header: true,
+                    footer: true,                    
+                },
+
+        } );
+});
+    </script>
+    <script type="text/javascript">
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				debugger;
+				//var conceptName = $('#EXPIRY_DATE').val();
+				$("#fromdate").removeAttr("readonly");
+				$("#Enddate").removeAttr("readonly");
+
+			
+
+				
+
+			});
+		});
+	</script><script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+		<script>
+		var topFunction = function() {
+		    window.scrollTo(0, 0);
+		};
+		</script>
+</body>
+</html>

@@ -1,0 +1,481 @@
+
+
+<head th:replace="fragments_others_head2" :: head>
+
+</head>
+
+<body>
+
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header3 :: header"></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">Infra Detail View</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<!-- <div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Infra Details</h4>
+									</div>
+								</div> -->
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form class="row g-3 needs-validation" novalidate id="validation-form">
+										
+	<!-------------------------------------------------------- Server Details ------------------------------------------------------>
+
+											<div class="card">
+												<div class="card-header bg-primary pb-2 pt-2">
+													<div class="d-flex justify-content-between">
+														<h4 class="card-title text-white mb-0 pt-2">Server
+															Details</h4>
+													</div>
+												</div>
+
+												<!-- Check if databaseDetails is empty and show a message if it is -->
+												<div
+													th:if="${#lists.isEmpty(projectDetails.serverDetails)}">
+													<p class="text-center text-muted mt-3">There are no
+														Server Details available.</p>
+												</div>
+
+												<!-- Dynamic table for Server Details -->
+
+												<div
+													th:if="${!#lists.isEmpty(projectDetails.serverDetails)}">
+													<table class="table table-striped">
+														<thead class="alert-info">
+															<tr>
+																<th>Project Name</th>
+																<th>IP</th>
+																<th>Server Type</th>
+																<th>CPU Code</th>
+																<th>RAM</th>
+																<th>OS Type</th>
+																<th>OS Version</th>
+																<th>Technology</th>
+																<th>WebSphere</th>
+																<th>Server Location</th>
+																<th>Encrypted Certificate</th>
+																<th>Encrypted Certificate Exp. Date</th>
+																<th>Signing Certificate</th>
+																<th>Signing Certificate Exp. Date</th>
+																<th>Status</th>
+																<!-- <th>Actions</th> -->
+															</tr>
+														</thead>
+														<tbody>
+															<!-- Thymeleaf iteration for server details -->
+															<tr
+																th:each="serverDetail : ${projectDetails.serverDetails}">
+																<td th:text="${serverDetail.projectName}"></td>
+																<td th:text="${serverDetail.ip}"></td>
+																<td th:text="${serverDetail.serverType}"></td>
+																<td th:text="${serverDetail.cpuCode}"></td>
+																<td th:text="${serverDetail.setRam}"></td>
+																<td th:text="${serverDetail.osType}"></td>
+																<td th:text="${serverDetail.osVersion}"></td>
+																<td th:text="${serverDetail.technology}"></td>
+																<td
+																	th:text="${serverDetail.selectWebSphere == 1 ? 'Active' : 'Deactive'}"></td>
+																<td th:text="${serverDetail.serverLocation}"></td>
+
+																<td><a class="download-button btn btn-primary"
+																	href="javascript:void(0);"
+																	th:onclick="|downloadEncryptedCertificate('${serverDetail.id}')|">
+																		<span class="ri-download-line"></span>
+																</a>
+																<td
+																	th:text="${#dates.format(serverDetail.encryptedCertificateExp, 'dd-MM-yyyy')}"></td>
+																<td><a class="download-button btn btn-primary"
+																	href="javascript:void(0);"
+																	th:onclick="|downloadSigningCertificate('${serverDetail.id}')|">
+																		<span class="ri-download-line"></span>
+																</a>
+																<td
+																	th:text="${#dates.format(serverDetail.signingCertificateExp, 'dd-MM-yyyy')}"></td>
+																<td
+																	th:text="${serverDetail.status == 1 ? 'Active' : 'Deactive'}"></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+
+											</div>
+
+
+											<!-------------------------------------------------------- Database Details ------------------------------------------------------>
+
+											<div class="card-header bg-primary pb-2 pt-2">
+												<div class="d-flex justify-content-between">
+													<h4 class="card-title text-white mb-0 pt-2">Database
+														Details</h4>
+												</div>
+											</div>
+
+											<!-- Check if databaseDetails is empty and show a message if it is -->
+											<div
+												th:if="${#lists.isEmpty(projectDetails.databaseDetails)}">
+												<p class="text-center text-muted mt-3">There are no
+													Database Details available.</p>
+											</div>
+
+											<!-- Dynamic table for Database Details if not empty -->
+											<div
+												th:if="${!#lists.isEmpty(projectDetails.databaseDetails)}">
+												<table class="table table-striped">
+													<thead class="alert-info">
+														<tr>
+															<th>Database Type</th>
+															<th>Database Version</th>
+															<th>IP</th>
+															<th>Environment</th>
+															<th>Server Port</th>
+															<th>Status</th>
+															<!-- <th>Actions</th> -->
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="dbDetail : ${projectDetails.databaseDetails}">
+															<td th:text="${dbDetail.databaseName}"></td>
+															<td th:text="${dbDetail.databaseVersion}"></td>
+															<td th:text="${dbDetail.ip}"></td>
+															<td th:text="${dbDetail.environment}"></td>
+															<td th:text="${dbDetail.serverPort}"></td>
+															<td
+																th:text="${dbDetail.status == 1 ? 'Active' : 'Deactive'}"></td>
+															<!-- <td>
+																<button class="btn btn-primary"
+																	th:attr="data-id=${dbDetail.id}"
+																	onclick="editDBDetail(this)">Edit</button>
+															</td> -->
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											
+											<!-------------------------------------------------------- LB Details ------------------------------------------------------>
+											<div class="card-header bg-primary pb-2 pt-2">
+												<div class="d-flex justify-content-between">
+													<h4 class="card-title text-white mb-0 pt-2">LB Details</h4>
+												</div>
+											</div>
+
+											<!-- Check if lbServerDetails is empty and show a message if it is -->
+											<div
+												th:if="${#lists.isEmpty(projectDetails.lbServerDetails)}">
+												<p class="text-center text-muted mt-3">There are no LB
+													Details available.</p>
+											</div>
+
+											<!-- Dynamic table for LB Details if not empty -->
+											<div
+												th:if="${!#lists.isEmpty(projectDetails.lbServerDetails)}">
+												<table class="table table-striped">
+													<thead class="alert-info">
+														<tr>
+															<th>Private IP</th>
+															<th>Public IP</th>
+															<th>Server Port</th>
+															<th>Status</th>
+															<!-- <th>Actions</th> -->
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="lbDetail : ${projectDetails.lbServerDetails}">
+															<td th:text="${lbDetail.privateIp}"></td>
+															<td th:text="${lbDetail.publicIp}"></td>
+															<td th:text="${lbDetail.port}"></td>
+															<td
+																th:text="${lbDetail.status == 1 ? 'Active' : 'Deactive'}"></td>
+															<!-- <td>
+																<button class="btn btn-primary openModal"
+																	th:attr="data-id=${lbDetail.id}"
+																	onclick="editLBDetail(this)">Edit</button>
+															</td> -->
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										
+	<!-------------------------------------------- Hardware details ----------------------------------------------------->
+											<div class="card-header bg-primary pb-2 pt-2">
+												<div class="d-flex justify-content-between">
+													<h4 class="card-title text-white mb-0 pt-2">Hardware
+														Details</h4>
+												</div>
+											</div>
+
+											<!-- Check if hardwareDetails is empty and show a message if it is -->
+											<div
+												th:if="${#lists.isEmpty(projectDetails.hardwareDetails)}">
+												<p class="text-center text-muted mt-3">There are no
+													Hardware Details available.</p>
+											</div>
+
+											<!-- Dynamic table for Hardware Details if not empty -->
+											<div style="overflow-y: auto; max-height: 400px; text-align: center"
+												th:if="${!#lists.isEmpty(projectDetails.hardwareDetails)}">
+												<table class="table table-striped">
+													<thead class="alert-info">
+														<tr>
+															<th>Device Name</th>
+															<th>Device Maker</th>
+															<th>Device Model Name</th>
+															<th>Device Serial No.</th>
+															<th>Device Esn No.</th>
+															<th>Device Type</th>
+															<th>Device Location</th>
+															<th>Management IP</th>
+															<th>RFS Server IP</th>
+															<th>Client IP</th>
+															<th>Maximum Client</th>
+															<th>Work Order Number</th>
+															<th>Work Order Start Date</th>
+															<th>Work Order End Date</th>
+															<th>Environment</th>
+															<th>Status</th>
+															<th>Vendor Name</th>
+															<th>Working Status</th>
+															<th>Reason</th>
+															<!-- <th>Actions</th> -->
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="hwDetail : ${projectDetails.hardwareDetails}">
+															<td th:text="${hwDetail.deviceName}"></td>
+															<td th:text="${hwDetail.deviceMaker}"></td>
+															<td th:text="${hwDetail.deviceModelName}"></td>
+															<td th:text="${hwDetail.deviceSerialNo}"></td>
+															<td th:text="${hwDetail.deviceEsnNo}"></td>
+															<td th:text="${hwDetail.deviceType}"></td>
+															<td th:text="${hwDetail.deviceLocation}"></td>
+															<td th:text="${hwDetail.managementIpAddress}"></td>
+															<td th:text="${hwDetail.rfsServerIp}"></td>
+															<td th:text="${hwDetail.clientIp}"></td>
+															<td th:text="${hwDetail.maximumClient}"></td>
+															<td th:text="${hwDetail.workOrderNumber}"></td>
+															<td
+																th:text="${#dates.format(hwDetail.workOrderStartDate, 'dd-MM-yyyy')}"></td>
+															<td
+																th:text="${#dates.format(hwDetail.workOrderEndDate, 'dd-MM-yyyy')}"></td>
+															<td th:text="${hwDetail.environment}"></td>
+															<td
+																th:text="${hwDetail.status == 1 ? 'Active' : 'Deactive'}"></td>
+															<td th:text="${hwDetail.vendorName}"></td>
+															<td
+																th:text="${hwDetail.workingStatus == 1 ? 'Active' : 'Deactive'}"></td>
+															<td th:text="${hwDetail.mentionReason}"></td>
+															<!-- <td>
+																<button class="btn btn-primary"
+																	th:attr="data-id=${hwDetail.id}"
+																	onclick="editHWDetail(this)">Edit</button>
+															</td> -->
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											
+											
+		
+
+
+		<!-------------------------------------------------------- Lease Line Details ------------------------------------------------------>
+
+											<div class="card-header bg-primary pb-2 pt-2">
+												<div class="d-flex justify-content-between">
+													<h4 class="card-title text-white mb-0 pt-2">Leased
+														Line Details</h4>
+												</div>
+											</div>
+
+											<!-- Check if leasedLineDetails is empty and show a message if it is -->
+											<div
+												th:if="${#lists.isEmpty(projectDetails.leasedLineDetails)}">
+												<p class="text-center text-muted mt-3">There are no
+													Leased Line Details available.</p>
+											</div>
+
+											<!-- Dynamic table for Leased Line Details if not empty -->
+											<div
+												th:if="${!#lists.isEmpty(projectDetails.leasedLineDetails)}">
+												<div style="overflow-y: auto; max-height: 400px;">
+													<table
+														class="table table-striped">
+														<thead class="alert-info">
+															<tr>
+																<th>Network Provider</th>
+																<th>IP1 Address (Start Point)</th>
+																<th>IP1 Location</th>
+																<th>IP2 Address (End Point)</th>
+																<th>IP2 Location</th>
+																<th>Maximum Client</th>
+																<th>Status</th>
+																<!-- <th>Actions</th> -->
+																
+															</tr>
+														</thead>
+														<tbody>
+															<tr
+																th:each="llDetail : ${projectDetails.leasedLineDetails}">
+																<td th:text="${llDetail.networkProvider}"></td>
+																<td th:text="${llDetail.privateIp}"></td>
+																<td th:text="${llDetail.privateIpLocation}"></td>
+																<td th:text="${llDetail.publicIp}"></td>
+																<td th:text="${llDetail.publicIpLocation}"></td>
+																<td th:text="${llDetail.maximumClient}"></td>
+																<td
+																	th:text="${llDetail.status == 1 ? 'Active' : 'Deactive'}"></td>
+																<!-- <td>
+																<button class="btn btn-primary openModal"
+																	th:attr="data-id=${llDetail.id}"
+																	onclick="editLBDetail(this)">Edit</button>
+															</td> -->
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+
+
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer :: footer"></div>
+
+	</div>
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="../../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../assets/libs/feather-icons/feather.min.js"></script>
+	<script src="../../assets/js/jquery-3.5.1.js"></script>
+	<script src="../../assets/js/jquery.dataTables.min.js"></script>
+	<script src="../../assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="../../assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="../../assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="../assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="../assets/js/buttons.html5.min.js"></script>
+	<script src="../assets/js/app.js"></script>
+
+	<script>
+    function downloadSigningCertificate(id) {
+        console.log(id);
+        debugger
+        $.ajax({
+            type: 'GET',
+            url: '/Authmis/downloadSigningCertificate/' + id,
+            success: function(data) {
+                var base64Data = data.signingCertificate;
+				debugger
+                if (base64Data) {
+                	debugger
+                    // Create a Blob from the Base64 data
+                    var byteCharacters = atob(base64Data);
+                    var byteNumbers = new Array(byteCharacters.length);
+                    for (var i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    var byteArray = new Uint8Array(byteNumbers);
+                    var blob = new Blob([byteArray], {
+                        type: 'application/pdf'
+                    });
+
+                    // Create a download link
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'SigningCertificate.pdf'; // Specify the desired file name
+                    document.body.appendChild(link); // Append the link to the body
+                    link.click();
+                    document.body.removeChild(link); // Remove the link after downloading
+                } else {
+                    alert("File not published for this SUBAUA and IP");
+                }
+            },
+            error: function(error) {
+                // Handle the error
+                console.error('Error downloading document:', error);
+            }
+        });
+    }
+</script>
+
+
+	<script>
+    function downloadEncryptedCertificate(id) {
+        console.log(id);
+        debugger
+        $.ajax({
+            type: 'GET',
+            url: '/Authmis/downloadEncryptedCertificate/' + id,
+            success: function(data) {
+                var base64Data = data.encryptedCertificate;
+				debugger
+                if (base64Data) {
+                	debugger
+                    // Create a Blob from the Base64 data
+                    var byteCharacters = atob(base64Data);
+                    var byteNumbers = new Array(byteCharacters.length);
+                    for (var i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    var byteArray = new Uint8Array(byteNumbers);
+                    var blob = new Blob([byteArray], {
+                        type: 'application/pdf'
+                    });
+
+                    // Create a download link
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'EncryptedCertificate.pdf'; // Specify the desired file name
+                    document.body.appendChild(link); // Append the link to the body
+                    link.click();
+                    document.body.removeChild(link); // Remove the link after downloading
+                } else {
+                    alert("File not published for this SUBAUA and IP");
+                }
+            },
+            error: function(error) {
+                // Handle the error
+                console.error('Error downloading document:', error);
+            }
+        });
+    }
+</script>
+
+
+
+
+</body>
+</html>

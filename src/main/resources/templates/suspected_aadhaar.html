@@ -1,0 +1,421 @@
+
+
+<head th:replace="fragments_others_head" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">Suspected Aadhaar</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Department
+											wise Suspected Aadhaar</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form id="validation-form" class="needs-validation" novalidate
+											th:action="@{/SuspectedAadhaarMapping}"
+											th:object="${suspected_aadhaar}" method="get">
+											<div class="row g-3 mt-0 mb-3 pb-3 alert-danger">
+												<div class="col-xxl-4 col-sm-5">
+													<select class="form-select mb-3"
+														aria-label="Default select example" id="subAuaCode"
+														name="subAuaCode" required>
+														<option value="ALL">ALL</option>
+														<option th:each="subAuaList :${subAuaList}"
+															th:value="${subAuaList.ID}" th:text="${subAuaList.NAME}"></option>
+													</select>
+												</div>
+												<div class="col-xxl-2 col-sm-4">
+													<div>
+														<!--<input id="fromdate" name="fromdate" type="date" class="form-control flatpickr-input active"  data-provider="flatpickr"  data-date-format="d/m/y"  data-enable-time readonly="readonly" placeholder="Start Date">-->
+														<input id="fromdate" name="fromdate" type="date"
+															class="form-control flatpickr-input active"
+															data-provider="flatpickr" data-date-format="d/m/y"
+															data-enable-time 
+															placeholder="Start Date" required value="">
+													</div>
+
+												</div>
+												<div class="col-xxl-2 col-sm-4">
+													<div>
+														<!-- <input id="Enddate" name="Enddate" type="date" class="form-control flatpickr-input active" data-provider="flatpickr"  data-date-format="d/m/y"  data-enable-time readonly="readonly" placeholder="End Date">-->
+														<input id="Enddate" name="Enddate" type="date"
+															class="form-control flatpickr-input active"
+															data-provider="flatpickr" data-date-format="d/m/y"
+															data-enable-time 
+															placeholder="End Date" required value="">
+													</div>
+												</div>
+												<div class="col-xxl-1 col-sm-4">
+													<div>
+														<input type="submit" id='submit'  class="btn btn-primary w-100 submit"
+															value="Submit" />
+													</div>
+												</div>
+											</div>
+										</form>
+										<div class="card bg-info bg-opacity-10 p-3 text-center">
+											<div class="d-flex fs-4 justify-content-center text-center ">
+												From Date : <span th:text="${FROM_DATE}" id="from_date" class="me-4 text-primary"></span> 
+												End Date : <span th:text="${End_DATE}" id="end_date" class=" text-primary"></span>
+											</div>
+										</div>
+										<div class="table-responsive table-card1 mt-4 mb-1">
+										
+											<table id="example" class="table table-striped"
+												style="width: 100%">
+												<thead class="alert-info">
+													<tr>
+														<th>S.no</th>
+														<th class="sort" data-sort="aadhaar">Aadhaar</th>
+														<th class="sort" data-sort=subAuaCode>SUB AUA CODE</th>
+														<th class="sort" data-sort="nooftransaction">Number
+															Of Transaction</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Number
+															Of Success Transations</th>
+														<th class="sort" data-sort="noofsuccesstransaction">ACTION</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="dataVal,iterator : ${result}">
+														<td th:text="${iterator.index}"></td>
+														<td class="aadhaar" th:utext="${dataVal.aadhaarId}"></td>
+														<td class="subAuaCode" th:utext="${dataVal.subAuaCode}"></td>
+														<td class="nooftransaction" th:utext="${dataVal.noOfTran}"></td>
+														<td class="noofsuccesstransaction"
+															th:utext="${dataVal.authSuccess}"></td>
+														<!-- <td>
+                                                            <div class="d-flex gap-2">
+                                                                <div class="edit">
+                                                                    <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal"> View More</button>
+                                                                </div>                                                                
+                                                            </div>
+                                                        </td> -->
+														<td>
+															<!-- <button data-toggle="modal" data-target="#myModal"
+															class="btn btn-info openModal" type="button">View
+														</button> -->
+															<button type="button" class="btn btn-primary openModal"
+																data-toggle="modal" data-target="#myModal"
+																data-whatever="@mdo">View</button>
+														</td>
+													</tr> 
+												</tbody>
+												<tfoot class="alert-info">
+													<tr>
+														<th>S.no</th>
+														<th class="sort" data-sort="aadhaar">Aadhaar</th>
+														<th class="sort" data-sort="subauacode">SUB AUA CODE</th>
+														<th class="sort" data-sort="nooftransaction">Number
+															Of Transaction</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Number
+															Of Success Transations</th>
+														<th class="sort" data-sort="noofsuccesstransaction">ACTION</th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+	<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					
+					<h5 class="modal-title1" id="exampleModalLabel1"></h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive table-card1 mt-4 mb-1">
+						<div class="table-responsive table-card1 mt-4 mb-1">
+							<table id="table2" class="table table-striped"
+								style="width: 100%">
+								<thead class="alert-info">
+									<tr>
+										<!-- <th>S.No</th> -->
+										<th>SUB_AUA_KEY</th>
+										<th>SUBAUA_NAME</th>
+										<th>TRANSACTION_DATE</th>
+
+									</tr>
+								</thead>
+								<tbody id="table2body">
+
+								</tbody>
+								<tfoot class="alert-info">
+									<tr>
+										<!-- <th>S.No</th> -->
+										<th>SUB_AUA_KEY</th>
+										<th>SUBAUA_NAME</th>
+										<th>TRANSACTION_DATE</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript' src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript" src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"	src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+	<script>
+		flatpickr("#fromdate", {
+			maxDate : "today",
+			enableTime : true,
+			dateFormat : "d/m/y H:i"
+		});
+	</script>
+	<script>
+		flatpickr("#Enddate", {
+			maxDate : "today",
+			enableTime : true,
+			dateFormat : "d/m/y H:i"
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#example').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+
+							});
+
+				});
+	</script>
+	<script type="text/javascript">
+		var table = '';
+		$(document).ready(
+				function() {
+					table = $('#table2').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+								columns : [
+								/* {data: "ID"}, */
+								 {
+									data : "SUB_AUA_KEY"
+								}, {
+									data : "SUBAUA_NAME"
+								}, {
+									data : "TRANSACTION_DATE"
+								} ]
+							});
+				});
+
+		$('.openModal').click(
+				function() {
+					debugger;
+					var E_AADHAAR_ID = $(this).closest('tr').find(
+							'td:nth-child(2)').text();
+					var SUB_AUA_CODE = $(this).closest('tr').find(
+							'td:nth-child(3)').text();
+					var from_date= document.getElementById("from_date").innerText;
+					var end_date= document.getElementById("end_date").innerText;
+					var search = {
+						"E_AADHAAR_ID" : E_AADHAAR_ID,
+						"SUB_AUA_CODE" : SUB_AUA_CODE,
+						"FROM_DATE":from_date,
+						"End_DATE":end_date
+
+					}
+					$.ajax({
+						url : "/Authmis/SuspectedAadhaarMappingDetails",
+						data : search,
+						dataType : 'json',
+						type : 'get',
+						success : function(data) {
+							var res = '';
+							table.rows.add([]).clear().draw();
+							table.rows.add(data).draw();
+							
+							$('.modal-title1').text("Data for SUB_AUA_CODE : " + SUB_AUA_CODE);
+							$("#myModal").modal('show');
+						},
+						fail : function() {
+							alert("failed");
+						}
+					});
+
+				})
+		$(".close").click(function() {
+
+			$("#myModal").modal('hide');
+		});
+	</script>
+	<script>
+		$('#submit').click(function() {
+
+			if ($.trim($('#subAuaCode').val()) == '') {
+				$("#subAuaCode").addClass("is-invalid");
+
+			}
+		});
+	</script>
+	<script>
+		$('#submit').click(function() {
+
+			if ($.trim($('#fromdate').val()) == '') {
+				$("#fromdate").addClass("is-invalid");
+
+			}
+		});
+	</script>
+	<script>
+		$('#submit').click(function() {
+
+			if ($.trim($('#Enddate').val()) == '') {
+				$("#Enddate").addClass("is-invalid");
+
+			}
+		});
+	</script>
+<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				debugger;
+				//var conceptName = $('#EXPIRY_DATE').val();
+				$("#fromdate").removeAttr("readonly");
+				$("#Enddate").removeAttr("readonly");
+
+			
+
+				
+
+			});
+		});
+	</script>
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+		<script>
+		var topFunction = function() {
+		    window.scrollTo(0, 0);
+		};
+		</script>
+			<script>/* $.each(results['hide'], function(name, title) {   
+		debugger;
+	    $(document.getElementById("subAuaCode").options).each(function(index, option) {
+	        if( option.value == "ALL" ) {
+	          option.hidden = true; // not fully compatible. option.style.display = 'none'; would be an alternative or $(option).hide();
+	        }
+	      });
+	  }); */
+	  
+	  /* jQuery('#subAuaCode').children('option[value="ALL"]').hide();
+	  jQuery('#subAuaCode').children('option[value="ALL"]').css('display','none'); */
+	 var col2=  $('#subAuaCode option').length;
+	  console.log(col2);
+	  if(col2==2)
+		{
+		 jQuery('#subAuaCode').children('option[value="ALL"]').remove();			
+		}
+		if(col2==3)
+			{
+			 jQuery('#subAuaCode').children('option[value="ALL"]').remove();			
+			}
+		
+	  
+	 
+	  </script>
+		
+</body>
+</html>

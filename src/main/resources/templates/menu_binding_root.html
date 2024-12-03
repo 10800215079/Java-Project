@@ -1,0 +1,356 @@
+
+<head th:replace="fragments_others_head" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">Menu Binding
+											Details</li>
+									</ol>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Menu Binding
+											Details</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form class="needs-validation" id="formid" novalidate >
+											<!--th:action="@{/menubinding}" th:object="${menubinding}"
+											method="GET">-->
+											<div class="alert alert-primary" role="alert"
+												th:text="${success}" th:if="${success}"></div>
+											<div class="alert alert-danger" role="alert"
+												th:text="${error}" th:if="${error}"></div>
+											<div class="row g-3 mt-0 mb-3  alert-danger">
+												<div class="col-xxl-3 col-sm-5">
+												<!--	<select class="form-select mb-3"
+														aria-label="Default select example" id="role_id"
+														name="role_id" required>
+														<option selected="" disabled="" value="">Select
+															Roles</option>
+														 <option th:value="ALL">ALL</option> 
+														<option th:each="subAuaList : ${subAuaList}" 
+															th:value="${subAuaList.ID}" th:text="${subAuaList.NAME}"
+															th:selected="${subAuaList.ID}"></option>
+													</select>-->
+													
+													
+													
+													<select class="form-select mb-3" aria-label="Default select example" id="role_id" name="role_id" required>
+														<option selected="" disabled="" value="">Select Roles</option>
+														<option th:each="subAuaList : ${subAuaList}" th:value="${subAuaList.ID}" th:text="${subAuaList.NAME}"
+															th:selected="${subAuaList.ID == session.role_id_ja}"></option>
+													</select>
+													
+													
+													</div>
+
+
+												<!--<input type="hidden" id="menuid" name="menuid"
+													th:value="${menuid}" /> <input type="hidden"
+													id="submenuid" name="submenuid" th:value="${submenuid}" />
+												<input type="hidden" id="role_id1" th:name="role_id1"
+													th:value="${role_id}" /> <input type="hidden" id="status1"
+													th:name="status1" th:value="${status1}" />-->
+												<!-- role_id th:value="${status1}"-->
+												<div id="myForm" class="col-xxl-1 col-sm-4">
+													<div>
+														<input type="submit" id="submit"
+															class="btn btn-primary w-100" value="Submit"  onclick="getSubMenuAndMenu()"/>
+													</div>
+												</div>
+											</div>
+										</form>
+										<div class="accordion" id="accordionExample">
+											
+										</div>
+										<div class = "listOfMenu"></div>
+
+										<!--<div class="accordion-item" th:each="list:${listofmainmenu1}">
+											<h2 class="accordion-header"
+												th:id="${'genques-heading' + list.menu_id}">
+												<button class="accordion-button collapsed" type="button"
+													data-bs-toggle="collapse"
+													th:data-bs-target="${'#genques-collapse' + list.menu_id}"
+													aria-expanded="false"
+													th:aria-controls="${'genques-collapse' + list.menu_id}"
+													th:data-value1="${list.menu_id}">
+													 	<input type="checkbox" class="checkbox2" name="checkbox"> 
+													<span data-key="t-dashboards"
+														th:data-value="${list.menu_id}" class="menu_id"
+														th:text="${list.menu_str}" style="color: #fcb8ab;"></span>
+												</button>
+											</h2>
+											<div th:id="${'genques-collapse' + list.menu_id}"
+												class="accordion-collapse collapse show"
+												th:aria-labelledby="${'genques-heading' + list.menu_id}"
+												data-bs-parent="#genques-accordion">
+												<div class="accordion-body"></div>
+											</div>
+										</div>-->
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+	
+	<div class="modal fade" id="otpPopupP1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title text-white" id="exampleModalLongTitle">XXXXXXXX5845</h5>
+					<button type="button" class="cancel" data-dismiss="modal" aria-label="Close"
+						onclick="closeandCancelModal()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+	
+					<form id="formOtp">
+	
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="popupbox11">
+									<input type="checkbox" id="agree1" name="agree1" value="Bike"
+										onclick="concernCheckbox(this)">
+									<label for="agree1"> I hereby state that i have no objection in authenticating myself
+										with AADHAAR based authentication system and consent to providing my AADHAAR Number,
+										and OTP for AADHAAR based Authentication. I also give my explicit consent for
+										accessing the mobile number and email address from AADHAAR System. </label>
+								</div>
+								<div class="otpinputbox1">
+									<input type="text" id="otp" name="otp" maxlength="6" style="display: none;"
+										placeholder="OTP (Time-Based OTP)">
+									<label class="left10minutes" style="display: none;">Note : AADHAAR OTP will be valid
+										only for 10 minutes.</label><br>
+									<label class="opt2minutes" style="display: none;">Resend OTP <span class="otp-countdown"
+											id="timer-countdown">02:00</span></label>
+								</div>
+							</div>
+							<div class="flexbuttonOTP">
+								<button type="button" class="btn btn-primary" id="sendOTP1" onclick="sendOtp()"
+									disabled>Send OTP</button>
+								<button type="button" class="btn btn-primary" id="OTPvalidatebtn" style="display: none;"
+									onclick="validateOtp()">Validate OTP</button>
+								<button type="button" class="btn btn-primary" id="resentOTP" style="display: none;"
+									onclick="resendOtp()">ReSend OTP</button>
+								<button type="button" class="btn btn-primary cancel" data-dismiss="modal"
+									onclick="closeandCancelModal()">Cancel</button>
+								<input type="text" id="txn" name="txn" style="display: none;">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div th:replace="fragments_others_footer" :: footer></div>
+
+
+
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="assets/js/otpValidation.js"></script>
+		
+
+
+
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+	<input type="hidden" id="hiddenStatus" th:value="${status1}" />
+
+	<script>
+		$(document).ready(function() {
+			// Retrieve the value from the hidden field using jQuery
+			var statusValue = $('#hiddenStatus').val();
+			console.log('status value:', statusValue);
+
+			// ... Your other JavaScript/jQuery code ...
+		});
+	</script>
+
+   <script>
+	   
+	   function getSubMenuAndMenu() {
+		   event.preventDefault()
+		   //event.stopPropagation()
+		   
+		   var roleId = $("#role_id").val();
+		   if(roleId === null || roleId == 'undefined'){
+			   alert("Please Select Role");
+		   } else {
+			$.ajax({
+			    url: '/GetSubMenu/getMenuandSubmenu/?roleId='+ roleId,
+			    type: 'GET',
+			    dataType: 'json',
+			    success: function (response) {
+					$('.listOfMenu').empty();
+					response.forEach(function (menu) {
+					    var mainMenu = $('<span class="nav-item menuitem"></span>');
+					    var accordionItem = $('<div class="accordion-item"></div>');
+					
+					    // Accordion header
+					    var accordionHeader = $('<h2 class="accordion-header alert-primary" id="heading' + menu.menuMaster.menuId + '"></h2>');
+					    accordionHeader.append('<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' + menu.menuMaster.menuId + '" aria-expanded="true" aria-controls="collapse' + menu.menuMaster.menuId + '">' + menu.menuMaster.menuName + '</button>');
+					
+					    // Accordion body
+					    var accordionBody = $('<div id="collapse' + menu.menuMaster.menuId + '" class="accordion-collapse collapse show" aria-labelledby="heading' + menu.menuMaster.menuId + '" data-bs-parent="#accordionExample"></div>');
+					    var accordionBodyContent = $('<div class="accordion-body"></div>');
+					    var submenuList = $('<ul class="nav-sm" style="color: primary; list-style: none; margin: 0; padding: 0px;"></ul>');
+					
+					    response.forEach(function (submenu) {
+					        if (menu.menuMaster.menuId === submenu.subMenu.menuId) {
+					            submenuList.append('<li class="nav-item" style="padding: 10px;"><input type="checkbox" style="margin-right: 15px;" class="checkbox1" name="checkbox" data-value="' + submenu.subMenu.submenuId + '"  ' + (submenu.subMenu.status ? 'checked' : '') + ' onclick="openOtpModal(this)"><span class="pl-3">' + submenu.subMenu.submenuName + '</span></li>');
+					        }
+					    });
+					
+					    accordionBodyContent.append(submenuList);
+					    accordionBody.append(accordionBodyContent);
+					    accordionItem.append(accordionHeader);
+					    accordionItem.append(accordionBody);
+					    mainMenu.append(accordionItem);
+					    $('.listOfMenu').append(mainMenu);
+					});
+		        }, error: function (xhr, status, error) {
+							console.error(xhr.responseText);
+							}
+						});
+				      }
+				  }
+				  
+				  function handleCheckboxChange(ev){
+					  var subMenuId = ev.dataset.value;
+					  var roleId = $('#role_id').val();
+					  var status = ev.checked;
+					  
+					  		$.ajax({
+								    url: "/updatestaus",
+								    method: 'POST',
+								    data: {
+								        roleId: roleId,
+								        subMenuId: subMenuId,
+								        status: status
+								    },
+								    success: function(response) {
+								        // Value sent successfully
+								        alert("Updated successfully");
+								    },
+								    error: function(xhr, status, error) {
+								        console.log('Error sending value: ' + error);
+								    }
+							});
+				  }
+				  
+				 let e ;
+				 function openOtpModal(eThis){
+				 e = eThis;	 
+				 $('#otpPopupP1').modal('show');
+			   }
+				
+	 function validateOtp() {
+
+			var otpValue = $("#otp").val();
+			if (otpValue === "" || !$.isNumeric(otpValue)) {
+				alert("Please enter a valid number OTP.");
+			} else {
+				$.ajax({
+
+					url: '/OTPAuthentication?OTP=' + otpValue,
+					method: 'POST',
+					cache: false,
+					contentType: 'application/json', // Set the content type
+					success: function (response) {
+						if (response.auth.status == 'Y' || response.auth.status == 'y') {
+							handleCheckboxChange(e);
+							alert('OTP Authenticated Successfully ');
+							closeandCancelModal();
+						} else {
+							alert(response.message);
+						}
+
+					},
+					error: function (xhr, status, error) {
+						alert("Interanal Server Error");
+					}
+				});
+
+			}
+		} 					 
+
+   </script>
+	
+</body>
+</html>

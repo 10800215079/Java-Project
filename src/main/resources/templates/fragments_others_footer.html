@@ -1,0 +1,79 @@
+    <div th:fragment="footer">
+   	  <footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+
+            </div>
+            <div class="col-sm-6">
+                <div class="text-sm-end d-none d-sm-block">
+                    Copyright © 2017 DoIT & C. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+    <i class="ri-arrow-up-line"></i>
+</button>
+    </div>
+     <script src="assets/libs/simplebar/simplebar.min.js"></script>
+    <script>
+    $("#page-header-user-dropdown").click(function(){
+    	
+    	$(".dropdown-menu").toggle();
+    })
+    </script>
+   
+    <script>
+	
+			$(document).ready(function(){
+				w=$(window).width();
+				
+				
+			if(w <=767)
+			{
+				$("#topnav-hamburger-icon").click(function(){
+				$(".app-menu").addClass("activeL");
+				
+				 //$(this).toggleClass('active');
+    				//return false;
+				})
+				$(document).mouseup(function (e) {
+					var menu = $(".app-menu");
+					if (!menu.is(e.target) && menu.has(e.target).length === 0) {
+						menu.removeClass("activeL");
+					}
+				});
+			}
+		$(window).resize(function(){
+		  location.reload();
+		});
+			
+			if(w >= 768)
+			{
+				$("#topnav-hamburger-icon").click(function(){
+				if($("body").hasClass("DST1"))
+				{
+					$("body").removeClass("DST1");
+				}
+				else
+				{
+					$("body").addClass("DST1");
+				}
+				
+				
+				})
+				
+			}
+		
+		
+			
+
+				
+		});
+		
+		
+		
+	</script>

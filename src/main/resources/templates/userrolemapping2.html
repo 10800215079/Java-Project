@@ -1,0 +1,303 @@
+<head th:replace="fragments_others_head" :: head></head>
+<body>
+	<div id="layout-wrapper">
+		<div th:replace="fragments_others_header" :: header></div>
+		<div th:replace="fragments_others_menu" :: menu></div>
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">SUB AUA ADMIN PAGE</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">SUB AUA ADMIN
+											PAGE</h4>
+									</div>
+								</div>
+								<div class="row">
+									<div class="card">
+										<!-- end card header -->
+
+										<div class="card-body">
+
+											<form id="validation-form"
+												class="needs-validation row g-3 bg-opacity-10"
+												th:action="@{/subauaaaa}" th:object="${subauaadminpage}"
+												method="post">
+												<div class="col-md-6">
+													<label for="fullnameInput" class="form-label">SSO
+														ID </label> <input type="text" class="form-control" name="SSOID"
+														id="SSOID" th:value="${ssoid}" readonly><!--  <input
+														type="hidden" name="SSOID" id="SSOID" th:value="${ssoid}"> -->
+
+												</div>
+												<div class="col-md-6">
+													<label for="fullnameInput" class="form-label">EMPLOYEE
+														NAME </label> <input type="text" class="form-control" name="NAME"
+														id="NAME" th:value="${displayname}" readonly> <input
+														type="hidden" name="displayName" id="displayName"
+														th:value="${displayname}">
+												</div>
+												<div class="col-md-6">
+													<label for="fullnameInput" class="form-label">AADHAAR
+														REF NO </label> <input type="text" class="form-control"
+														name="AADHAAR_NO" id="AADHAAR_NO" th:value="${aadhaar}"
+														disabled> <input type="hidden" name="aadhaarId"
+														id="aadhaarId" th:value="${aadhaar}">
+												</div>
+												<div class="col-md-6">
+													<label for="fullnameInput" class="form-label">EMAIL
+														ID </label> <input type="text" class="form-control" id="EMAIL_ID"
+														name="EMAIL_ID" th:value="${mailoff}" readonly> <input
+														type="hidden" name="mailOfficial" id="mailOfficial"
+														th:value="${mailoff}">
+													<!-- <h5 id="usercheck" style="color: red;">**Email is empty</h5> -->
+												</div>
+												<div class="col-md-6">
+													<label for="fullnameInput" class="form-label">Mobile</label>
+													<input type="text" class="form-control" id="MOBILE_NO"
+														name="MOBILE_NO" th:value="${mobile}" readonly> <input
+														type="hidden" name="mobile" id="mobile"
+														th:value="${mobile}">
+												</div>
+												<!-- <div class="col-md-6">
+													<label for="inputEmail4" class="form-label">ROLE ID</label> <input
+														type="email" class="form-control" id="ROLE_ID"
+														 th:value="${ROLE_ID}"
+														disabled>
+												</div> -->
+												<div class="col-md-6">
+													<label for="fullnameInput" class="form-label">Employee
+														No.</label> <input type="text" class="form-control"
+														id="EMPLOYEE_NO" name="EMPLOYEE_NO"
+														th:value="${employeenumber}" readonly > <input
+														type="hidden" name="employeeNumber" id="employeeNumber"
+														th:value="${employeenumber}">
+														
+												</div>
+												<div class="col-md-6">
+													<label for="fullnameInput" class="form-label">Designation</label>
+													<input type="text" class="form-control" id="DESIGNATION"
+														name="DESIGNATION" th:value="${designation}" readonly>
+													<input type="hidden" name="designation" id="designation"
+														th:value="${designation}">
+												</div>
+												<div class="col-md-6">
+													<label for="inputPassword4" class="form-label">User
+														Roles</label><select id="ROLE_NAME" class="form-select"
+														th:field="*{user_roles}" required>
+														<!-- th:field="*{user_roles}" -->
+														<option selected="selected" value="">-- Roles --</option>
+														<option th:each="subAuaList1 :${subAuaList1}"
+															th:value="${subAuaList1.NAME}"
+															th:text="${subAuaList1.NAME}"></option>
+													</select>
+												</div>
+												<div class="col-md-6 ">
+													<label for="validationCustom01" class="form-label">Sub
+														AUA Name </label> <select class="form-select mb-3  "
+														aria-label="Default select example " id="SUB_AUA_NAME"
+														name="SUB_AUA_NAME" th:field="*{subauaname}" required>
+
+														<!-- th:field="*{subauaname}" -->
+														<option selected="selected" value="">--
+															Department --</option>
+
+													</select>
+												</div>
+												<input type="hidden" class="form-control" id="status"
+													name="status" value="1" />
+												<div class="col-12">
+													<div class="text-end">
+														<button type="submit" id="submit" class="btn btn-primary"
+															onclick="clicked()">Submit</button>
+														<!-- <button type="reset" class="btn btn-secondary">Reset</button> -->
+														<input type="button" value="Reset!" class="btn btn-primary"
+															onclick="history.back()">
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments_others_footer" :: footer></div>
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+	
+	<!-- <script>
+function myFunction() {
+	debugger;
+  var x = document.getElementById("validation-form").action;
+  window.location.href = x;
+  
+}
+</script> -->
+	<script type="text/jscript">
+		  
+    
+    
+    $('#ROLE_NAME').change(function() {
+    //Use $option (with the "$") to see that the variable is a jQuery object
+    var option = $(this).find('option:selected');
+    //Added with the EDIT
+    var value = option.val();//to get content of "value" attrib
+   // var text = $option.text();//to get <option>Text</option> content
+   console.log(value);
+   if(value=='AUA ADMIN')
+	   {
+	   $('select#SUB_AUA_NAME').empty();
+	   $('select#SUB_AUA_NAME').append('<option value="All">All</option>');
+	   
+	   }
+   if(value=='SUB AUA ADMIN')
+	  {
+	   $('select#SUB_AUA_NAME').empty();
+	   $('select#SUB_AUA_NAME').append('<option th:each="subAuaList :${subAuaList}" th:value="${subAuaList.NAME}"th:text="${subAuaList.NAME}"></option>');
+	   
+	  } 
+   if(value=='SUPPORT TEAM USER')
+	   {
+	   $('select#SUB_AUA_NAME').empty();
+	   $('select#SUB_AUA_NAME').append('<option value="All">All</option>');
+	   }
+  
+});
+    
+
+	</script>
+	<script type="text/javascript">
+    function clicked() {
+    	debugger;
+    	var role = $("#ROLE_NAME").val();
+    	if(role == 'SUPPORT TEAM USER'){
+    		if (confirm('Do you want to submit?')) {
+    	           submit();
+    	       } else {
+    	    	  
+    	    	   event.preventDefault();
+    	       }
+    	}else{
+    	
+	       		if (confirm('Do you want to submit?')) {
+	 	           submit();
+	 	       } else {
+	 	    	   event.preventDefault();
+	 	       }
+       	  }
+    	}
+    	
+       
+    
+
+</script>
+<!-- 
+<script type="text/javascript">
+function clicked() {
+    debugger;
+    var role = $("#ROLE_NAME").val();
+    if (role == 'SUPPORT TEAM USER') {
+        if (confirm('Do you want to submit?')) {
+            document.getElementById('myForm').submit();
+        } else {
+            event.preventDefault();
+        }
+    } else {
+        /* Other logic here */
+        if (confirm('Do you want to submit?')) {
+            document.getElementById('myForm').submit();
+        } else {
+            event.preventDefault();
+        }
+    }
+}
+</script> -->
+
+<script>
+/* 
+$("#validation-form").validate({
+	 ignore: ".ignore",
+    rules: {
+    	EMAIL_ID: "required",
+        EMPLOYEE_NO: "required",
+    },
+    
+    messages: {
+    	
+    	EMAIL_ID: "Email is empty",
+    	EMPLOYEE_NO: "Employee No is empty",
+    },
+    submitHandler: function (form) {
+    	 
+        confirm("Do you want to sure you want to submit the form ");
+		$('#validation-form').click(function () {
+            form.submit();
+       });
+    }
+});  
+ */
+
+</script>
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+            debugger;
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+</body>
+</html>

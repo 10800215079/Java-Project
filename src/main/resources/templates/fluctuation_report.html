@@ -1,0 +1,209 @@
+
+<head th:replace="fragments_others_head" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+  
+      	<div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0"></h4>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Fluctuation Report</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header bg-primary pb-2 pt-2">
+                                    <div class="d-flex justify-content-between">
+                                    <h4 class="card-title text-white mb-0 pt-2 pb-2">Fluctuation Report</h4>
+                                   </div>
+                                </div>
+                                <div class="card-body">
+                                	<form id="validation-form"  class="needs-validation"  novalidate th:action="@{/FluctuationData}" th:object="${fluctuation_report}" method="get">                                                                                                                                                  
+                                        <div class="row g-3 mt-0 mb-3 pb-3  alert-danger">
+                                            <!-- <div class="col-xxl-4 col-sm-5">
+	                                            <select class="form-select mb-3" aria-label="Default select example" id="subAuaCode"name="subAuaCode">
+	                                                    <option selected="" disabled>Select Department </option>
+	                                                    <option value="ALL">ALL</option> 
+	                                                    <option th:each="subAuaList :${subAuaList}" th:value="${subAuaList.ID}" th:text="${subAuaList.NAME}"></option>
+	                                            </select>                                              
+                                            </div> -->
+                                            <div class="col-xxl-2 col-sm-4">
+                                                <div>
+                                                   <!--  <input id="frdate" name="frdate" type="date" class="form-control flatpickr-input active " data-provider="flatpickr" data-date-format="d M, Y"  data-enable-time readonly="readonly" placeholder="Start Date"> --> 
+                                                    <input id="fromdate" name="fromdate" type="date" class="form-control flatpickr-input active"  data-provider="flatpickr"  data-date-format="d/m/y"   placeholder="Start Date" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-sm-4">
+	                                            <div>
+	                                                <input id="Enddate" name="Enddate" type="date" class="form-control flatpickr-input active" data-provider="flatpickr"  data-date-format="d/m/y"   placeholder="End Date" required>
+	                                            </div>
+                                            </div>                                    
+                                            <div class="col-xxl-1 col-sm-4">
+                                                <div>                                                 
+                                                    <input type="submit" id="submit" class="btn btn-primary w-100" value="Submit"/>
+                                                </div>
+                                            </div>   
+                                        </div> 
+                                        </form>
+                                        <div class="table-responsive table-card1 mt-4 mb-1">
+                                            <table id="example" class="table table-striped" style="width:100%">
+                                               <thead class="alert-info">
+                                                    <tr>                                                        
+                                                        <th>S.no</th>
+                                                       <!--  <th>SUBAUA Code</th> -->
+                                                        <th>Transaction Date</th>
+                                                        <th>Error Code</th>
+                                                        <th>Request Type</th>
+                                                        <th>Version</th>
+                                                        <th>Transaction Id</th>
+                                                        <th>UID Response Code </th> 
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all">                                                  
+                                                     <tr th:each="dataVal,iterator : ${result}">                                                 
+                                                        <td th:text="${iterator.index+1}">S.no</td>
+                                                      <!--   <td class="reasons" th:text="${dataVal.AUA_CODE}" >SUBAUA Code </td> -->
+                                                        <td class="nooftransaction" th:text="${dataVal.TRANSACTIONTIME}">Transaction Date</td>
+                                                        <td class="nooftransaction" th:text="${dataVal.ERROR}">Error Code</td>  
+                                                        <td class="nooftransaction" th:text="${dataVal.REQUEST_TYPE}">Request Type</td>  
+                                                        <td class="nooftransaction" th:text="${dataVal.VER}">Version</td>  
+                                                        <td class="nooftransaction" th:text="${dataVal.TRANSACTION_ID}">Transaction Id</td>  
+                                                        <td class="nooftransaction" th:text="${dataVal.UID_RESPONSE_CODE}">UID Response Code</td>
+                                                                                                            
+                                                    </tr>                                                
+                                                </tbody>
+                                                <tfoot class="alert-info">
+                                                    <tr>                                                        
+                                                        <th>S.no</th>
+                                                      <!--   <th>SUBAUA Code</th> -->
+                                                        <th>Transaction Date</th>
+                                                        <th>Error Code</th>
+                                                        <th>Request Type</th>
+                                                        <th>Version</th>
+                                                        <th>Transaction Id</th>
+                                                        <th>UID Response Code </th> 
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div> 
+              </div>    
+           </div>
+        
+		<div th:replace="fragments_others_footer" :: footer></div>
+               
+    </div>
+       
+  <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+   <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript' src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript" src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"	src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+    
+    <script>
+   flatpickr("#fromdate", {	       
+	    maxDate: "today",
+	    enableTime: true,
+	    dateFormat: "d/m/y H:i"	   
+	});
+   </script>
+   <script>
+   flatpickr("#Enddate", {	       
+	    maxDate: "today",
+	    enableTime: true,
+	    dateFormat: "d/m/y H:i"	   
+	});
+   </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+    $('#example').DataTable({
+        "pageLength": 20,
+        responsive: true,
+        lengthMenu: [[50, 100, 200, 500, -1], [50, 100, 200, 500, 'All'],],
+
+
+       dom: 'Bfrtip',
+        buttons: [
+            'pageLength','csv', 'excel'
+        ],
+         
+         fixedHeader: {
+                   // header: true,
+                    footer: true,                    
+                },
+
+        } );
+});
+    </script>
+    <script type="text/javascript">
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				debugger;
+				//var conceptName = $('#EXPIRY_DATE').val();
+				$("#fromdate").removeAttr("readonly");
+				$("#Enddate").removeAttr("readonly");
+
+			
+
+				
+
+			});
+		});
+	</script>
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+   	<script>
+		var topFunction = function() {
+		    window.scrollTo(0, 0);
+		};
+		</script>
+</body>
+</html>

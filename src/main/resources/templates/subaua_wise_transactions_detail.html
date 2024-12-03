@@ -1,0 +1,645 @@
+
+<head th:replace="fragments_others_head" :: head></head>
+<style>
+.modal-header {
+	padding: 5px
+}
+
+.modal-body table tr td:first-child {
+	display: none
+}
+
+.modal-body table tr th:first-child {
+	display: none
+}
+
+table.lusan tr td:nth-child(2) {
+	display: none
+}
+
+table.lusan tr th:nth-child(2) {
+	display: none
+}
+</style>
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">SUBAUA Wise
+											Transaction</li>
+									</ol>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">SUBAUA Wise
+											Error Details Report</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<form id="validation-form" class="needs-validation"
+										th:action="@{/subauaWiseData}" novalidate
+										th:object="${subAuaWiseErrorDetailsReportModel}" method="get">
+
+										<div class="row g-3 mt-0 mb-3  alert-danger">
+											<div class="col-xxl-3 col-sm-5">
+												<select class="form-select mb-3"
+													aria-label="Default select example" id="subAuaCode"
+													name="subAuaCode" required>
+													<option selected="" disabled="" value="">Select
+														Department</option>
+													<option th:selected="${session.subAuaCode == 'ALL'}"
+														th:value="ALL">ALL</option>
+													<option th:each="subAuaList :${subAuaList}"
+														th:value="${subAuaList.ID}"
+														th:selected="${subAuaList.ID == session.subAuaCode}"
+														th:text="${subAuaList.NAME}"></option>
+												</select>
+
+											</div>
+											<div class="col-xxl-2 col-sm-4">
+												<div>
+
+													<input id="fromdate" name="fromdate" type="date"
+														class="form-control flatpickr-input active"
+														data-provider="flatpickr" data-date-format="d/m/y"
+														data-enable-time placeholder="Start Date"
+														th:value="${session.fromdate ?: ''}" required value="">
+
+												</div>
+											</div>
+											<div class="col-xxl-2 col-sm-4">
+												<div>
+													<input id="Enddate" name="Enddate" type="date"
+														class="form-control flatpickr-input active"
+														data-provider="flatpickr" data-date-format="d/m/y"
+														data-enable-time placeholder="End Date"
+														th:value="${session.enddate ?: ''}" required value="">
+
+												</div>
+											</div>
+											<div class="col-xxl-1 col-sm-4">
+												<div>
+													<input type="submit" id='submit'
+														class="btn btn-primary w-100" value="Submit" />
+												</div>
+											</div>
+										</div>
+									</form>
+
+
+									<div class="table-responsive table-card1 mt-4 mb-1"
+										id="example2">
+										<table id="example" class="table table-striped lusan"
+											style="width: 100%">
+											<thead class="alert-info">
+												<tr>
+													<th>S.no</th>
+													<th>SUBAUA CODE</th>
+													<th>SubAUA</th>
+													<th>Request Type</th>
+													<th>Dp Id</th>
+													<th>Model Id</th>
+													<th>No of Device</th>
+													<th>Transaction Count</th>
+													<th>Error</th>
+													<th>Response Message</th>
+													<th>Authentication Status</th>
+													<th>Action</th>
+
+												</tr>
+											</thead>
+											<tbody class="list form-check-all" id="tbody3">
+												<tr th:each="dataVal,iterator  : ${details}">
+													<td th:text="${iterator.index+1}"></td>
+													<td class="reasons" th:text="${dataVal.sub_aua_key}">SUBAUA
+														CODE</td>
+													<td class="reasons" th:text="${dataVal.orgname}">SUBAUA</td>
+													<td class="nooftransaction"
+														th:text="${dataVal.Request_type}">Service Type</td>
+													<td class="reasons" th:text="${dataVal.dp_id}">Dp_ID</td>
+													<td class="reasons" th:text="${dataVal.MI}">MI</td>
+													<td class="nooftransaction"
+														th:text="${dataVal.count_of_devices}">No of Device</td>
+													<td class="nooftransaction"
+														th:text="${dataVal.count_conditionally}">Transaction
+														Count</td>
+													<td class="AUTHENTICATION_STATUS"
+														th:text="${dataVal.error}">Error</td>
+													<td class="reasons" th:text="${dataVal.response_message}">Response
+														Message</td>
+													<td class="reasons"
+														th:text="${dataVal.authentication_status}">AUTHENTICATION
+														STATUS</td>
+													<td>
+														<button type="button" class="btn btn-primary openModal"
+															data-toggle="modal" data-target="#myModal"
+															data-whatever="@mdo">View</button>
+													</td>
+												</tr>
+											</tbody>
+
+											<tfoot class="alert-info">
+												<th>S.no</th>
+												<th>SUBAUA CODE</th>
+												<th>SubAUA</th>
+												<th>Request Type</th>
+												<th>Dp Id</th>
+												<th>Model Id</th>
+												<th>No of Device</th>
+												<th>Transaction Count</th>
+												<th>Error</th>
+												<th>Response Message</th>
+												<th>Authentication Status</th>
+												<th>Action</th>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<!--  
+
+		<div class="modal hide fade" id="myModal3" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-fullscreen" role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title" id="exampleModalLabel" style="color: white; text-align: center;">Transaction Details</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="table-responsive table-card1 mt-1 mb-1">
+							<div class="table-responsive table-card1 mt-4 mb-1">
+								<table id="table5" class="table table-striped"
+									style="width: 100%">
+									<thead class="alert-info">
+										<tr>
+											
+											<th>SUB AUA CODE</th>
+											<th>ORGANIZATION NAME</th>
+											<th>REQUEST TYPE</th>
+											<th>AADHAAR ID</th>
+											<th>MAC ADDRESS</th>
+											<th>APPNAME</th>
+											<th>AUTHENTICATION STATUS</th>
+											<th>CREATED DATE</th>
+											<th>ERROR</th>
+											<th>RESPONSE MESSAGE</th>
+											<th>TRANSACTION ID</th>
+											<th>UID RESPONSE CODE</th>
+											<th>DC</th>
+											<th>DP_ID</th>
+											<th>MI</th>
+											<th>BT AUA</th>
+											<th>IP</th>
+
+										</tr>
+									</thead>
+									<tbody id="table2body">
+
+									</tbody>
+									<tfoot class="alert-info">
+										<tr>
+											
+											<th>SUB AUA CODE</th>
+											<th>ORGANIZATION NAME</th>
+											<th>REQUEST TYPE</th>
+											<th>AADHAAR ID</th>
+											<th>MAC ADDRESS</th>
+											<th>APPNAME</th>
+											<th>AUTHENTICATION STATUS</th>
+											<th>CREATED DATE</th>
+											<th>ERROR</th>
+											<th>RESPONSE MESSAGE</th>
+											<th>TRANSACTION ID</th>
+											<th>UID RESPONSE CODE</th>
+											<th>DC</th>
+											<th>DP_ID</th>
+											<th>MI</th>
+											<th>BT AUA</th>
+											<th>IP</th>
+
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		-->
+		
+			<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-fullscreen" role="document">
+				<div class="modal-content">
+					<!-- <div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Transaction Report</h5>
+						<h5 class="modal-title text-white" id="exampleModalLabel"></h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div> -->
+					<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="exampleModalLabel" style="color: white; text-align: center;">Transaction Details</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+					<div class="modal-body">
+						<div class="table-responsive table-card1 mt-4 mb-1">					
+							<div class="table-responsive table-card1 mt-4 mb-1">
+								<table id="table2" class="table table-striped"
+									style="width: 100%">
+									<thead class="alert-info">
+										<tr>
+											<th>SUB AUA CODE</th>
+											<th>ORGANIZATION NAME</th>
+											<th>REQUEST TYPE</th>
+											<th>AADHAAR ID</th>
+											<th>MAC ADDRESS</th>
+											<th>APPNAME</th>
+											<th>AUTHENTICATION STATUS</th>
+											<th>CREATED DATE</th>
+											<th>ERROR</th>
+											<th>RESPONSE MESSAGE</th>
+											<th>TRANSACTION ID</th>
+											<th>UID RESPONSE CODE</th>
+											<th>DC</th>
+											<th>DP_ID</th>
+											<th>MI</th>
+											<th>BT AUA</th>
+											<th>IP</th>
+
+										</tr>
+									</thead>
+									<tbody id="table2body">
+
+									</tbody>
+									<tfoot class="alert-info">
+										<tr>
+											<th>SUB AUA CODE</th>
+											<th>ORGANIZATION NAME</th>
+											<th>REQUEST TYPE</th>
+											<th>AADHAAR ID</th>
+											<th>MAC ADDRESS</th>
+											<th>APPNAME</th>
+											<th>AUTHENTICATION STATUS</th>
+											<th>CREATED DATE</th>
+											<th>ERROR</th>
+											<th>RESPONSE MESSAGE</th>
+											<th>TRANSACTION ID</th>
+											<th>UID RESPONSE CODE</th>
+											<th>DC</th>
+											<th>DP_ID</th>
+											<th>MI</th>
+											<th>BT AUA</th>
+											<th>IP</th>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+	<div id="loader"
+		style="border: 8px solid #007bff; border-radius: 50%; width: 100px; height: 100px; animation: spin 2s linear infinite; position: absolute; top: 50%; left: 60%; transform: translate(-50%, -50%); display: none;"></div>
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+	<script>
+		const fromdefaultTime = new Date();
+		fromdefaultTime.setHours(00); // Set the default hour 
+		fromdefaultTime.setMinutes(00); // Set the default minute
+
+		// Initialize Flatpickr with the modified date object
+		flatpickr("#fromdate", {
+			mode : "single",
+			dateFormat : "Y-m-d",
+			enableTime : false,
+			// Use the modified date object with the desired time
+			maxDate : new Date()
+		});
+
+		const toDefaultTime = new Date();
+		toDefaultTime.setHours(23); // Set the default hour 
+		toDefaultTime.setMinutes(59); // Set the default minute
+
+		flatpickr("#Enddate", {
+			mode : "single",
+			dateFormat : "Y-m-d",
+			enableTime : false,
+			// Default time for the end date
+			maxDate : new Date()
+		});
+	</script>
+
+
+		<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#example').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 10, 50, 100, 200, 500, -1 ],
+										[ 10, 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									header : true,
+									footer : true,
+								},
+
+							});
+				});
+	</script>
+
+ 
+<!--  
+	<script type="text/javascript">
+		var table = '';
+		$(document)
+				.ready(
+						function() {
+							debugger;
+
+							table = $('#table5')
+							.DataTable(
+									{
+										"pageLength" : 10,
+										responsive : true,
+										lengthMenu : [
+												[ 50, 100, 200, 500, -1 ],
+												[ 50, 100, 200, 500,'All' ], ],
+
+										dom : 'Bfrtip',
+										buttons : [ 'pageLength','csv', 'excel' ],
+
+										fixedHeader : {
+											header : true,
+											footer : true,
+										},
+
+									});
+
+							$('.openModal')
+									.click(
+											function() {
+												debugger;
+												var SUB_AUA_CODE = $(this).closest('tr').find('td:nth-child(2)').text();
+												var REQUEST_TYPE1 = $(this).closest('tr').find('td:nth-child(4)').text();
+												var ERRORCODE = $(this).closest('tr').find('td:nth-child(9)').text();
+												var RESPONSE_MESSAGE = $(this).closest('tr').find('td:nth-child(10)').text();
+												var Count = $(this).closest('tr').find('td:nth-child(8)').text();
+
+												var search = {
+													"SUB_AUA_CODE" : SUB_AUA_CODE,
+													"REQUEST_TYPE1" : REQUEST_TYPE1,
+													"ERRORCODE" : ERRORCODE,
+													"RESPONSE_MESSAGE" : RESPONSE_MESSAGE,
+
+												}
+												if (Count <= 20000) {
+													showLoader();
+													$
+															.ajax({
+																url : "/Authmis/getCountWiseErrorReport",
+																data : search,
+																dataType : 'json',
+																type : 'GET',
+																success : function(data) {
+																	hideLoader();
+																	var res = '';
+																	
+																	table.rows.add([]).clear().draw();
+																	table.rows.add(data).draw();  																
+
+																	$("#myModal3").modal('show');
+																},
+																fail : function() {
+																	hideLoader();
+																	alert("failed");
+																}
+															});
+												} else {
+													alert('Count is more than 20000 view is not available')
+												}
+
+											})
+							$(".close").click(function() {
+
+								$("#myModal3").modal('hide');
+							});
+
+							function showLoader() {
+								$("#loader").show();
+							}
+
+							function hideLoader() {
+								$("#loader").hide();
+							}
+
+						});
+	</script>
+	
+	-->
+	
+	<script type="text/javascript">
+		var table = '';
+		$(document).ready(
+				function() {
+					debugger;
+					table = $('#table2').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 10, 50, 100, 200, 500, -1],
+										[ 10, 50, 100, 200, 500, 'All' ],],
+
+										
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+							
+							});
+				});
+
+		$('.openModal')
+				.click(
+
+						function() {
+							
+							debugger;
+												
+							var SUB_AUA_CODE = $(this).closest('tr').find('td:nth-child(2)').text();
+							var REQUEST_TYPE1 = $(this).closest('tr').find('td:nth-child(4)').text();
+							var DP_ID = $(this).closest('tr').find('td:nth-child(5)').text();
+							var ERRORCODE = $(this).closest('tr').find('td:nth-child(9)').text();
+							var RESPONSE_MESSAGE = $(this).closest('tr').find('td:nth-child(10)').text();
+							var MI = $(this).closest('tr').find('td:nth-child(6)').text();
+							var Count = $(this).closest('tr').find('td:nth-child(8)').text();
+							var search = {
+									"SUB_AUA_CODE" : SUB_AUA_CODE,
+									"REQUEST_TYPE1" : REQUEST_TYPE1,
+									"ERRORCODE" : ERRORCODE,
+									"DP_ID" : DP_ID,
+									"RESPONSE_MESSAGE" : RESPONSE_MESSAGE,
+									"MI" : MI
+							
+								}
+							if (Count <= 20000) {
+								showLoader();
+							$.ajax({
+								url : "/Authmis/getCountWiseErrorReport",
+								data : search,
+								dataType : 'json',
+								type : 'get',
+								success : function(data) {
+									hideLoader();
+									var res = '';
+									table.rows.add([]).clear().draw();
+									table.rows.add(data).draw();
+									
+									$("#myModal").modal('show');
+								},
+								fail : function() {
+									hideLoader();
+									alert("failed");								
+								}
+							});
+						}
+							 else {
+								 	hideLoader();
+									alert('Count is more than 20000 view is not available')
+								}
+						})
+		$(".close").click(function() {
+
+			$("#myModal").modal('hide');
+		});
+		function showLoader() {
+			$("#loader").show();
+		}
+
+		function hideLoader() {
+			$("#loader").hide();
+		}
+	</script>
+	
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				debugger;
+				$("#fromdate").removeAttr("readonly");
+				$("#Enddate").removeAttr("readonly");
+
+			});
+		});
+	</script>
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+	<script>
+		var topFunction = function() {
+			window.scrollTo(0, 0);
+		};
+
+		var col2 = $('#subAuaCode option').length;
+		console.log(col2);
+		if (col2 == 2) {
+			jQuery('#subAuaCode').children('option[value="ALL"]').remove();
+
+		}
+
+		if (col2 == 3) {
+			jQuery('#subAuaCode').children('option[value="ALL"]').remove();
+			
+		}
+	</script>
+</body>
+</html>
+</body>
+</html>

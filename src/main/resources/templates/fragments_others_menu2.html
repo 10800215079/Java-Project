@@ -1,0 +1,101 @@
+	
+	<div th:fragment="menu1">
+		<div class="app-menu navbar-menu">
+			<div class="navbar-brand-box">
+				<!-- Dark Logo-->
+				<a href="/" class="logo logo-dark"> <span class="logo-sm">
+						<img src="assets/images/logo-sm.png" alt="" height="22" />
+				</span> <span class="logo-lg"> <img src="assets/images/logo-dark.png"
+						alt="" height="60" />
+				</span>
+				</a>
+				<!-- Light Logo-->
+				<a href="/Authmis" class="logo logo-light"> <span class="logo-sm">
+						<img src="assets/images/logo-sm.png" alt="" height="22" />
+				</span> <span class="logo-lg"> <img
+						src="assets/images/logo-light.png" alt="" height="60" />
+				</span>
+				</a>
+				<button type="button"
+					class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+					id="vertical-hover">
+					<i class="ri-record-circle-line"></i>
+				</button>
+			</div>
+	
+			<div id="scrollbar" >
+				<div class="container-fluid">
+					<div id="sidebar" data-simplebar style="height: 100vh;">
+						<ul class="navbar-nav" id="navbar-nav">
+							<li class="menu-title"><span data-key="t-menu"><h4
+										class="text-white">Reports</h4></span></li>
+							<!--<li class="nav-item menuitem" th:each="list:${listofmainmenu}"><a
+								class="nav-link menu-link" th:href="${'#menu' + list.menu_id}"
+								data-bs-toggle="collapse" role="button" aria-expanded="true"
+								aria-controls="sidebarDashboards" data-key="t-dashboards"> <i
+									class="ri-dashboard-2-line"></i> <span data-key="t-dashboards"
+									th:data-value="${list.menu_id}" class="menu_id"
+									th:text="${list.menu_str}"></span>
+							</a>
+								<div class="menu-dropdown collapse "
+									th:id="${'menu' + list.menu_id}">
+									<input type="hidden" id="menuid" name="menuid"
+										th:value="${menuid}" />
+									 <ul class="nav nav-sm flex-column">
+										<li class="nav-item menuitem">
+						</ul> 
+					</div>
+					</li>-->
+					</ul>
+				</div>
+	
+	
+			</div>
+	
+		</div>
+	</div>
+	<div class="sidebar-background"></div>
+	<script src="../assets/js/addMenuSubMenu.js"></script>
+	<div class="vertical-overlay"></div>
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="../../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='../../assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="../../assets/js/jquery-3.5.1.js"></script>
+	<script src="../../assets/js/jquery.dataTables.min.js"></script>
+	<script src="../../assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="../../assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript" src="../../assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="../../assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="../../assets/js/buttons.html5.min.js"></script>
+	<script src="../../assets/js/app.js"></script>
+	
+	<script type="text/javascript">
+	     
+	      $(document).ready(function () {
+			 				debugger;
+							if (sessionStorage.getItem('isPageReloaded') >= 1) {
+								addMenuAndSubMenu();
+								//localStorage.setItem('isPageReloaded', 'true');
+							}
+							
+						});
+
+	
+		  $(document).on("click", ".nav-link", function() {
+		    $(this).closest(".menu-dropdown").prev(".nav-link").click();
+		  });
+		
+		  $(document).on('click', '#sidebar .menuitem', function() {
+			  $('li.menuitem').not(this).find('div').hide();  
+	            $(this).find('div').toggle();  
+			});
+		
+	</script>
+	
+	

@@ -1,0 +1,1110 @@
+
+<head th:replace="fragments_others_head" :: head></head>
+<style>
+.modal-header{padding: 5px}
+.modal-body table tr td:first-child{display:none}
+.modal-body table tr th:first-child{display:none}
+ table.lusan tr td:nth-child(2){display:none}
+ table.lusan tr th:nth-child(2){display:none}
+
+</style>
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<!-- <div th:replace="fragments_others_menu" :: menu></div> -->
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">SUBAUA and Service
+											Wise Transaction</li>
+									</ol>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="row">
+					
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">SUBAUA and
+											Service Wise Transaction Detail</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form class="needs-validation" id="formid" novalidate
+											th:action="@{/data}"
+											th:object="${subaua_and_service_wise_transaction_report}"
+											method="GET">
+
+											<div class="row g-3 mt-0 mb-3  alert-danger">
+												<div class="col-xxl-3 col-sm-5">
+													<select class="form-select mb-3"
+														aria-label="Default select example" id="subAuaCode"
+														name="subAuaCode" required>
+														<option selected="" disabled="" value="">Select Department</option>
+														<option th:selected="${session.subAuaCode == 'ALL'}" th:value="ALL">ALL</option>
+														<option th:each="subAuaList :${subAuaList}" th:value="${subAuaList.ID}" 
+														th:selected="${subAuaList.ID == session.subAuaCode}" th:text="${subAuaList.NAME}"></option>
+													</select>
+													 																					
+
+												</div>
+												
+												<div class="col-xxl-2 col-sm-5">
+													<select class="form-select mb-3"
+														aria-label="Default select example" id="servicetype"
+														name="servicetype" required>
+														<option selected="" disabled="" value="">Select Service</option>
+														<option th:selected="${session.servicetype == 'ALL'}" value="ALL">ALL</option>
+														<option th:each="serviceTypeList :${serviceTypeList}" th:value="${serviceTypeList.ID}" 
+														 th:selected="${serviceTypeList.ID == session.servicetype}" th:text="${serviceTypeList.NAME}"></option>
+													</select>
+												</div>
+																																														
+								
+												<div class="col-xxl-2 col-sm-5">
+													<select class="form-select mb-3" id="status1"
+														name="status1" required>
+														<option selected="" disabled="" value="">Select
+															Status</option>
+														<option th:selected="${session.status1 == 'ALL'}" value="ALL">All</option>
+														<option th:selected="${session.status1 == 'SUCCESS'}" value="SUCCESS">SUCCESS</option>
+														<option th:selected="${session.status1 == 'FAILURE'}" value="FAILURE">FAILURE</option>
+													</select>
+												</div>
+												
+												
+												
+												<!-- 
+													th:value="${#strings.concat(session.enddate, '-To Month-Year') ?: ''}"
+													th:value="${#strings.concat(session.fromdate, '-From Month-Year') ?: ''}"
+												<div class="col-xxl-2 col-sm-4">
+													<div class="form-group">
+														 <input
+															id="fromdate" name="fromdate" type="time"
+															class="form-control flatpickr-input active"
+															data-date-format="d/m/y H:i" data-enable-time
+															placeholder="From Month-Year" 
+															th:value="${session.fromdate ?: ''}" required="true">
+													</div>
+												</div> -->
+
+												<div class="col-xxl-2 col-sm-4">
+													<div class="form-group">
+														<input id="fromdate" name="fromdate" type="text"
+															class="form-control flatpickr-input active"
+															data-date-format="Y-m" data-enable-time="false"
+															placeholder="From Month-Year"
+															th:value="${session.fromdate ?: ''}"
+															required="true">
+													</div>
+												</div>
+
+														<div class="col-xxl-2 col-sm-4">
+													<div class="form-group">
+														<input id="Enddate" name="Enddate" type="text"
+															class="form-control flatpickr-input active"
+															data-date-format="Y-m" data-enable-time="false"
+															placeholder="To Month-Year"
+															th:value="${session.enddate ?: ''}"
+															required="true">
+													</div>
+												</div>
+												
+												
+												
+												
+												
+												
+												
+											
+												<!-- <div class="col-xxl-2 col-sm-4">
+													<div class="form-group">
+														<input
+															id="Enddate" name="Enddate" type="time"
+															class="form-control flatpickr-input active"
+															data-date-format="d/m/y H:i" data-enable-time
+															placeholder="To Month-Year"
+															th:value="${session.enddate ?: ''}" required="true">
+													</div>
+												</div> -->
+
+
+												<div id="myForm" class="col-xxl-1 col-sm-4">
+													<div>
+														<input type="submit" id="submit"
+															class="btn btn-primary w-100" value="Submit" />
+													</div>
+												</div>
+											</div>
+										</form>
+										<div class="card bg-info bg-opacity-10 p-3 text-center">
+											<div class="d-flex fs-4 justify-content-center text-center ">
+												From Month-Year : <span th:text="${FROM_DATE}" id="from_date"
+													class="me-4 text-primary"></span> To Month-Year : <span
+													th:text="${End_DATE}" id="end_date" class=" text-primary"></span>
+											</div>
+										</div>
+										<div class="table-responsive table-card1 mt-4 mb-1"
+											id="example2">
+
+											<table id="example" class="table table-striped lusan"
+												style="width: 100%">
+
+												<thead class="alert-info">
+
+													<tr>
+														<th>S.no</th>
+														<th>SUBAUA CODE</th>
+														<th>SubAUA</th>
+														<th>Request Type</th>
+														<th>AUTHENTICATION STATUS</th>
+														<th>Count</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody class="list form-check-all" id="tbody3">
+													<tr th:each="dataVal,iterator  : ${details}">
+														<td th:text="${iterator.index+1}"></td>
+														<td class="reasons" th:text="${dataVal.SUB_AUA_CODE}">SUBAUA
+															CODE</td>
+														<td class="reasons" th:text="${dataVal.ORGNAME}">SUBAUA
+														</td>
+														<td class="nooftransaction"
+															th:text="${dataVal.REQUEST_TYPE}">Service Type</td>
+														<td class="AUTHENTICATION_STATUS"
+															th:text="${dataVal.AUTHENTICATION_STATUS}">AUTHENTICATION
+															STATUS</td>
+														<td class="nooftransaction" th:text="${dataVal.COUNT}">Count</td>
+														<td>
+															<button type="button" class="btn btn-primary openModal"
+																data-toggle="modal" data-target="#myModal"
+																data-whatever="@mdo">View</button>
+														</td>
+													</tr>
+												</tbody>
+
+												<tfoot class="alert-info">
+													<tr>
+														<th>S.no</th>
+														<th>SUBAUA CODE</th>
+														<th>SubAUA</th>
+														<th>Request Type</th>
+														<th>AUTHENTICATION STATUS</th>
+														<th>Count</th>
+														<th>Action</th>
+														
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+	<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="exampleModalLabel" style="color: white; text-align: center;"> Month Wise Report</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive table-card1 mt-4 mb-1">
+						<div class="table-responsive table-card1 mt-4 mb-1">
+							<table id="table2" class="table table-striped"
+								style="width: 100%">
+									<thead class="alert-info">
+
+									<tr>
+										<!-- <th>S.no</th> -->
+										<th>SUBAUA CODE</th>
+										<th>ORGNAME</th>
+										<th>Request Type</th>
+										<th>MONTH</th>
+										<th>AUTHENTICATION STATUS</th>
+										<th>Count</th>
+									 	<th>Action</th> 
+									</tr>
+								</thead>
+								<tbody id="table3body">
+
+								</tbody>
+
+								<tfoot class="alert-info">
+									<tr>
+										<!-- <th>S.no</th> -->
+										<th>SUBAUA CODE</th>
+										<th>ORGNAME</th>
+										<th>Request Type</th>
+										<th>MONTH</th>
+										<th>AUTHENTICATION STATUS</th>
+										<th>Count</th>
+										 <th>Action</th> 
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> 
+	
+	<div class="modal hide fade" id="myModal1" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary ">
+					<h5 class="modal-title text-white" id="exampleModalLabel"> Day Wise Report</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive table-card1 mt-4 mb-1">
+						<div class="table-responsive table-card1 mt-4 mb-1">
+							<table id="table3" class="table table-striped"
+								style="width: 100%">
+									<thead class="alert-info">
+
+									<tr>
+										<!-- <th>S.no</th> -->
+										<th>SUBAUA CODE</th>
+										<th>ORGNAME</th>
+										<th>Request Type</th>
+										<th>DAY</th>
+										<th>AUTHENTICATION STATUS</th>
+										<th>Count</th>
+									 	<th>Action</th> 
+									</tr>
+								</thead>
+								<tbody id="table3body">
+
+								</tbody>
+
+								<tfoot class="alert-info">
+									<tr>
+										<!-- <th>S.no</th> -->
+										<th>SUBAUA CODE</th>
+										<th>ORGNAME</th>
+										<th>Request Type</th>
+										<th>DAY</th>
+										<th>AUTHENTICATION STATUS</th>
+										<th>Count</th>
+										 <th>Action</th> 
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> 
+	
+		<div class="modal hide fade" id="myModal2" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title text-white" id="exampleModalLabel">Hour Wise Report</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive table-card1 mt-4 mb-1">
+						<div class="table-responsive table-card1 mt-4 mb-1">
+							<table id="table4" class="table table-striped"
+								style="width: 100%">
+									<thead class="alert-info">
+
+									<tr>
+										<!-- <th>S.no</th> -->
+										<th>SUBAUA CODE</th>
+										<th>ORGNAME</th>
+										<th>Request Type</th>
+										<th>DATE</th>
+										<th>HOUR</th>
+										<th>AUTHENTICATION STATUS</th>
+										<th>Count</th>
+									 	<th>Action</th> 
+									</tr>
+								</thead>
+								<tbody id="table3body">
+
+								</tbody>
+
+								<tfoot class="alert-info">
+									<tr>
+										<!-- <th>S.no</th> -->
+										<th>SUBAUA CODE</th>
+										<th>ORGNAME</th>
+										<th>Request Type</th>
+										<th>DATE</th>
+										<th>HOUR</th>
+										<th>AUTHENTICATION STATUS</th>
+										<th>Count</th>
+										 <th>Action</th> 
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+		<div class="modal hide fade" id="myModal3" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-fullscreen" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title text-white" id="exampleModalLabel">Transaction Details</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive table-card1 mt-1 mb-1">
+						<div class="table-responsive table-card1 mt-4 mb-1">
+							<table id="table5" class="table table-striped"
+								style="width: 100%">
+								<thead class="alert-info">
+									<tr>
+										<!-- <th>S.No</th> -->
+										<th>SUB AUA CODE</th>
+										<th>ORGANIZATION NAME</th>
+										<th>REQUEST TYPE</th>
+										<th>AADHAAR ID</th>
+										<th>APPNAME</th>
+										<th>UID RESPONSE CODE</th>
+										<th>AUTHENTICATION STATUS</th>
+										<th>BT_AUA</th>
+										<th>CREATED_DATE</th>
+										<th>MAC_ADDRESS</th>
+										<th>TRANSACTION_ID</th>
+										<th>RESPONSE_MESSAGE</th>
+										<th>IP</th>
+										<th>MI</th>
+										<th>ERROR</th>
+										<th>DC</th>
+										<th>DP_ID</th>
+
+									</tr>
+								</thead>
+								<tbody id="table2body">
+
+								</tbody>
+								<tfoot class="alert-info">
+									<tr>
+										<!-- <th>S.No</th> -->
+										<th>SUB AUA CODE</th>
+										<th>ORGANIZATION NAME</th>
+										<th>REQUEST TYPE</th>
+										<th>AADHAAR ID</th>
+										<th>APPNAME</th>
+										<th>UID RESPONSE CODE</th>
+										<th>AUTHENTICATION STATUS</th>
+										<th>BT AUA</th>
+										<th>CREATED DATE</th>
+										<th>MAC ADDRESS</th>
+										<th>TRANSACTION ID</th>
+										<th>RESPONSE MESSAGE</th>
+										<th>IP</th>
+										<th>MI</th>
+										<th>ERROR</th>
+										<th>DC</th>
+										<th>DP_ID</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+
+ <div id="loader" style="border: 8px solid #007bff; border-radius: 50%; width: 100px; height: 100px; animation: spin 2s linear infinite; position: absolute; top: 50%; left: 60%; transform: translate(-50%, -50%); display: none;"></div> 
+
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+
+	<script>
+	const fromdefaultTime = new Date();
+	fromdefaultTime.setHours(00);    // Set the default hour 
+	fromdefaultTime.setMinutes(00);  // Set the default minute
+
+	// Initialize Flatpickr with the modified date object
+	flatpickr("#fromdate", {
+		mode: "single",
+        dateFormat: "Y-m",
+        enableTime: false,
+        maxDate: new Date()
+	});
+
+      
+  
+    const toDefaultTime = new Date();
+	toDefaultTime.setHours(23);    // Set the default hour 
+	toDefaultTime.setMinutes(59);  // Set the default minute
+	
+        flatpickr("#Enddate", {
+        	mode: "single",
+            dateFormat: "Y-m",
+            enableTime: false,
+            maxDate: new Date()
+    	   	// Default time for the end date
+       });
+    </script>
+
+
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#example').DataTable(
+							{
+								"pageLength" : 50,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									header : true,
+									footer : true,
+								},
+
+							});
+				});
+	</script>
+	
+	<script>
+	$(document).on('click', '.view-button', function() {
+	 				debugger;
+					var SUB_AUA_CODE = $(this).closest('tr').find(
+							'td:nth-child(1)').text();
+					var REQUEST_TYPE1 = $(this).closest('tr').find(
+							'td:nth-child(3)').text();
+					var AUTHENTICATION_STATUS = $(this).closest('tr')
+							.find('td:nth-child(5)').text();
+
+					var fromDate = $(this).closest('tr')
+					.find('td:nth-child(4)').text();
+					/* const [year, month] = yearMonth.split('-'); */
+					
+					/* var from_date = document
+							.getElementById("from_date").innerText;
+					var end_date = document.getElementById("end_date").innerText;
+ */
+ 					var end_date = document.getElementById("end_date").innerText;
+					var search = {
+						"SUB_AUA_CODE" : SUB_AUA_CODE,
+						"REQUEST_TYPE1" : REQUEST_TYPE1,
+						"AUTHENTICATION_STATUS" : AUTHENTICATION_STATUS,
+						"fromDate" : fromDate
+						/* "month" : month */
+					/* "STATUS1" : STATUS1 */
+
+					}
+					showLoader();
+					$
+							.ajax({
+								url : "/Authmis/daySubauaANDServiceWiseTransaction",
+								data : search,
+								dataType : 'json',
+								type : 'GET',
+								success : function(data) {
+									hideLoader();
+									var res = '';
+									table1.rows.add([]).clear().draw();
+									table1.rows.add(data).draw();
+									$("#myModal1").modal('show');
+								},
+								fail : function() {
+									hideLoader();
+									alert("failed");
+								}
+							});
+
+	});
+	
+	$("#myModal1 .close").click(function() {
+
+		$("#myModal1").modal('hide');
+	});
+	</script>
+	
+	<script>
+	$(document).on('click', '.view-button1', function() {
+				 debugger;
+					var SUB_AUA_CODE = $(this).closest('tr').find(
+							'td:nth-child(1)').text();
+					var REQUEST_TYPE1 = $(this).closest('tr').find(
+							'td:nth-child(3)').text();
+					var AUTHENTICATION_STATUS = $(this).closest('tr')
+							.find('td:nth-child(5)').text();
+
+					var fromDate  = $(this).closest('tr')
+					.find('td:nth-child(4)').text();
+					
+				/* 	var parts = fromDate.split('-'); 
+					var toDate = parts[2] + '/' + parts[1] + '/' + parts[0].slice(2) + ' 23:59:59';
+					var fromDate = parts[2] + '/' + parts[1] + '/' + parts[0].slice(2) + ' 00:00:00';  */
+					
+/* 					var from_date = document
+							.getElementById("from_date").innerText;
+					var end_date = document.getElementById("end_date").innerText;
+ */
+					console.log("SUB_AUA_CODE" + SUB_AUA_CODE);
+					console.log("REQUEST_TYPE1" + REQUEST_TYPE1);
+
+					var search = {
+						"SUB_AUA_CODE" : SUB_AUA_CODE,
+						"REQUEST_TYPE1" : REQUEST_TYPE1,
+						"AUTHENTICATION_STATUS" : AUTHENTICATION_STATUS,
+						"fromDate" : fromDate,
+						 /* "toDate" : toDate */
+					/* "STATUS1" : STATUS1 */
+
+					}
+					showLoader();
+					$
+							.ajax({
+								url : "/Authmis/hourSubauaANDServiceWiseTransaction",
+								data : search,
+								dataType : 'json',
+								type : 'GET',
+								success : function(data) {
+									hideLoader();
+									var res = '';
+									table2.rows.add([]).clear().draw();
+									table2.rows.add(data).draw();
+									$("#myModal2").modal('show');
+								},
+								fail : function() {
+									hideLoader();
+									alert("failed");
+								}
+							});
+
+	});
+	
+	$("#myModal2 .close").click(function() {
+
+		$("#myModal2").modal('hide');
+	});
+	</script>
+
+	<script type="text/javascript">
+		var table = '';
+		var table1 = '';
+		var table2 = '';
+		var table3 = '';
+		$(document).ready(
+				function() {
+					debugger;
+					table = $('#table2').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									header : true,
+									footer : true,
+								},
+								columns : [
+
+								{
+									data : "SUB_AUA_CODE"
+								}, {
+									data : "ORGNAME"
+								}, {
+									data : "REQUEST_TYPE"
+								},{
+									data : "MONTH" 
+								},{
+									data : "AUTHENTICATION_STATUS"
+								}, {
+									data : "COUNT"
+								}, {
+						            data: null,
+						            defaultContent: '<button class="btn btn-primary view-button" data-toggle="modal" data-target="#myModal1">View</button>'
+						        }
+								]
+							});
+					
+					
+					table1 = $('#table3').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									header : true,
+									footer : true,
+								},
+								columns : [
+
+								{
+									data : "SUB_AUA_CODE"
+								}, {
+									data : "ORGNAME"
+								}, {
+									data : "REQUEST_TYPE"
+								},{
+									data : "DAY" 
+								},{
+									data : "AUTHENTICATION_STATUS"
+								}, {
+									data : "COUNT"
+								}, {
+						            data: null,
+						            defaultContent: '<button class="btn btn-primary view-button1 openModal1 inline" data-bs-toggle="tooltip" data-bs-placement="top" title="HourWise Count"><i class="ri-time-line fs-5"></i> </button>  <button class="btn btn-primary detailedViewBtn openDetailedView  data-bs-toggle="tooltip" data-bs-placement="top" title="Detailed View""><i class = "ri-eye-fill fs-5"> <i></button>'
+						            	
+						        }
+								]
+							});
+					
+					table2 = $('#table4').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									header : true,
+									footer : true,
+								},
+								columns : [
+
+								{
+									data : "SUB_AUA_CODE"
+								}, {
+									data : "ORGNAME"
+								}, {
+									data : "REQUEST_TYPE"
+								},{
+									data : "DATE" 
+								},{
+						            data: "HOUR",
+						            render: function (data, type, row) {
+						            	var intHour = parseInt(row.HOUR,10)
+						                return intHour + '-' + (intHour + 1);
+						            }
+						        },{
+									data : "AUTHENTICATION_STATUS"
+								}, {
+									data : "COUNT"
+								}, {
+						            data: null,
+						            defaultContent: '<button class="btn btn-primary view-button2 openModal2">View</button>'
+						        }
+								]
+							});
+					
+					table3 = $('#table5').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									header : true,
+									footer : true,
+								},
+								columns : [
+
+								{
+									data : "SUB_AUA_CODE"
+								}, {
+									data : "ORG_NAME"
+								}, {
+									data : "REQUEST_TYPE"
+								}, 
+								{
+									data : "AADHAAR_ID" 
+								},{
+									data : "APPNAME" 
+								},{
+									data : "UID_RESPONSE_CODE" 
+								},{
+									data : "AUTHENTICATION_STATUS" 
+								},{
+									data : "BT_AUA" 
+								},{
+									data : "CREATED_DATE" 
+								},{
+									data : "MAC_ADDRESS" 
+								},{
+									data : "TRANSACTION_ID" 
+								},{
+									data : "RESPONSE_MESSAGE" 
+								},{
+									data : "IP" 
+								},{
+									data : "MI" 
+								},{
+									data : "ERROR" 
+								},{
+									data : "DC" 
+								},{
+									data : "DP_ID" 
+								}
+								
+								]
+							});
+				});
+
+			$('.openModal')
+				.click(
+						function() {
+							debugger;
+							var SUB_AUA_CODE = $(this).closest('tr').find(
+									'td:nth-child(2)').text();
+							var REQUEST_TYPE1 = $(this).closest('tr').find(
+									'td:nth-child(4)').text();
+							var AUTHENTICATION_STATUS = $(this).closest('tr')
+									.find('td:nth-child(5)').text();
+
+							var from_date = document
+									.getElementById("from_date").innerText;
+							var end_date = document.getElementById("end_date").innerText;
+
+							console.log("SUB_AUA_CODE" + SUB_AUA_CODE);
+							console.log("REQUEST_TYPE1" + REQUEST_TYPE1);
+
+							var search = {
+								"SUB_AUA_CODE" : SUB_AUA_CODE,
+								"REQUEST_TYPE1" : REQUEST_TYPE1,
+								"AUTHENTICATION_STATUS" : AUTHENTICATION_STATUS,
+								"from_date" : from_date,
+								"end_date" : end_date
+							/* "STATUS1" : STATUS1 */
+
+							}
+							showLoader();
+							$
+									.ajax({
+										url : "/Authmis/monthWiseSubauaANDServiceWiseTransaction",
+										data : search,
+										dataType : 'json',
+										type : 'GET',
+										success : function(data) {
+											hideLoader();
+											var res = '';
+											table.rows.add([]).clear().draw();
+											table.rows.add(data).draw();
+											/* $('.modal-title').text(
+													"SubAua Code : "
+															+ SUB_AUA_CODE,
+													"Service Type : "
+															+ REQUEST_TYPE1); */
+											$("#myModal").modal('show');
+										},
+										fail : function() {
+											hideLoader();
+											alert("failed");
+										}
+									});
+
+						})
+		$("#myModal .close").click(function() {
+
+			$("#myModal").modal('hide');
+		});
+
+		function showLoader() {
+			$("#loader").show();
+		}
+
+		function hideLoader() {
+			$("#loader").hide();
+		}
+		
+		
+		 $(document).on('click', '.openDetailedView', function() {
+				debugger;
+				var SUB_AUA_CODE = $(this).closest('tr').find(
+						'td:nth-child(1)').text();
+				var REQUEST_TYPE1 = $(this).closest('tr').find(
+						'td:nth-child(3)').text();
+				var AUTHENTICATION_STATUS = $(this).closest('tr')
+						.find('td:nth-child(5)').text();
+
+				var from_date = $(this).closest('tr')
+				.find('td:nth-child(4)').text();
+	
+				var count = $(this).closest('tr')
+				.find('td:nth-child(6)').text();
+				
+			/* 	var from_date = document
+						.getElementById("from_date").innerText;
+				var end_date = document.getElementById("end_date").innerText; */
+
+				console.log("SUB_AUA_CODE" + SUB_AUA_CODE);
+				console.log("REQUEST_TYPE1" + REQUEST_TYPE1);
+
+				var search = {
+					"SUB_AUA_CODE" : SUB_AUA_CODE,
+					"REQUEST_TYPE1" : REQUEST_TYPE1,
+					"AUTHENTICATION_STATUS" : AUTHENTICATION_STATUS,
+					"from_date" : from_date
+					/* "end_date" : end_date */
+					
+				/* "STATUS1" : STATUS1 */
+
+				}
+				if(count <= 20000){
+					showLoader();
+					$.ajax({
+						url : "/Authmis/detailedView", 
+						data : search,
+						dataType : 'json',
+						type : 'GET',
+						success : function(data) {
+							hideLoader();
+							var res = '';
+							table3.rows.add([]).clear().draw();
+							table3.rows.add(data).draw();
+							/* $('.modal-title').text(
+									"SubAua Code : " + SUB_AUA_CODE,
+									"Service Type : " + REQUEST_TYPE1); */
+							$("#myModal3").modal('show');
+						},
+						fail : function() {
+							hideLoader();
+							alert("failed");
+						}
+					});
+				} else {
+					alert('Vount is more than 20000 Please view HourWise count')
+				}
+	
+
+			})
+	</script>
+
+	   <script type="text/javascript">
+
+	   $(document).on('click', '.view-button2', function() {
+							debugger;
+							var SUB_AUA_CODE = $(this).closest('tr').find(
+									'td:nth-child(1)').text();
+							var REQUEST_TYPE1 = $(this).closest('tr').find(
+									'td:nth-child(3)').text();
+							var AUTHENTICATION_STATUS = $(this).closest('tr')
+									.find('td:nth-child(6)').text();
+
+							var from_date = $(this).closest('tr')
+							.find('td:nth-child(4)').text();
+							
+						/* 	var from_date = document
+									.getElementById("from_date").innerText;
+							var end_date = document.getElementById("end_date").innerText; */
+
+							console.log("SUB_AUA_CODE" + SUB_AUA_CODE);
+							console.log("REQUEST_TYPE1" + REQUEST_TYPE1);
+
+							var search = {
+								"SUB_AUA_CODE" : SUB_AUA_CODE,
+								"REQUEST_TYPE1" : REQUEST_TYPE1,
+								"AUTHENTICATION_STATUS" : AUTHENTICATION_STATUS,
+								"from_date" : from_date
+								/* "end_date" : end_date */
+								
+							/* "STATUS1" : STATUS1 */
+
+							}
+							showLoader();
+							$.ajax({
+								url : "/Authmis/SubauaANDServiceWiseTransaction", 
+								data : search,
+								dataType : 'json',
+								type : 'GET',
+								success : function(data) {
+									hideLoader();
+									var res = '';
+									table3.rows.add([]).clear().draw();
+									table3.rows.add(data).draw();
+									/* $('.modal-title').text(
+											"SubAua Code : " + SUB_AUA_CODE,
+											"Service Type : " + REQUEST_TYPE1); */
+									$("#myModal3").modal('show');
+								},
+								fail : function() {
+									hideLoader();
+									alert("failed");
+								}
+							});
+
+						})
+		$("#myModal3 .close").click(function() {
+
+			$("#myModal3").modal('hide');
+		});
+		
+		function showLoader() {
+			  $("#loader").show();
+			}
+
+			function hideLoader() {
+			  $("#loader").hide();
+			}
+
+	</script> 
+	
+	
+	
+
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				debugger;
+				//var conceptName = $('#EXPIRY_DATE').val();
+				$("#fromdate").removeAttr("readonly");
+				$("#Enddate").removeAttr("readonly");
+
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function() {
+			$("select").children().first().remove();
+		});
+	</script>
+	<script>/* $.each(results['hide'], function(name, title) {   
+		debugger;
+	    $(document.getElementById("subAuaCode").options).each(function(index, option) {
+	        if( option.value == "ALL" ) {
+	          option.hidden = true; // not fully compatible. option.style.display = 'none'; would be an alternative or $(option).hide();
+	        }
+	      });
+	  }); */
+	  
+	  /* jQuery('#subAuaCode').children('option[value="ALL"]').hide();
+	  jQuery('#subAuaCode').children('option[value="ALL"]').css('display','none'); */
+	 var col2=  $('#subAuaCode option').length;
+	  console.log(col2);
+	  if(col2==2)
+		{
+		 jQuery('#subAuaCode').children('option[value="ALL"]').remove();
+		// jQuery('#subAuaCode').val("DOIT"); 
+		}
+	
+		if(col2==3)
+			{
+			 jQuery('#subAuaCode').children('option[value="ALL"]').remove();
+			// jQuery('#subAuaCode').val("DOIT"); 
+			}
+		
+	  
+	 
+	  </script>
+	  
+	
+</body>
+</html>

@@ -1,0 +1,665 @@
+
+
+<head th:replace="fragments_others_head" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">Suspected Aadhaar</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Send Mail
+											Details</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form id="validation-form" class="needs-validation" novalidate
+											th:action="@{/getEmailData}" th:object="${SendMailReport}"
+											method="get">
+											<div class="row g-3 mt-0 mb-3 pb-3 alert-danger">
+
+												<div class="col-xxl-2 col-sm-4">
+													<div>
+														<!--<input id="fromdate" name="fromdate" type="date" class="form-control flatpickr-input active"  data-provider="flatpickr"  data-date-format="d/m/y"  data-enable-time readonly="readonly" placeholder="Start Date">-->
+														<input id="fromdate" name="fromdate" type="date"
+															class="form-control flatpickr-input active"
+															data-provider="flatpickr" data-date-format="d/m/y"
+															data-enable-time placeholder="Start Date" required
+															value="">
+													</div>
+
+												</div>
+												<div class="col-xxl-2 col-sm-4">
+													<div>
+														<!-- <input id="Enddate" name="Enddate" type="date" class="form-control flatpickr-input active" data-provider="flatpickr"  data-date-format="d/m/y"  data-enable-time readonly="readonly" placeholder="End Date">-->
+														<input id="Enddate" name="Enddate" type="date"
+															class="form-control flatpickr-input active"
+															data-provider="flatpickr" data-date-format="d/m/y"
+															data-enable-time placeholder="End Date" required value="">
+													</div>
+												</div>
+
+												<div class="col-xxl-1 col-sm-2">
+													<div>
+														<input type="submit" id='submit'
+															class="btn btn-primary w-100 submit" value="Submit" />
+													</div>
+												</div>
+											</div>
+										</form>
+										<div class="card bg-info bg-opacity-10 p-3 text-center">
+											<div class="d-flex fs-4 justify-content-center text-center ">
+												From Date : <span th:text="${FROM_DATE}" id="from_date"
+													class="me-4 text-primary"></span> End Date : <span
+													th:text="${End_DATE}" id="end_date" class=" text-primary"></span>
+											</div>
+										</div>
+										<div class="table-responsive table-card1 mt-4 mb-1">
+
+											<table id="example" class="table table-striped"
+												style="width: 100%">
+												<thead class="alert-info">
+													<tr>
+														<th>S.no</th>
+														<th class="sort" data-sort="noofsuccesstransaction">SUBAUA
+															Code</th>
+														<th class="sort" data-sort="noofsuccesstransaction">To</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Cc</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Subject</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Date</th>
+														<th class="sort" data-sort="noofsuccesstransaction">IP</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Transaction</th>
+														<!-- <th class="sort" data-sort="noofsuccesstransaction">Status</th> -->
+														<th class="sort" data-sort="noofsuccesstransaction">Action</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Action</th>
+													</tr>
+												</thead>
+												<tbody class="list form-check-all">
+													<tr th:each="dataVal,iterator : ${result}">
+														<td th:text="${iterator.index+1}">Sr.no</td>
+														<td class="nooftransaction"
+															th:text="${dataVal.subAuaCode}">SUBAUA Code</td>
+														<td class="nooftransaction" th:text="${dataVal.to}">
+															To</td>
+														<td class="nooftransaction" th:text="${dataVal.cc}">
+															Cc</td>
+														<td class="nooftransaction" th:text="${dataVal.subject}">
+															Subject</td>
+														<td class="nooftransaction"
+															th:text="${dataVal.send_email_date}">Date</td>
+														<td class="nooftransaction" th:text="${dataVal.ip}">
+															IP</td>
+														<td class="nooftransaction" th:text="${dataVal.srno}">Transaction</td>
+														<!-- <td class="nooftransaction" th:text="${dataVal.status}">Status</td> -->
+														<td>
+															<button type="button" class="btn btn-primary openModal1"
+																data-toggle="modal" data-target="myModal1"
+																data-whatever="@mdo">View</button>
+														</td>
+														<td>
+															<button type="button" class="btn btn-primary openModal2"
+																data-toggle="modal" data-target="myModalAttachment"
+																data-whatever="@mdo">Attachments</button>
+														</td>
+
+													</tr>
+												</tbody>
+												<tfoot class="alert-info">
+													<tr>
+														<th>S.no</th>
+														<th class="sort" data-sort="noofsuccesstransaction">SUBAUA
+															Code</th>
+														<th class="sort" data-sort="noofsuccesstransaction">To</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Cc</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Subject</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Date</th>
+														<th class="sort" data-sort="noofsuccesstransaction">IP</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Transaction</th>
+														<!-- <th class="sort" data-sort="noofsuccesstransaction">Status</th> -->
+														<th class="sort" data-sort="noofsuccesstransaction">Action</th>
+														<th class="sort" data-sort="noofsuccesstransaction">Action</th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+	<!-- ----------------------------------------For PDF--------------------------------------------------- -->
+	<div class="modal hide fade" id="myModal1" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<!-- <button id="downloadButton" onclick="downloadPDF()">Download
+						PDF</button> -->
+					<button id="download-button">Download PDF</button>
+					<h5 class="modal-title1" id="exampleModalLabel1"></h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+				</div>
+				<div class="modal-body" id="content1"
+					style="font-family: Arial, sans-serif; font-size: 16px;">
+
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+
+								<div class="card-body">
+									<div class="row">
+										<div class="col-lg-12">
+
+											<h3 class="pb-3 mt-3">
+												<span id="maildata3" class="me-4 text-primary"></span>
+											</h3>
+
+											<div style="display: flex; align-items: center;">
+												<img src="assets/images/emil_png.png" alt="" height="35"
+													width="35" style="border-radius: 50px;">
+												<div style="margin-left: 8px;">
+													<span style="font-weight: 600;" id="maildata1"></span> <span
+														style="font-weight: 600;" id="maildata2"></span>
+													<p
+														style="font-size: 13px; margin-bottom: 0px; margin-top: 3px; color: #878a99;"
+														id="maildata4"></p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="pt-4 pb-4"
+												style="color: rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica, sans-serif; font-size: 12pt">
+
+												<p id="maildata5"></p>
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+								<!-- end card -->
+							</div>
+							<!-- end col -->
+						</div>
+						<!-- end col -->
+					</div>
+
+
+				</div>
+				<!-- end .h-100-->
+
+			</div>
+			<!-- end col -->
+
+
+		</div>
+	</div>
+	<!-- ---------------------------------------------end for pdf------------------------------------------------------------------------>
+
+	<!-----------------------------------------------View for attchment------------------------------------------------------------------>
+
+	<div class="modal hide fade" id="myModalAttachment" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel"></h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive table-card1 mt-4 mb-1">
+						<div class="table-responsive table-card1 mt-4 mb-1">
+							<table id="table3" class="table table-striped"
+								style="width: 100%">
+								<thead class="alert-info">
+									<tr>
+										<th>FILE ID</th>
+										<th>FILE NAME</th>
+										<th>URI</th>
+									</tr>
+								</thead>
+								<tbody id="table3body">
+
+								</tbody>
+								<tfoot class="alert-info">
+									<tr>
+										<th>FILE ID</th>
+										<th>FILE NAME</th>
+										<th>URI</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- If file not exist -->
+	<div class="modal fade" id="throwError" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		data-backdrop="static">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Alert
+						Message</h5>
+					<button type="button" class="closeModel1" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<form>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="popupbox11">
+									<p class="text-success" id="#OTPVerifiedMsg">File does not exist.</p>
+								</div>
+
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-----------------------------------------------------------------end for attchment------------------------------------------------->
+	</div>
+	</div>
+	</div>
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+
+	<!-- Other meta tags and CSS links -->
+	<script type="text/javascript" src="assets/js/html2pdf.bundle.min.js"></script>
+	<script type="text/javascript" src="assets/js/jspdf.umd.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.10.2/jspdf.umd.min.js"></script> -->
+
+
+
+	<script>
+		const fromdefaultTime = new Date();
+		fromdefaultTime.setHours(00); // Set the default hour 
+		fromdefaultTime.setMinutes(00); // Set the default minute
+
+		// Initialize Flatpickr with the modified date object
+		flatpickr("#fromdate", {
+			mode : "single",
+			dateFormat : "Y-m-d",
+			enableTime : false,
+			// Use the modified date object with the desired time
+			maxDate : new Date()
+		});
+
+		const toDefaultTime = new Date();
+		toDefaultTime.setHours(23); // Set the default hour 
+		toDefaultTime.setMinutes(59); // Set the default minute
+
+		flatpickr("#Enddate", {
+			mode : "single",
+			dateFormat : "Y-m-d",
+			enableTime : false,
+			// Default time for the end date
+			maxDate : new Date()
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#example').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+
+							});
+
+				});
+	</script>
+
+
+	<script type="text/javascript">
+		var table = '';
+		$(document).ready(
+				function() {
+					table = $('#table2').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+								
+							});
+				});
+	
+		$('.openModal1').click(
+				function() {
+					var TRANSACTION_ID = $(this).closest('tr').find(
+							'td:nth-child(8)').text();
+
+					var search = {
+						"TRANSACTION_ID" : TRANSACTION_ID,
+					};
+
+					$
+							.ajax({
+								url : "/Authmis/TransactionIdMappingDetails",
+								data : search,
+								dataType : 'json',
+								type : 'get',
+								success : function(data) {
+									var modalContent_To = '';
+									var modalContent_Cc = '';
+									var modalContent_Subject = '';
+									var modalContent_Date = '';
+									var modalContent_Content = '';
+
+									var toValue = data[0].to;
+									var ccValue = data[0].cc;
+									var subjectValue = data[0].subject;
+									var dateValue = data[0].send_email_date;
+									var contentValue = data[0].content;
+
+									if (toValue) {
+										modalContent_To += '<div>' + toValue + '</div>';
+									}
+									if (ccValue) {
+										modalContent_Cc += '<div>' + ccValue + '</div>';
+									}
+									if (subjectValue) {
+										modalContent_Subject += subjectValue;
+									}
+									if (dateValue) {
+										modalContent_Date += '<div>' + dateValue + '</div>';
+									}
+									if (contentValue) {
+										modalContent_Content += '<div>' + contentValue + '</div>';
+									}
+
+									// Add more values as needed
+
+									$('#maildata1').html(modalContent_To);
+									$('#maildata2').html(modalContent_Cc);
+									$('#maildata3').html(modalContent_Subject);
+									$('#maildata4').html(modalContent_Date);
+									$('#maildata5').html(modalContent_Content);
+									$("#myModal1").modal('show');
+								},
+								fail : function() {
+									alert("failed");
+								}
+							});
+				});
+
+		$(".close").click(function() {
+
+			$("#myModal1").modal('hide');
+		});
+	</script>
+
+
+
+
+	<!----------------------For PDF------------------------------------------------------------------------------------------------------>
+
+	
+	<script>
+    
+    	const button = document.getElementById('download-button');
+
+    	button.addEventListener('click', () => {
+        	const element = document.getElementById('content1');
+        	const options = {
+           	 	margin: 10,
+            	filename: 'Mail.pdf',
+            	image: { type: 'jpeg', quality: 1 },
+            	html2canvas: { scale: 2 },
+            	jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        	};
+
+        html2pdf().from(element).set(options).save();
+    });
+	</script>
+
+	<!----------------------------------------------------------------------------------------------------------------------------------->
+
+	<!-----------------------------Attchment View---------------------------------------------------------------------------------------->
+	<script type="text/javascript">
+		var table = '';
+		$(document).ready(
+				function() {
+					table = $('#table3').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									header : true,
+									footer : true,
+								},
+								 columns : [
+
+								{
+									data : "FILEID"
+								}, {
+									data : "FILENAME"
+								}, {
+					                "data": "URI",
+					                "render": function(data, type, row) {
+					                    var completeURI = "/Authmis/downloadFile?path=" + encodeURIComponent(data);
+					                    return '<a href="' + completeURI + '" target="_blank">Download</a>';
+					                }
+					            }
+		
+
+  							] 
+							});
+				});
+
+		$('.openModal2')
+				.click(
+						function() {
+							debugger;
+							var TRANSACTION_ID = $(this).closest('tr').find('td:nth-child(8)').text();
+							console.log("TRANSACTION_ID" + TRANSACTION_ID);
+							
+							var search = {
+								"TRANSACTION_ID" : TRANSACTION_ID,
+							}
+							$.ajax({
+								url : "/Authmis/TransactionIdMappingDetailsForAttchment",
+								data : search,
+								dataType : 'json',
+								type : 'GET',
+								success : function(data) {
+									debugger;
+									
+									if(data[0].FILENAME!=null) {
+										var res = '';
+										table.rows.add([]).clear().draw();
+										table.rows.add(data).draw();
+										/* $('.modal-title').text(
+												"SubAua Code : " + SUB_AUA_CODE,
+												"Service Type : " + REQUEST_TYPE1); */
+										$("#myModalAttachment").modal('show');
+												
+												
+									}
+									else{
+										$("#throwError").modal('show');
+									}
+																									
+								},
+								fail : function() {
+									alert("failed");
+								}
+							});
+
+						})
+		$(".close").click(function() {
+
+			$("#myModalAttachment").modal('hide');
+		});
+		
+		$(".closeModel1").click(function() {
+			$('#throwError').modal('hide');
+		});
+	</script>
+	<!-- -------------------------------------------------------------------------------------------------------------------------------->
+
+	<script>
+		$('#submit').click(function() {
+
+			if ($.trim($('#subAuaCode').val()) == '') {
+				$("#subAuaCode").addClass("is-invalid");
+
+			}
+		});
+	</script>
+	<script>
+		$('#submit').click(function() {
+
+			if ($.trim($('#fromdate').val()) == '') {
+				$("#fromdate").addClass("is-invalid");
+
+			}
+		});
+	</script>
+	<script>
+		$('#submit').click(function() {
+
+			if ($.trim($('#Enddate').val()) == '') {
+				$("#Enddate").addClass("is-invalid");
+
+			}
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				debugger;
+				//var conceptName = $('#EXPIRY_DATE').val();
+				$("#fromdate").removeAttr("readonly");
+				$("#Enddate").removeAttr("readonly");
+
+			});
+		});
+	</script>
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+	<script>
+		var topFunction = function() {
+			window.scrollTo(0, 0);
+		};
+	</script>
+
+
+</body>
+</html>

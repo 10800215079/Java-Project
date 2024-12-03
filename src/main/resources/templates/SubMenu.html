@@ -1,0 +1,267 @@
+
+
+<head th:replace="fragments_others_head" :: head></head>
+<style>
+.modal-header{padding: 5px}
+.modal-body table tr td:first-child{display:none}
+.modal-body table tr th:first-child{display:none}
+ table.lusan tr td:nth-child(8){display:none}
+ table.lusan tr th:nth-child(8){display:none}
+ 
+ .modal-body table tr td:first-child{display:none}
+.modal-body table tr th:first-child{display:none}
+ table.lusan tr td:nth-child(9){display:none}
+ table.lusan tr th:nth-child(9){display:none}
+
+
+
+.border-danger {
+	border: 1px solid #F01;
+}
+</style>
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dash board</a></li>
+										<li class="breadcrumb-item active">Sub Menu</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Add Sub Menu
+											Service</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form class="row g-3 needs-validation" novalidate
+											id="validation-form" th:action="@{/addSubMenu}"
+											th:object="${subMenu}" method="POST">
+											<div class="alert alert-success" role="alert"
+												th:text="${success}" th:if="${success}"></div>
+											<div class="alert alert-danger" role="alert"
+												th:text="${error}" th:if="${error}"></div>
+
+
+											<div class="row g-3 mt-0 mb-3 ">
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">MENU
+														NAME's </label> <select class="form-select mb-3"
+														aria-label="Default select example" id="MENUID"
+														name="MENUID" required>
+														<option selected="" disabled="" value="">Select
+															Menu's</option>
+														<option th:each="subAuaList :${subAuaList1}"
+															th:value="${subAuaList.ID}" th:text="${subAuaList.NAME}"></option>
+													</select>
+
+												</div>
+
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">SUB
+														MENU NAME </label> <input type="text" th:field="*{SUBMENUNAME}"
+														class="form-control" id="SUBMENUNAME"
+														placeholder="SUBMENUNAME" required="true">
+												</div>
+
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">SUB
+														MENU DESC </label> <input type="text" th:field="*{SUBMENUDESC}"
+														class="form-control" id="SUBMENUDESC"
+														placeholder="SUBMENUDESC" required="true">
+												</div>
+
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">URL
+														FOR SUB MENU </label> <input type="text"
+														th:field="*{URL_REPO_submenu}" class="form-control"
+														id="URL_REPO_submenu" placeholder="URL_REPO_submenu"
+														required="true">
+												</div>
+
+												<div class="col-md-3">
+													<label for="validationCustom01" class="form-label">ROLES
+													</label> <select class="form-select mb-3"
+														aria-label="Default select example" id="roles"
+														name="roles" multiple required>
+														<!-- <option selected="" disabled="" value="">Select
+																Roles</option> -->
+
+														<option th:each="subAuaList :${subAuaList}"
+															th:value="${subAuaList.ID}" th:text="${subAuaList.NAME}"></option>
+													</select>
+												</div>
+												<div class="col-4">
+													<button class="btn btn-primary mt-4" type="submit" id="submit">Submit</button>
+												</div>
+											</div>
+											</form>																																						
+										<div class="table-responsive table-card1 mt-4 mb-1"
+											id="example2">
+											<table id="example" class="table table-striped lusan"
+												style="width: 100%">
+												<thead class="alert-info">
+												<tr class ="table-responsive table-card1 mt-4 mb-1" style="color: 100%">
+													<th>S.NO</th>
+													<th>MAIN MENU</th>
+													<th>SUB MENU</th>
+													<!-- <th>MENU DESCRIPTION</th> -->
+													<th>URL</th>												
+													<th>STATUS</th>
+													<th>CREATION DATE</th>
+													<th>CREATED BY</th>													
+													<th>SUB MENU ID</th>
+													<th>MAIN MENU ID</th>
+													<th>ACTION</th>
+													
+												</tr>
+											</thead>
+											<tbody class="list form-check-all" id="tbody3">
+													<tr th:each="dataVal,iterator  : ${details}">
+														<td th:text="${iterator.index+1}"></td>		
+														<td class="reasons" th:text="${dataVal.MENUNAME}">SUB MENU NAME</td>			
+														<td class="reasons" th:text="${dataVal.SUBMENUNAME}">SUB MENU NAME</td>
+														<!-- <td class="reasons" th:text="${dataVal.SUBMENUDESC}">DESCRIPTION</td> -->
+														<td class="reasons" th:text="${dataVal.URL_REPO}">URL</td>
+													
+														<td class="nooftransaction">
+																<span th:switch="${dataVal.STATUS}">
+																	<span th:case="1">Active</span>
+																	<span th:case="0">De-Active</span>
+																</span>
+															</td>													
+														<td class="reasons" th:text="${dataVal.CREATIONDATE}">CREATIONAL DATE</td>														
+														<td class="reasons" th:text="${dataVal.CREATIONBY}">CREATED BY</td>																						
+														<td class="reasons" th:text="${dataVal.SUBMENUID}">SUB MENU ID</td>		
+														<td class="reasons" th:text="${dataVal.MENUID}">MAIN MENU ID</td>																										
+														<td><a class="btn btn-danger"
+																th:href="@{/editById/{SUBMENUID}(SUBMENUID=${dataVal.SUBMENUID})}">EDIT</a></td>
+													</tr>
+												</tbody>
+											<tfoot class="alert-info">
+												<tr>
+													<th>S.NO</th>
+													<th>MAIN MENU</th>
+													<th>SUB MENU</th>
+													<!-- <th>MENU DESCRIPTION</th> -->
+													<th>URL</th>													
+													<th>STATUS</th>
+													<th>CREATION DATE</th>
+													<th>CREATED BY</th>																						
+													<th>SUB MENU ID</th>
+													<th>MAIN MENU ID</th>
+													<th>ACTION</th>
+													
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+									</div>									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/jquery.multiselect.js"></script>
+	<link rel="stylesheet" href="assets/css/jquery.multiselect.css">
+
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+	<script type="text/javascript">
+		jQuery('#roles').multiselect({
+			columns : 1,
+			placeholder : 'Select roles',
+			search : true
+		});
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#example').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+
+							});
+				});
+	</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+
+<head th:replace="fragments_others_head" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">SUBAUA for License Key
+											Update Details</li>
+									</ol>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Edit Sub Aua license key</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form class="needs-validation" novalidate
+											th:action="@{/LicencyForSubAuaSystemViewUpdation}"
+											th:object="${LicencyForSubAuaSystemViewUpdation}"
+											method="GET">
+											<div class="alert alert-primary" role="alert"
+												th:text="${success}" th:if="${success}"></div>
+											<div class="alert alert-danger" role="alert"
+												th:text="${error}" th:if="${error}"></div>
+											<div class="table-responsive table-card1 mt-4 mb-1">
+												<table id="example" class="table table-striped"
+													style="width: 100%">
+
+													<thead class="alert-info">
+
+														<tr>
+															<th>S.NO</th>
+															<th>SUBAUA CODE</th>
+															<th>SubAUA</th>
+															<th>SubAUA LK</th>
+															<th>EXPIRY DATE</th>
+															<th>STATUS</th>
+															<th>EDIT</th>
+
+														</tr>
+													</thead>
+													<tbody class="list form-check-all">
+														<tr th:each="dataVal,iterator  : ${details}">
+															<td th:text="${iterator.index+1}"></td>
+															<td class="reasons" th:text="${dataVal.subAuaCode}">SUBAUA
+																CODE</td>
+															<td class="reasons" th:text="${dataVal.subAuaName}">SUBAUA
+															</td>
+															<td class="nooftransaction" th:text="${dataVal.subAuaLk}">SubAUA LK</td>
+															<td class="expirydate"
+																th:text="${dataVal.expiryDate}">EXPIRY DATE</td> 
+															<td class="Status" th:text="${dataVal.status}">STATUS</td>
+															<td><a class="btn btn-danger"
+																th:href="@{/edit/{srno}(srno=${dataVal.srno})}">EDIT</a></td>
+														</tr>
+													</tbody>
+													<tfoot class="alert-info">
+														<tr>
+															<th>S.NO</th>
+															<th>SUBAUA CODE</th>
+															<th>SubAUA</th>
+															<th>SubAUA LK</th>
+															<th>EXPIRY DATE</th>
+															<th>STATUS</th>
+															<th>EDIT</th>
+														</tr>
+													</tfoot>
+												</table>
+											</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<button onclick="topFunction()" class="btn btn-danger btn-icon"
+			id="back-to-top">
+			<i class="ri-arrow-up-line"></i>
+		</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript' src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript" src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"	src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+		<script>
+			flatpickr("#fromdate", {
+				maxDate : "today",
+				enableTime : true,
+				dateFormat : "d/m/y H:i"
+			});
+		</script>
+		<script>
+			flatpickr("#Enddate", {
+				maxDate : "today",
+				enableTime : true,
+				dateFormat : "d/m/y H:i"
+			});
+		</script>
+		<script type="text/javascript">
+			$(document).ready(
+					function() {
+						var sPageURL = window.location.search.substring(1);
+						var sURLVariables = sPageURL.split('&');
+
+						$('#example').DataTable(
+								{
+									"pageLength" : 50,
+									responsive : true,
+									lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+											[ 50, 100, 200, 500, 'All' ], ],
+
+									dom : 'Bfrtip',
+									buttons : [ 'pageLength', 'csv', 'excel' ],
+
+									fixedHeader : {
+										// header: true,
+										footer : true,
+									},
+
+								});
+					});
+		</script>
+			<script>
+		var topFunction = function() {
+		    window.scrollTo(0, 0);
+		};
+		</script>
+</body>
+</html>

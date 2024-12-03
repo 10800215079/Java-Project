@@ -1,0 +1,266 @@
+
+<head th:replace="fragments_others_head" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+							<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">Minutes Wise
+											Transaction Report</li>
+									</ol>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Error Code
+											Report</h4>
+									</div>
+								</div>
+								<div class="card-body">
+
+									<form id="validation-form" class="needs-validation" novalidate  th:action="@{/ErrorCodeReport}"
+										th:object="${errorCodeModel}" method="get">
+										<div class="row g-3 mt-0 mb-3 pb-3 alert-danger">
+											<div class="col-xxl-2 col-sm-4">
+												<div>
+													<input id="fromdate" name="fromdate" type="date"
+														class="form-control flatpickr-input active"
+														data-provider="flatpickr" data-date-format="d/m/y"
+														data-enable-time 
+														placeholder="Start Date" required="true" data-time_24hr=true>
+												</div>
+											</div>
+											<div class="col-xxl-2 col-sm-4">
+												<div>
+													<input id="enddate" name="enddate" type="date"
+														class="form-control flatpickr-input active"
+														data-provider="flatpickr" data-date-format="d/m/y"
+														data-enable-time 
+														placeholder="End Date" required="true" data-time_24hr=true>
+												</div>
+											</div>
+											<div class="col-xxl-1 col-sm-4">
+												<div>
+													<input type="submit"  id="submit" class="btn btn-primary w-100"
+														value="Submit" />
+												</div>
+											</div>
+										</div>
+									</form>
+
+									<div class="table-responsive table-card1 mt-4 mb-1">
+										<table id="example" class="table table-striped"
+											style="width: 100%">
+											<thead class="alert-info">
+
+												<tr>
+													<th>S.No</th>
+													<th>ERROR CODE</th>
+													<th>ERROR MESSAGE</th>
+													<th>ERROR COUNT</th>
+													<th>ERROR PERCENTAGE%</th>
+
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="dataVal,iterator : ${result}">
+													<td th:text="${iterator.index+1}">S.no</td>
+													<td class="reasons" th:text="${dataVal.Error_code}">
+														CREATED DATE</td>
+													<td class="reasons" th:text="${dataVal.error_message}">ERROR
+														MESSAGE</td>
+													<td class="reasons" th:text="${dataVal.error_count}">ERROR COUNT</td>
+													<td class="reasons" th:text="${dataVal.error_percent}">ERROR PERCENTAGE%</td>
+
+
+
+													</td>
+												</tr>
+											</tbody>
+											<tfoot class="alert-info">
+												<tr>
+													<th>S.No</th>
+													<th>ERROR CODE</th>
+													<th>ERROR MESSAGE</th>
+													<th>ERROR COUNT</th>
+													<th>ERROR PERCENTAGE%</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+	<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel"></h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive table-card1 mt-4 mb-1">
+						<div class="table-responsive table-card1 mt-4 mb-1">
+							<table id="table2" class="table table-striped"
+								style="width: 100%">
+								<thead class="alert-info">
+									<tr>
+										<!-- <th>S.No</th> -->
+										<th>ASA_TYPE</th>
+										<th>APPNAME</th>
+										<th>AUA_CODE</th>
+										<th>AADHAAR_ID</th>
+
+									</tr>
+								</thead>
+								<tbody id="table2body">
+
+								</tbody>
+								<tfoot class="alert-info">
+									<tr>
+										<!-- <th>S.No</th> -->
+										<th>ASA_TYPE</th>
+										<th>APPNAME</th>
+										<th>AUA_CODE</th>
+										<th>AADHAAR_ID</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript' src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript" src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"	src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+	
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#example').DataTable(
+							{
+								"pageLength" : 50,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+
+							});
+				});
+	</script>
+	
+	<script>
+		flatpickr("#fromdate", {
+			maxDate : "today",
+			enableTime : true,
+			dateFormat : "d/m/y H:i:ss"
+		});
+	</script>
+	<script>
+		flatpickr("#enddate", {
+			maxDate : "today",
+			enableTime : true,
+			dateFormat : "d/m/y H:i:ss"
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				debugger;
+				//var conceptName = $('#EXPIRY_DATE').val();
+				$("#fromdate").removeAttr("readonly");
+				$("#enddate").removeAttr("readonly");
+
+			
+
+				
+
+			});
+		});
+	</script>
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+	<script>
+		var topFunction = function() {
+		    window.scrollTo(0, 0);
+		};
+		</script>
+</body>
+</html>

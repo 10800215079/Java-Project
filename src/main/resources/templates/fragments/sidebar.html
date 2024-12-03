@@ -1,0 +1,105 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+
+
+<div layout:fragment="sidebar">
+    <!-- LOGO -->
+    <div class="navbar-brand-box">
+        <!-- Dark Logo-->
+        <a href="index.html" class="logo logo-dark">
+            <span class="logo-sm">
+                <img th:src="assets/images/logo-sm.png" class="img-fluid rounded-circle mb-2" /></img>
+
+                <img th:src="@{assets/images/logo-sm.png}" class="img-fluid rounded-circle mb-2"></img>
+            </span>
+
+        </a>
+        <!-- Light Logo-->
+        <a href="index.html" class="logo logo-light">
+            <span class="logo-sm">
+                <img th:src="@{assets/images/logo-sm.png}" class="img-fluid rounded-circle mb-2"></img>
+
+            </span>
+            <span class="logo-lg">
+                <img th:src="assets/images/logo-light.png" class="img-fluid rounded-circle mb-2" /></img>
+            </span>
+        </a>
+        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+            id="vertical-hover">
+            <i class="ri-record-circle-line"></i>
+        </button>
+    </div>
+
+    <div id="scrollbar">
+        <div class="container-fluid">
+            <div id="two-column-menu"></div>
+            <ul class="navbar-nav" id="navbar-nav">
+                <li class="menu-title"><span data-key="t-menu">Reports</span></li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
+                        aria-expanded="true" aria-controls="sidebarDashboards">
+                        <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Auth MIS Reports</span>
+                    </a>
+                    <div class="menu-dropdown collapse show" id="sidebarDashboards">
+                        <ul class="nav nav-sm flex-column">
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/transaction_details}"> Transaction Details</a>
+
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/suspected_aadhaar}"> Suspected Aadhaar</a>
+
+                                <!--<a href="suspected_aadhaar.html" class="nav-link" data-key="t-crm"> Suspected Aadhaar </a>  -->
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-key="t-ecommerce"> ODD time Transaction </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="services_wise_transaction_details.html" class="nav-link" data-key="t-crypto">
+                                    Service wise transactions </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="block_aadhaar_no.html" class="nav-link" data-key="t-projects"> Block Aadhaar No
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-key="t-projects"> Fluctuation Report </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-key="t-projects"> Mintues Wise Transaction Report </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-key="t-projects"> Average Response Time Success Count
+                                    Report </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-key="t-projects"> Average Response Time Error Count
+                                    Report </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-key="t-projects"> Sub-AuA Onboarding Approval </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <span data-key="t-nft">Approved Sub-AuA </span>
+                                    <!-- <span class="badge badge-pill bg-danger" data-key="t-new">New</span> -->
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- end AuthMIS Menu -->
+            </ul>
+        </div>
+        <!-- Sidebar -->
+    </div>
+
+    <div class="sidebar-background"></div>
+
+</div>
+
+</html>

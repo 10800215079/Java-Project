@@ -1,0 +1,328 @@
+
+
+<head th:replace="fragments_others_head2" :: head></head>
+
+<style>
+.ms-options ul{margin:0px; padding:0px;}
+.ms-options ul li{list-style:none;}
+.ms-options ul li label{line-height:13px;}
+</style>
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header2" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu1></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dash board</a></li>
+										<li class="breadcrumb-item active">Update License</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Send Mail to
+											Sub aua</h4>
+									</div>
+								</div>
+								<div class="row p-4">
+
+									<form id="form1" class="row g-6 needs-validation" novalidate
+										th:action="@{/addEmailDetails}" method="POST"
+										th:object="${addEmail}" enctype="multipart/form-data">
+										<!-- <div class="alert alert-primary" role="alert"
+											th:text="${buildQuery}"></div> -->
+											
+										<div class="alert alert-success" role="alert"
+											th:text="${success}" th:if="${success}"></div>
+											
+											
+										<div class="col-md-3">
+											<label for="subAuaName" class="form-label">To</label> <select
+												class="form-select mb-5" aria-label="Default select example"
+												id="subAuaName" th:field="*{subAuaCode}" name="subAuaName[]"
+												multiple required>
+
+												<option th:each="subAuaList : ${subAuaList}"
+													th:value="${subAuaList.ID}" th:text="${subAuaList.NAME}"></option>
+											</select>
+											<div class="invalid-feedback" id="subAuaNameError">Please
+												select at least one option.</div>
+										</div>
+
+										<!-- 	<div class="col-md-3">
+											<label for="subAuaName" class="form-label">To</label> <select
+												class="form-select mb-3" aria-label="Default select example"
+												id="subAuaName" th:field="*{subAuaCode}" name="subAuaName[]"
+												multiple>
+												<option th:each="subAuaList : ${subAuaList}"
+													th:value="${subAuaList.ID}" th:text="${subAuaList.ID}"></option>
+											</select>
+											<div class="invalid-feedback" id="subAuaNameError">Please
+												select at least one option.</div>
+										</div>
+ -->
+
+										<div class="form-group">
+											<label for="validationCustom01" class="form-label">Email</label>
+											<div class="col-lg-12">
+												<input type="text" placeholder="email"
+													class="form-control emails" rows="10" id="Email"
+													name="Email" th:field="*{to}" required>
+												<!-- <div class="invalid-feedback">Please provide a valid Email id.</div>  -->
+											</div>
+
+											<div class="form-group">
+												<label class="control-label">Cc / Bcc</label>
+												<div class="col-lg-12">
+													<input type="text" placeholder="Cc/Bcc"
+														class="form-control" rows="10" id="cc" name="cc">
+													<!-- <div class="invalid-feedback">Please provide a valid Email.</div> -->
+												</div>
+
+											</div>
+
+											<div class="form-group">
+												<label class="control-label">Subject</label>
+												<div class="col-lg-12">
+													<input type="text" placeholder="" id="subject"
+														name="subject" class="form-control">
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="control-label">Message</label>
+												<!-- <div class="col-lg-12 ckeditor-classic"> -->
+												<textarea name="content" class="ckeditor-classic"
+													id="content"></textarea>
+
+												<!-- <textarea rows="10" cols="30" class="form-control"
+														id="content" name="content" required></textarea> -->
+
+
+											</div>
+										</div>
+
+										<!-- <div class="form-group">
+												<label class="control-label">Message</label>
+												<div class="col-lg-12">
+													<div class="ckeditor-classic"></div>
+												</div>
+											</div> -->
+										<div class="form-group">
+											<div class="col-lg-offset-2 col-lg-10">
+												<span class="btn btn-ghost-secondary fileinput-button">
+													<i class="fa fa-plus fa fa-white"></i> <span>Attachment</span>
+													<!-- <input id="fileName" type="file" name="files" multiple=""> -->
+													<input type="file" id="fileName" name="files" multiple=""
+													onchange="checkFileSize(event)">
+												</span>
+												<button class="btn btn-primary float-end mt-2 mb-2"
+													type="submit" id="submit">Send</button>
+												<label id="errorAttachment" class="invalid-feedback">Invalid
+													file size. Total attachment size exceeds the limit of 25MB</label>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="../../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../assets/libs/feather-icons/feather.min.js"></script>
+	<script src="../assets/js/jquery-3.5.1.js"></script>
+	<script src="../assets/js/jquery.dataTables.min.js"></script>
+	<script src="../assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="../assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="../assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="../assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="../assets/js/buttons.html5.min.js"></script>
+	<script src="../assets/js/app.js"></script>
+	<script
+		src="assets/libs/%40ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+	<script src="../assets/js/form-editor.init.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="assets/js/jquery.multiselect.js"></script>
+	<link rel="stylesheet" href="assets/css/jquery.multiselect.css">
+
+
+
+
+	<script>
+		var topFunction = function() {
+			window.scrollTo(0, 0);
+		};
+	</script>
+
+
+
+	<!-- Code for multiple selection  -->
+	<script type="text/javascript">
+		jQuery('#subAuaName').multiselect({
+			columns : 1,
+			placeholder : 'Select SubAua',
+			search : true
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			debugger;
+			$("#subAuaName").change(function() {
+							
+				var ORGNAME = $(this).val();
+				console.log(ORGNAME);
+				$.ajax({
+						type : 'GET',
+						url : "/Authmis/subauaORGNAME1/"+ ORGNAME,
+						contentType : "application/json; charset=utf-8",
+						dataType : "json",
+						success : function(data) 
+						{
+							var slctSubcat = $("#Email"), option = "";
+							slctSubcat.empty();
+							var emails = data;
+							$(".emails").val(emails);	
+							console.log(option);
+							//slctSubcat.clear(option);
+							slctSubcat.append(option);
+						},
+						error : function() {
+						//	$(".emails").remove();
+						// alert("error");
+							//slctSubcat.clear(option);
+							//alert("I am null");
+						$("#Email").val("")
+							
+						
+						}});
+						});
+						});
+	</script>
+
+
+
+	<script>
+  		function checkFileSize(event) {
+    	const file = event.target.files[0];
+   		 if (file.size === 0) {
+      		// Perform your desired action for files with size 0
+      		console.log("File size is 0.");
+    }
+  }
+	</script>
+
+
+	<script>
+  		$("#errorAttachment").hide();
+  		const fileInput = document.getElementById("fileName");
+  		const messageElement = document.getElementById('message');
+ 		var foo = "Invalid";
+
+  		fileInput.addEventListener('change', (event) => {
+    	debugger;
+    	let totalFileSize = 0;
+
+    	for (let i = 0; i < event.target.files.length; i++) {
+      		const file = event.target.files[i];
+      		totalFileSize += file.size;
+    	}
+
+    	const maxSize = 25 * 1024 * 1024; // 25MB in bytes
+
+    	if (totalFileSize > maxSize) {
+      			event.preventDefault();
+      			$("#errorAttachment").show();
+    			} else {
+      				console.log('Total attachment size is within the limit');
+    				}
+  		});
+	</script>
+
+
+
+	<!--code for disabling form submissions if there are invalid fields -->
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
+
+
+	<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict'
+
+        var form = document.querySelector('#form1');
+
+        form.addEventListener('submit', function(event) {
+            var subAuaSelect = form.querySelector('#subAuaName');
+            if (subAuaSelect && subAuaSelect.selectedOptions.length === 0) {
+                event.preventDefault();
+                event.stopPropagation();
+                document.querySelector('#subAuaNameError').style.display = 'block';
+            }
+            form.classList.add('was-validated');
+        }, false);
+    })();
+</script>
+
+	<!-- 	<script>
+	CKEDITOR.replace('DSC');
+ 	var desc = CKEDITOR.instances['DSC'].getData();
+
+	</script>
+	 -->
+
+</body>
+</html>

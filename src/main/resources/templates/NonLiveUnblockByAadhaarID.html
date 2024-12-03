@@ -1,0 +1,271 @@
+
+<head th:replace="fragments_others_head" :: head></head>
+
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">unblock by Aadhaar ID</li>
+									</ol>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">unblock by
+											Aadhaar ID</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<form id="validation-form"
+										th:action="@{/SingleAadhaarUnblockData}"
+										th:object="${NonLiveUnblockByAadhaarID}" method="get">
+										<div class="row g-3 mt-0 mb-3  pb-3 alert-danger">
+											<!-- <div class="col-xxl-3 col-sm-4">
+												<div>
+													<input id="aadhaarid" name="aadhaarid"
+														class="form-control active" type="number"
+														onKeyPress="if(this.value.length==12) false;"
+														placeholder="Enter Aadhaar ID">
+												</div>
+											</div> -->
+											<div class="col-xxl-3 col-sm-4">
+												<div>
+													<input id="aadhaarid" name="aadhaarid"
+														class="form-control active" type="number"
+														onKeyPress="if(this.value.length==12) false;"
+														placeholder="Enter Aadhaar ID" th:value="${aadhaarid}" />
+												</div>
+											</div>
+
+											<div class="col-xxl-1 col-sm-4">
+												<div>
+													<input id="btnAadhaarSubmit" type="submit"
+														class="btn btn-primary w-80" value="Search" />
+												</div>
+											</div>
+										</div>
+									</form>
+
+									<div class="alert alert-success fs-2" role="alert"
+										th:text="${success}" th:if="${success}"></div>
+									<div class="alert alert-danger fs-2" role="alert"
+										th:text="${error}" th:if="${error}"></div>
+
+									<!-- <form id="formUnblockSingleAadhaar"
+										th:action="@{/UnblockByAadhaarID}"
+										th:object="${NonLiveUnblockByAadhaarID}" method="get"> -->
+									<div class="table-responsive table-card1 mt-4 mb-1">
+										<table id="tableUnblockSingleAadhaar"
+											class="table table-striped" style="width: 100%">
+											<thead class="alert-info">
+												<tr>
+													<!-- <td><input type="checkbox" id="selectAll" /> <strong>All</strong> </td> -->
+													<th>S.no</th>
+													<th>Ref. ID</th>
+													<th>SubAUA Code</th>
+													<th>SSO ID</th>
+													<th>Response Code</th>
+													<th>Device Code</th>
+													<th>Transaction ID</th>
+													<th>Batch Id</th>
+													<th>Block Date</th>
+													<!-- 	<th>Aadhaar ID</th> -->
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody id="tablebody" class="list form-check-all">
+												<tr th:each="dataVal,iterator  : ${details}">
+													<td th:text="${iterator.index+1}"></td>
+													<td class="reasons" th:text="${dataVal.REF_ID}">REF_ID</td>
+													<td class="nooftransaction"
+														th:text="${dataVal.SUBAUA_CODE}">SUBAUA_CODE</td>
+													<td class="reasons" th:text="${dataVal.SSO_ID}">SSO ID</td>
+													<td class="nooftransaction"
+														th:text="${dataVal.RESPONSE_CODE}">RESPONSE_CODE</td>
+													<td class="nooftransaction"
+														th:text="${dataVal.DEVICE_CODE}">DEVICE_CODE</td>
+													<td class="nooftransaction"
+														th:text="${dataVal.TRANSACTION_ID}">TRANSACTION_ID</td>
+													<td class="nooftransaction" th:text="${dataVal.BATCH_ID}">BATCH_ID</td>
+													<td class="nooftransaction" th:text="${dataVal.BLOCK_DATE}">BLOCK_DATE</td>
+													<td class="nooftransaction" style="display: none;"
+														th:text="${dataVal.FROM_DATE}">From Date</td>
+													<td class="nooftransaction" style="display: none;"
+														th:text="${dataVal.END_DATE}">End Date</td>
+													<td class="nooftransaction" style="display: none;"
+														th:text="${dataVal.AADHAAR_ID}">Aadhaar ID</td>
+													<td class="nooftransaction"><a id="unblockSingle"
+														class="btn btn-primary">Unblock</a>
+												</tr>
+											</tbody>
+											<tfoot class="alert-info">
+												<tr>
+													<!-- <td><input type="checkbox" id="selectAll" /> <strong>All</strong> </td> -->
+													<th>S.no</th>
+													<th>Ref. ID</th>
+													<th>SubAUA Code</th>
+													<th>SSO ID</th>
+													<th>Response Code</th>
+													<th>Device Code</th>
+													<th>Transaction ID</th>
+													<th>Batch Id</th>
+													<th>Block Date</th>
+													<!-- <th>Aadhaar ID</th> -->
+													<th>Action</th>
+												</tr>
+											</tfoot>
+										</table>
+
+									</div>
+									<!-- </form> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+	<!-- <button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button> -->
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+	<script>
+		flatpickr("#fromdate", {
+			maxDate : "today",
+		//enableTime: true,
+		//dateFormat: "d/m/y H:i"	   
+		});
+	</script>
+	<script>
+		flatpickr("#Enddate", {
+			maxDate : "today",
+		// enableTime: true,
+		//dateFormat: "d/m/y H:i"	   
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#tableUnblockSingleAadhaar').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+
+							});
+				});
+	</script>
+	<script>
+		$("a#unblockSingle").click(
+				function() {
+					debugger;
+					var batchid = $(this).closest('tr').find('td:nth-child(8)')
+							.text();
+					var adhaarid = $(this).closest('tr')
+							.find('td:nth-child(2)').text(); 
+							/* var adhaarid = $("#aadhaarid").val(); */
+					var subauacode = $(this).closest('tr').find(
+							'td:nth-child(3)').text();
+					var fromdate = $(this).closest('tr').find(
+							'td:nth-child(10)').text();
+					var enddate = $(this).closest('tr')
+							.find('td:nth-child(11)').text();
+					var dc = $(this).closest('tr').find('td:nth-child(6)')
+							.text();
+					var uidresponsecode = $(this).closest('tr').find(
+							'td:nth-child(5)').text();
+					var transactionid = $(this).closest('tr').find(
+							'td:nth-child(7)').text();
+					var ssoid = $(this).closest('tr').find('td:nth-child(4)')
+							.text();
+					var aadhaaridFROMrefid = $(this).closest('tr').find(
+							'td:nth-child(12)').text();
+
+					var search = {
+						"batchid" : batchid,
+						"adhaarid" : adhaarid,
+						"subauacode" : subauacode,
+						"fromdate" : fromdate,
+						"enddate" : enddate,
+						"dc" : dc,
+						"uidresponsecode" : uidresponsecode,
+						"transactionid" : transactionid,
+						"ssoid" : ssoid,
+					}
+					console.log(search);
+					$.ajax({
+						url : "/Authmis/UnblockByAadhaarID",
+						data : search,
+						dataType : 'json',
+						type : 'get',
+						success : function(data) {
+							console.log("Success");
+							//changes add 
+							location.reload(); 
+						},
+						 fail : function() {
+							alert("error...please try again");
+						} 
+						/* error : function() {
+							alert("error...please try again");
+						} */
+					});
+					//location.reload(true);
+
+				})
+				
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,593 @@
+
+
+<head th:replace="fragments_others_head" :: head></head>
+<style>
+.modal-header {
+	padding: 5px
+}
+
+.modal-body table tr td:first-child {
+	display: none
+}
+
+.modal-body table tr th:first-child {
+	display: none
+}
+
+table.lusan tr td:nth-child(2) {
+	display: none
+}
+
+table.lusan tr th:nth-child(2) {
+	display: none
+}
+
+.border-danger {
+	border: 1px solid #F01;
+}
+</style>
+<body>
+	<div id="layout-wrapper">
+
+		<div th:replace="fragments_others_header" :: header></div>
+
+		<div th:replace="fragments_others_menu" :: menu></div>
+
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dash board</a></li>
+										<li class="breadcrumb-item active">Add Reminder</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">Add Details
+											For Reminder</h4>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="suspectedAadhaar">
+										<form class="row g-3 needs-validation" novalidate
+											id="validation-form"
+											th:action="@{/saveProjectDetailsForRemainder}"
+											th:object="${SetRemainderForServerConfigModel}" method="POST">
+
+											<div class="alert alert-success" role="alert"
+												th:text="${success}" th:if="${success}"></div>
+											<div class="alert alert-danger" role="alert"
+												th:text="${error}" th:if="${error}"></div>
+
+
+											<div class="row g-3 mt-0 mb-3 ">
+												<!--<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">Project</label>
+													<select class="form-select mb-3"
+														aria-label="Default select example" id="PROJECT_NAME"
+														name="PROJECT_NAME" required>
+														<option selected="" disabled="" value="">Select
+															Project</option>
+														<option th:each="project : ${projectList}"
+															th:value="${project}" th:text="${project}"></option>
+													</select>
+												</div>-->
+												
+												<div class="col-md-4">
+													<label for="validationCustom01" class="form-label">Project</label>
+													<select class="form-select mb-3"
+														aria-label="Default select example" id="PROJECT_NAME"
+														name="PROJECT_NAME" required>
+														<option selected disabled value="">Select Project</option>
+														<option value="Aadhaar Authentication Ecosystem">Aadhaar
+															Authentication Ecosystem</option>
+														<option value="Document Verification Engine">Document
+															Verification Engine</option>
+														<option value="Aadhaar MIS Portal">Aadhaar MIS
+															Portal</option>
+														<option value="Rajasthan Aadhaar Portal">Rajasthan
+															Aadhaar Portal</option>
+														<option value="Raj Upasthiti Web Application">Raj
+															Upasthiti Web Application</option>
+														<option value="RBSE Application">RBSE Application</option>
+														<option value="Aadhaar Data Vault">Aadhaar Data
+															Vault</option>
+														<option value="Raj Upasthiti Android Application">Raj
+															Upasthiti Android Application</option>
+														<option value="Raj Upasthiti Desktop Application">Raj
+															Upasthiti Desktop Application</option>
+														<option value="Rajmasters Project">Rajmasters
+															Project</option>
+														<option value="Circuit House Management System">Circuit
+															House Management System</option>
+													</select>
+												</div>
+
+
+												<div class="col-md-4">
+													<label for="REMAINDER_DATE" class="form-label">Reminder
+														Date</label>
+													<div>
+														<input id="REMAINDER_DATE" name="REMAINDER_DATE"
+															type="date" class="form-control flatpickr-input active"
+															data-provider="flatpickr" data-date-format="d/m/y"
+															data-enable-time placeholder="Start Date" required
+															value="">
+													</div>
+												</div>
+
+												<div class="col-md-4">
+													<label for="GET_REMAINDER" class="form-label">
+														Reminder Start Before(Days)</label>
+													<div>
+														<input id="GET_REMAINDER" name="GET_REMAINDER" type="text"
+															class="form-control"
+															placeholder="Mention Day You Want To Get Reminder"
+															required pattern="\d+"
+															title="Please enter only numeric characters">
+														<!-- pattern="\d+" ensures only numeric characters are accepted -->
+														<div class="invalid-feedback">Please provide a valid
+															number.</div>
+													</div>
+												</div>
+
+												<!-- Add field for To and CC -->
+
+												<!-- <div class="col-md-6">
+													<label class="control-label">To</label>
+													<div>
+														<input type="text" placeholder="TO" class="form-control"
+															rows="10" id="MAIL_TO" name="MAIL_TO" required
+															pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+														<div class="invalid-feedback">Please provide a valid
+															email id.</div>
+
+													</div>
+
+												</div>
+ -->
+												<div class="col-md-12 mt-0">
+													<label class="control-label">To</label>
+													<div>
+														<input type="text" placeholder="TO" class="form-control"
+															rows="10" id="MAIL_TO" name="MAIL_TO" required>
+														<div class="invalid-feedback">Please provide one or more valid email addresses separated by commas and spaces. </div>
+													</div>
+												</div>
+
+
+
+												<div class="col-md-12 mt-3">
+													<label class="control-label">Cc / Bcc</label>
+													<div>
+														<input type="text" placeholder="Cc / Bcc"
+															class="form-control" rows="10" id="MAIL_CC"
+															name="MAIL_CC">
+														<div class="invalid-feedback">Please provide one or more valid email addresses separated by commas and spaces. </div>
+													</div>
+
+												</div>
+
+
+												<div class="col-md-12">
+													<label for="PERFORM_ACTIVITY" class="form-label">Activity
+														Description</label>
+													<textarea rows="5" cols="30" class="form-control"
+														name="PERFORM_ACTIVITY" id="PERFORM_ACTIVITY"
+														placeholder="Reminder Description" required></textarea>
+												</div>
+
+
+												<div class="col-12 mt-0 text-center">
+													<button class="btn btn-primary mt-4" type="submit"
+														id="submit">Submit</button>
+												</div>
+											</div>
+										</form>
+
+
+										<div class="table-responsive table-card1 mt-4 mb-1"
+											id="example2">
+											<table id="example" class="table table-striped lusan"
+												style="width: 100%">
+												<thead class="alert-info">
+													<tr class="table-responsive table-card1 mt-4 mb-1"
+														style="color: 100%">
+														<th>S.no</th>
+														<th>SRNO</th>
+														<th>PROJECT</th>
+														<th>ACTIVITY</th>
+														<th>REMINDER DATE</th>
+														<th>REMINDER START BEFORE(DAYS)</th>
+														<th>TO</th>
+														<th>CC / BCC</th>
+														<th>CREATED BY</th>
+														<th>IP</th>
+														<th>STATUS</th>
+														<th>ACTION</th>
+
+													</tr>
+												</thead>
+												<tbody class="list form-check-all" id="tbody3">
+													<tr th:each="dataVal,iterator  : ${remainders}">
+														<td th:text="${iterator.index+1}"></td>
+														<td class="reasons" th:text="${dataVal.SRNO}">SR NO</td>
+														<td class="reasons" th:text="${dataVal.PROJECT_NAME}">PROJECT</td>
+														<td class="reasons" th:text="${dataVal.PERFORM_ACTIVITY}">ACTIVITY</td>
+														<td class="reasons"
+															th:text="${#dates.format(dataVal.REMAINDER_DATE, 'dd-MM-yyyy')}">REMINDER
+															DATE</td>
+														<td class="reasons" th:text="${dataVal.GET_REMAINDER}">REMINDER
+															START BEFORE(DAYS)</td>
+														<td class="reasons" th:text="${dataVal.MAIL_TO}">TO</td>
+														<td class="reasons" th:text="${dataVal.MAIL_CC}">CC /
+															BCC</td>
+														<td class="reasons" th:text="${dataVal.CREATED_BY}">CREATED
+															BY</td>
+														<td class="reasons" th:text="${dataVal.IP}">IP</td>
+														<td class="nooftransaction"><span
+															th:switch="${dataVal.STATUS}"> <span th:case="1">Active</span>
+																<span th:case="0">De-Active</span>
+														</span></td>
+
+														<td class="nooftransaction"><span
+															th:switch="${dataVal.STATUS}"> <span th:case="1">
+																	<button class="btn btn-danger" style="width: 100px;"
+																		th:onclick="'confirmDeactivation(' + ${dataVal.SRNO} + ')'">De-Active</button>
+															</span> <span th:case="0"> <a class="btn btn-success"
+																	style="width: 100px" onclick="doNotAllowToActivate()">Active</a>
+															</span>
+														</span></td>
+													</tr>
+												</tbody>
+												<tfoot class="alert-info">
+													<tr class="table-responsive table-card1 mt-4 mb-1"
+														style="color: 100%">
+														<th>S.no</th>
+														<th>SRNO</th>
+														<th>PROJECT</th>
+														<th>ACTIVITY</th>
+														<th>REMINDER DATE</th>
+														<th>REMINDER START BEFORE(DAYS)</th>
+														<th>TO</th>
+														<th>CC / BCC</th>
+														<th>CREATED BY</th>
+														<th>IP</th>
+														<th>STATUS</th>
+														<th>ACTION</th>
+
+													</tr>
+
+												</tfoot>
+											</table>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Reason For deactivation -->
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+			role="dialog" aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title text-white" id="exampleModalLongTitle">Please
+							provide a reason for deactivation:</h5>
+						<button type="button" class="closeModel" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="deactivationForm" class="needs-validation" novalidate>
+							<textarea rows="5" cols="30" class="form-control" name="REASON"
+								id="REASON" required></textarea>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary Cancel"
+							data-dismiss="modal" style="width: 100px;">Cancel</button>
+						<button type="button" class="btn btn-primary" id="submit1"
+							style="width: 100px;">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Do not allow to activate -->
+		<div class="modal fade" id="doNotAllow" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+			data-backdrop="static">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Message!</h5>
+						<button type="button" class="closeModelforActivation"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="popupbox11">
+										<p id="modalMessage" class="text-success mx-auto"
+											style="width: fit-content; font-size: 15px;">Please
+											Create New Task.</p>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+
+	<div th:replace="fragments_others_footer" :: footer></div>
+
+	</div>
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+
+
+	<script>
+		const currentDate = new Date();
+		const fromdefaultTime = new Date();
+		fromdefaultTime.setHours(00); // Set the default hour
+		fromdefaultTime.setMinutes(00); // Set the default minute
+
+		// Initialize Flatpickr with the modified date object
+		flatpickr("#REMAINDER_DATE", {
+			mode : "single",
+			dateFormat : "Y-m-d",
+			enableTime : false,
+			minDate : currentDate, // Set minDate to the current date
+			defaultDate : fromdefaultTime
+		// Optionally, set a default date if needed
+		});
+	</script>
+
+	<script>
+		function confirmDeactivation(srno) {
+
+			event.preventDefault();
+			$('#exampleModalCenter').data('srno', srno).modal('show');
+
+			// Close the modal
+			$(".closeModel").click(function() {
+				$('#exampleModalCenter').modal('hide');
+			});
+			// for cancel 
+			$(".Cancel").click(function() {
+				$("#REASON").val("");
+				$('#exampleModalCenter').modal('hide');
+			});
+		}
+	</script>
+
+	<!-- Prevent from activation  -->
+	<script>
+		function doNotAllowToActivate() {
+			event.preventDefault();
+			// Show modal
+			$("#doNotAllow").modal('show');
+			// Close the modal
+			$(".closeModelforActivation").click(function() {
+				$('#doNotAllow').modal('hide');
+			});
+
+		}
+	</script>
+
+	<!-- Required Field For Reason Of Deactivation -->
+	<script>
+		// Custom JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict';
+
+			// Fetch the form inside the modal
+			var form = document.getElementById('deactivationForm');
+
+			// Add event listener to the form
+			document.getElementById('submit1').addEventListener('click',
+					function(event) {
+						if (!form.checkValidity()) {
+							event.preventDefault();
+							event.stopPropagation();
+						} else {
+							// If the form is valid, call the saveWithReason function
+							saveWithReason();
+						}
+
+						form.classList.add('was-validated');
+					}, false);
+		})();
+	</script>
+
+
+
+
+	<script>
+		function saveWithReason() {
+
+			var srno = $('#exampleModalCenter').data('srno');
+			var reason = $('#REASON').val();
+
+			$.ajax({
+				type : 'POST',
+				url : '/Authmis/deactivateWithReason',
+				data : {
+					srno : srno,
+					reason : reason
+				},
+				success : function(response) {
+					location.reload()
+				},
+				error : function(xhr, status, error) {
+					alert('Task is not deactivated successfully!');
+				}
+			});
+
+		}
+	</script>
+
+
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				$("#REMAINDER_DATE").removeAttr("readonly");
+			});
+		});
+	</script>
+
+
+	<!-- <script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script> -->
+
+
+<script>
+    (function() {
+        'use strict';
+
+        function isValidEmail(email) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        var forms = document.querySelectorAll('.needs-validation');
+        Array.prototype.slice.call(forms).forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                var mailToInput = form.querySelector('#MAIL_TO').value.trim();
+                var mailCcInput = form.querySelector('#MAIL_CC').value.trim();
+
+                var toEmails = mailToInput.split(',');
+                var ccEmails = mailCcInput.split(',');
+
+                function validateEmails(emails) {
+                    return emails.every(function(email) {
+                        return isValidEmail(email.trim());
+                    });
+                }
+
+                var isToValid = mailToInput === '' || validateEmails(toEmails);
+
+
+                var isCcValid = mailCcInput === '' || validateEmails(ccEmails);
+
+                if (!isToValid) {
+                    form.querySelector('#MAIL_TO')
+                    .setCustomValidity('Please provide one or more valid email addresses separated by commas and spaces.');
+                } else {
+                    form.querySelector('#MAIL_TO').setCustomValidity('');
+                }
+
+                if (!isCcValid) {
+                    form.querySelector('#MAIL_CC')
+                    .setCustomValidity('Please provide one or more valid email addresses separated by commas and spaces.');
+                } else {
+                    form.querySelector('#MAIL_CC').setCustomValidity('');
+                }
+
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+
+
+
+
+
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#example').DataTable(
+							{
+								"pageLength" : 10,
+								responsive : true,
+								lengthMenu : [ [ 50, 100, 200, 500, -1 ],
+										[ 50, 100, 200, 500, 'All' ], ],
+
+								dom : 'Bfrtip',
+								buttons : [ 'pageLength', 'csv', 'excel' ],
+
+								fixedHeader : {
+									// header: true,
+									footer : true,
+								},
+
+							});
+				});
+	</script>
+</body>
+</html>

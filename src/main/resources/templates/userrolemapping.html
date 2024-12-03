@@ -1,0 +1,126 @@
+<head th:replace="fragments_others_head" :: head></head>
+<body>
+	<div id="layout-wrapper">
+		<div th:replace="fragments_others_header" :: header></div>
+		<div th:replace="fragments_others_menu" :: menu></div>
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div
+								class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0"></h4>
+
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item"><a
+											href="javascript: void(0);">Dashboard</a></li>
+										<li class="breadcrumb-item active">SUB AUA ADMIN PAGE</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card">
+								<div class="card-header bg-primary pb-2 pt-2">
+									<div class="d-flex justify-content-between">
+										<h4 class="card-title text-white mb-0 pt-2">User Mapping Page</h4>
+									</div>
+								</div>
+								<div class="row">
+									<div class="card">
+										<!-- end card header -->
+
+										<div class="card-body">
+
+											<form class="row g-3 bg-opacity-10 bg-danger mb-3 ps-4"
+												th:action="@{/user}" th:object="${subauaadminpage}"
+												method="GET">
+												<div class="alert alert-success" role="alert"
+													th:text="${success}" th:if="${success}"></div>
+												<div class="alert alert-danger" role="alert"
+													th:text="${error}" th:if="${error}"></div>
+												<div class="col-auto">
+													<label for="staticEmail2" class="pt-2">Enter SSOID</label>
+
+												</div>
+												<div class="col-6">
+													<label for="inputPassword2" class="visually-hidden">ssoid</label>
+													<input type="text" class="form-control" id="SSOID1" required
+														th:field="*{SSOID}" placeholder="SSOID">
+													<!-- onchange="Validate()" -->
+												</div>
+												<div class="col-auto">
+													<button type="submit" class="btn btn-primary mb-3">Search
+														Details</button>
+												</div>
+											</form>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments_others_footer" :: footer></div>
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/libs/feather-icons/feather.min.js"></script>
+	<script type='text/javascript'
+		src='assets/libs/flatpickr/flatpickr.min.js'></script>
+	<script src="assets/js/jquery-3.5.1.js"></script>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript"
+		src="assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/js/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	 <script>
+		(function() {
+			'use strict'
+			var forms = document.querySelectorAll('.needs-validation')
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script> 
+
+	<!-- <script type="text/javascript">
+	function Validate() {
+		debugger;
+	    var param = $("#SSOID1").val();
+	    $.ajax({
+	        type: "GET",/*method type*/
+	        contentType: "application/json; charset=utf-8",
+	        url: "/user/",/*Target function that will be return result*/
+	        data: '{"data":"' + param + '"}',/*parameter pass data is parameter name param is value */
+	        dataType: "json",
+	        success: function(data) {
+	        	if(Object.keys(data).length)
+	               alert("Valid SSO ID");
+	            }
+	        });   
+	}
+	
+	</script> -->
+</body>
+</html>
